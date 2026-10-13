@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>MOON STORE</title>
+  <!-- Telegram WebApp SDK -->
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            moonBg: '#090d16',
+            moonCard: '#131b2e',
+            moonBorder: '#23304c',
+            moonAccent: '#3b82f6',
+            moonAccentHover: '#2563eb'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #090d16;
+      color: #f1f5f9;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .active-tab {
+      color: #60a5fa;
+      border-color: #3b82f6;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between pb-20 font-sans antialiased">
+
+  <!-- Шапка -->
+  <header class="p-4 border-b border-moonBorder flex items-center justify-between bg-moonBg/80 backdrop-blur sticky top-0 z-20">
+    <div class="flex items-center space-x-2">
+      <div class="w-8 h-8 rounded-full bg-blue-600/30 flex items-center justify-center border border-blue-500/50">
+        🌙
+      </div>
+      <span class="font-bold tracking-wider text-base text-white">MOON STORE</span>
+    </div>
+    <div class="flex items-center space-x-2 bg-moonCard px-3 py-1 rounded-full border border-moonBorder">
+      <span class="text-xs text-slate-400">Баланс:</span>
+      <span id="user-balance" class="text-xs font-semibold text-emerald-400">0.0 $</span>
+    </div>
+  </header>
+
+  <!-- Основной контейнер экранов -->
+  <main class="p-4 flex-1">
+    
+    <!-- 1. ГЛАВНАЯ / СТАРТ -->
+    <section id="tab-home" class="space-y-4">
+      <div class="rounded-2xl p-5 border border-moonBorder bg-gradient-to-br from-moonCard to-[#101726] shadow-lg text-center relative overflow-hidden">
+        <div class="absolute -right-10 -bottom-10 w-36 h-36 bg-blue-600/10 rounded-full blur-2xl"></div>
+        <h1 class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-300 tracking-widest uppercase mb-2">
+          MOON STORE
+        </h1>
+        <p class="text-sm text-slate-300 leading-relaxed mb-4">
+          Привет, это магазин готовых верифицированных аккаунтов крипто бирж, ЛК банков, платежек и необанков!
+        </p>
+        <div class="grid grid-cols-2 gap-2 text-xs">
+          <a href="https://t.me/Moon_store_news" target="_blank" class="p-2.5 rounded-xl bg-moonBg/80 border border-moonBorder hover:border-blue-500 transition flex items-center justify-center space-x-1">
+            <span>📢 Канал</span>
+          </a>
+          <a href="https://t.me/MoonStoreReviews" target="_blank" class="p-2.5 rounded-xl bg-moonBg/80 border border-moonBorder hover:border-blue-500 transition flex items-center justify-center space-x-1">
+            <span>⭐ Отзывы</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="p-3.5 bg-blue-500/10 border border-blue-500/20 rounded-xl text-xs text-blue-200 flex items-center justify-between">
+        <span>📖 Перед покупкой ознакомьтесь с FAQ</span>
+        <button onclick="switchTab('info')" class="underline font-semibold ml-2">Читать</button>
+      </div>
+
+      <button onclick="switchTab('catalog')" class="w-full py-3.5 bg-blue-600 hover:bg-blue-500 rounded-xl font-semibold shadow-lg shadow-blue-600/20 transition flex items-center justify-center space-x-2">
+        <span>Перейти в каталог</span>
+        <span>→</span>
+      </button>
+    </section>
+
+    <!-- 2. КАТАЛОГ -->
+    <section id="tab-catalog" class="hidden space-y-4">
+      <!-- Список категорий -->
+      <div id="catalog-categories" class="space-y-3">
+        <h2 class="text-lg font-bold text-slate-200">Выберите категорию</h2>
+        <div class="grid grid-cols-1 gap-2.5">
+          <button onclick="openCategory('crypto')" class="p-4 bg-moonCard hover:border-blue-500/60 border border-moonBorder rounded-xl flex items-center justify-between transition">
+            <span class="font-medium">📈 Крипто-биржи</span>
+            <span class="text-slate-500 text-sm">→</span>
+          </button>
+          <button onclick="openCategory('banks')" class="p-4 bg-moonCard hover:border-blue-500/60 border border-moonBorder rounded-xl flex items-center justify-between transition">
+            <span class="font-medium">🏦 ЛК банков</span>
+            <span class="text-slate-500 text-sm">→</span>
+          </button>
+          <button onclick="openCategory('payment')" class="p-4 bg-moonCard hover:border-blue-500/60 border border-moonBorder rounded-xl flex items-center justify-between transition">
+            <span class="font-medium">💳 Платёжки / Необанки</span>
+            <span class="text-slate-500 text-sm">→</span>
+          </button>
+          <button onclick="openCategory('bundle')" class="p-4 bg-moonCard hover:border-blue-500/60 border border-moonBorder rounded-xl flex items-center justify-between transition">
+            <span class="font-medium">🔗 Банк + Биржа</span>
+            <span class="text-slate-500 text-sm">→</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Список товаров внутри выбранной категории -->
+      <div id="catalog-items" class="hidden space-y-3">
+        <div class="flex items-center justify-between pb-1">
+          <button onclick="closeCategory()" class="text-xs text-blue-400 hover:underline flex items-center space-x-1">
+            <span>← Назад к категориям</span>
+          </button>
+          <span id="current-category-title" class="text-xs text-slate-400 uppercase tracking-wide"></span>
+        </div>
+        <div id="items-grid" class="grid grid-cols-2 gap-2"></div>
+      </div>
+    </section>
+
+    <!-- 3. КАБИНЕТ -->
+    <section id="tab-cabinet" class="hidden space-y-4">
+      <div class="p-5 bg-moonCard border border-moonBorder rounded-2xl flex flex-col items-center text-center">
+        <div class="w-16 h-16 rounded-full bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-2xl mb-2">
+          👤
+        </div>
+        <div id="user-name" class="font-bold text-base text-white">Пользователь</div>
+        <div class="text-xs text-slate-400 mt-1">Текущий баланс</div>
+        <div class="text-2xl font-black text-emerald-400 mt-0.5">0.0 $</div>
+      </div>
+
+      <div class="grid grid-cols-1 gap-2.5">
+        <button onclick="tgAlert('Форма пополнения баланса (CryptoBot / USDT TRC20)')" class="p-3.5 bg-blue-600 hover:bg-blue-500 rounded-xl font-semibold text-center transition">
+          Пополнить баланс
+        </button>
+        <button onclick="tgAlert('История ваших заказов пока пуста')" class="p-3 bg-moonCard border border-moonBorder rounded-xl text-sm flex items-center justify-between">
+          <span>📦 Мои заказы</span>
+          <span class="text-slate-500 text-xs">0 шт.</span>
+        </button>
+        <button onclick="tgPromptPromo()" class="p-3 bg-moonCard border border-moonBorder rounded-xl text-sm flex items-center justify-between">
+          <span>🎁 Ввести промокод</span>
+          <span class="text-slate-500 text-xs">→</span>
+        </button>
+        <button onclick="tgAlert('Ваша реферальная ссылка: https://t.me/Moon_store_bot?start=ref123')" class="p-3 bg-moonCard border border-moonBorder rounded-xl text-sm flex items-center justify-between">
+          <span>👥 Реферальная система</span>
+          <span class="text-slate-500 text-xs">5%</span>
+        </button>
+        <button onclick="toggleLang()" class="p-3 bg-moonCard border border-moonBorder rounded-xl text-sm flex items-center justify-between">
+          <span>🌐 Язык / Language</span>
+          <span id="lang-label" class="text-blue-400 text-xs font-semibold">RU</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- 4. ИНФО -->
+    <section id="tab-info" class="hidden space-y-4">
+      <div class="p-5 bg-moonCard border border-moonBorder rounded-2xl text-center">
+        <h2 class="text-lg font-bold text-white mb-2">Информация о сервисе</h2>
+        <p class="text-xs text-slate-300 leading-relaxed">
+          Мы предоставляем полностью верифицированные аккаунты платежных систем, необанков и криптовалютных бирж с полным комплектом документов и доступов.
+        </p>
+      </div>
+
+      <div class="space-y-2">
+        <div class="p-4 bg-moonCard border border-moonBorder rounded-xl">
+          <div class="font-semibold text-sm mb-1 text-blue-300">FAQ (Вопросы и ответы)</div>
+          <p class="text-xs text-slate-400">
+            • Передача: логин, пароль, почта, 2FA, документы.<br>
+            • Гарантия на вход: 24 часа с момента получения.<br>
+            • Перед работой смените пароли и резервные коды.
+          </p>
+        </div>
+        <div class="p-4 bg-moonCard border border-moonBorder rounded-xl">
+          <div class="font-semibold text-sm mb-1 text-blue-300">Техническая поддержка</div>
+          <p class="text-xs text-slate-400 mb-3">Время ответа оператора обычно составляет до 15 минут.</p>
+          <a href="https://t.me/Moon_store_news" target="_blank" class="inline-block px-4 py-2 bg-moonBg border border-blue-500/40 rounded-lg text-xs font-semibold text-blue-400">
+            Написать оператору
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Нижняя навигация (Таб-бар) -->
+  <nav class="fixed bottom-0 left-0 right-0 bg-moonBg/95 backdrop-blur border-t border-moonBorder px-4 py-2 z-30">
+    <div class="grid grid-cols-4 gap-1 text-center text-xs">
+      <button onclick="switchTab('home')" id="nav-home" class="py-1 text-blue-400 font-semibold flex flex-col items-center">
+        <span class="text-base">🏠</span>
+        <span class="mt-0.5">Главная</span>
+      </button>
+      <button onclick="switchTab('catalog')" id="nav-catalog" class="py-1 text-slate-400 hover:text-white flex flex-col items-center">
+        <span class="text-base">📁</span>
+        <span class="mt-0.5">Каталог</span>
+      </button>
+      <button onclick="switchTab('cabinet')" id="nav-cabinet" class="py-1 text-slate-400 hover:text-white flex flex-col items-center">
+        <span class="text-base">👤</span>
+        <span class="mt-0.5">Кабинет</span>
+      </button>
+      <button onclick="switchTab('info')" id="nav-info" class="py-1 text-slate-400 hover:text-white flex flex-col items-center">
+        <span class="text-base">ℹ️</span>
+        <span class="mt-0.5">Инфо</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Скрипт логики и наполнения товарами -->
+  <script>
+    const tg = window.Telegram?.WebApp;
+    if (tg) {
+      tg.expand();
+      tg.ready();
+      if (tg.initDataUnsafe?.user) {
+        const u = tg.initDataUnsafe.user;
+        document.getElementById('user-name').innerText = (u.first_name || '') + ' ' + (u.last_name || '');
+      }
+    }
+
+    // Тактильный отклик
+    function haptic(style = 'light') {
+      if (tg?.HapticFeedback) {
+        tg.HapticFeedback.impactOccurred(style);
+      }
+    }
+
+    // База позиций бота из предоставленных скриншотов
+    const catalogData = {
+      crypto: {
+        title: "Крипто-биржи",
+        items: [
+          "Binance", "Bybit", "MEXC", "OKX", "Bitget", "KuCoin", 
+          "Kraken", "HTX (Huobi)", "Coinbase", "BingX", 
+          "Crypto.com", "Gate.io", "Bybit (Maker)"
+        ]
+      },
+      payment: {
+        title: "Платёжки / Необанки",
+        items: [
+          "Wise (Personal)", "Wise (Business)", "Revolut (Personal)", 
+          "Revolut (Business)", "Bunq (Personal)", "Bunq (Business)", 
+          "Blackcatcard", "Vivid", "PayPal (Personal)", "Wirex", 
+          "Payoneer", "Pyypl", "Icard", "Skrill", "N26", 
+          "Paysera (unlimited)", "Stripe Business", "UP bank"
+        ]
+      },
+      bundle: {
+        title: "Банк + Биржа",
+        items: [
+          "Privat Bank + Binance", "Sber Bank + Bybit (maker)", 
+          "A-Bank + Binance", "Kapital Bank + OKX", 
+          "Tinkoff Bank + Bybit", "Mono Bank + Binance", 
+          "Bakai Bank + OKX", "Stripe Business + Bybit + Bunq", 
+          "Freedom bank + Binance"
+        ]
+      },
+      banks: {
+        title: "ЛК Банков",
+        items: [
+          "Tinkoff Bank", "Sber Bank", "Raiffeisen", 
+          "Freedom Bank KZ", "Kaspi Gold", "Bakai Bank KG", 
+          "Kapital Bank UZ"
+        ]
+      }
+    };
+
+    // Переключение вкладок
+    function switchTab(tabName) {
+      haptic();
+      ['home', 'catalog', 'cabinet', 'info'].forEach(tab => {
+        document.getElementById('tab-' + tab).classList.add('hidden');
+        const navBtn = document.getElementById('nav-' + tab);
+        navBtn.classList.remove('text-blue-400', 'font-semibold');
+        navBtn.classList.add('text-slate-400');
+      });
+
+      document.getElementById('tab-' + tabName).classList.remove('hidden');
+      const activeNav = document.getElementById('nav-' + tabName);
+      activeNav.classList.remove('text-slate-400');
+      activeNav.classList.add('text-blue-400', 'font-semibold');
+    }
+
+    // Открытие категории каталога
+    function openCategory(catKey) {
+      haptic();
+      const cat = catalogData[catKey];
+      if (!cat) return;
+
+      document.getElementById('catalog-categories').classList.add('hidden');
+      document.getElementById('catalog-items').classList.remove('hidden');
+      document.getElementById('current-category-title').innerText = cat.title;
+
+      const grid = document.getElementById('items-grid');
+      grid.innerHTML = '';
+
+      cat.items.forEach(item => {
+        const btn = document.createElement('button');
+        btn.className = "p-3 bg-moonCard border border-moonBorder hover:border-blue-500 rounded-xl text-left transition flex flex-col justify-between";
+        btn.innerHTML = `
+          <span class="text-xs font-semibold text-slate-100 leading-snug mb-2">${item}</span>
+          <span class="text-[10px] text-blue-400 font-medium">Купить →</span>
+        `;
+        btn.onclick = () => buyItem(item);
+        grid.appendChild(btn);
+      });
+    }
+
+    function closeCategory() {
+      haptic();
+      document.getElementById('catalog-items').classList.add('hidden');
+      document.getElementById('catalog-categories').classList.remove('hidden');
+    }
+
+    function buyItem(itemName) {
+      haptic('medium');
+      if (tg) {
+        tg.showPopup({
+          title: 'Оформление заказа',
+          message: `Вы выбрали товар: "${itemName}". Для оформления требуется пополнить баланс.`,
+          buttons: [
+            { id: 'deposit', type: 'default', text: 'Пополнить' },
+            { type: 'cancel', text: 'Отмена' }
+          ]
+        }, (btnId) => {
+          if (btnId === 'deposit') switchTab('cabinet');
+        });
+      } else {
+        alert(`Товар: ${itemName}\nНедостаточно средств. Пополните баланс в кабинете.`);
+      }
+    }
+
+    function tgAlert(msg) {
+      haptic();
+      if (tg?.showAlert) tg.showAlert(msg);
+      else alert(msg);
+    }
+
+    function tgPromptPromo() {
+      haptic();
+      const code = prompt("Введите промокод:");
+      if (code) {
+        tgAlert("Промокод не найден или срок его действия истек.");
+      }
+    }
+
+    let curLang = 'RU';
+    function toggleLang() {
+      haptic();
+      curLang = curLang === 'RU' ? 'EN' : 'RU';
+      document.getElementById('lang-label').innerText = curLang;
+    }
+  </script>
+</body>
+</html>
