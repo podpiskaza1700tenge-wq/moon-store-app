@@ -77,4 +77,879 @@
       }
       100% {
         transform: translateY(-4px) scale(1.02);
-        box-shadow: 0 0 4
+        box-shadow: 0 0 45px 12px rgba(255, 255, 255, 0.18);
+      }
+    }
+
+    /* Контейнер приложения */
+    .app-viewport {
+      width: 100%;
+      max-width: 440px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      padding-bottom: calc(88px + env(safe-area-inset-bottom, 16px));
+      z-index: 10;
+    }
+
+    /* Карточки */
+    .mono-card {
+      background: #101014;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.7);
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .mono-card:active {
+      transform: scale(0.985);
+      border-color: rgba(255, 255, 255, 0.25);
+      background: #15151A;
+    }
+
+    /* Зеленая неоновая точка статуса */
+    .status-dot-green {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: #10B981;
+      box-shadow: 0 0 8px 2px rgba(16, 185, 129, 0.7);
+      animation: greenPulse 2s infinite ease-in-out;
+    }
+
+    @keyframes greenPulse {
+      0%, 100% {
+        box-shadow: 0 0 6px 1.5px rgba(16, 185, 129, 0.65);
+      }
+      50% {
+        box-shadow: 0 0 12px 3.5px rgba(16, 185, 129, 0.95);
+      }
+    }
+
+    .mono-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 13px 15px;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+
+    .mono-row:active {
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .mono-row:not(:last-child) {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .mono-icon-box {
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #FFFFFF;
+      flex-shrink: 0;
+    }
+
+    /* Капсульный таб-бар iOS */
+    .tabbar-wrapper {
+      position: fixed;
+      bottom: calc(14px + env(safe-area-inset-bottom, 8px));
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: center;
+      z-index: 50;
+      pointer-events: none;
+    }
+
+    .tabbar {
+      pointer-events: auto;
+      width: calc(100% - 32px);
+      max-width: 380px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 4px;
+      background: rgba(18, 18, 22, 0.94);
+      backdrop-filter: blur(28px) saturate(190%);
+      -webkit-backdrop-filter: blur(28px) saturate(190%);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 9999px;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.85);
+      position: relative;
+    }
+
+    .tab-slider {
+      position: absolute;
+      top: 4px;
+      bottom: 4px;
+      left: 4px;
+      width: calc((100% - 8px) / 4);
+      background: #FFFFFF;
+      border-radius: 9999px;
+      box-shadow: 0 3px 12px rgba(255, 255, 255, 0.25);
+      transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .tab-btn {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 7px 0;
+      border-radius: 9999px;
+      color: #71717A;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      position: relative;
+      z-index: 2;
+      transition: color 0.25s ease, transform 0.15s ease;
+    }
+
+    .tab-btn:active {
+      transform: scale(0.92);
+    }
+
+    .tab-btn.active {
+      color: #050507;
+    }
+
+    .tab-btn svg {
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .tab-btn.active svg {
+      transform: translateY(-1px) scale(1.08);
+    }
+
+    .tab-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: -0.2px;
+      margin-top: 3px;
+    }
+
+    .tab-content {
+      animation: tabFadeIn 0.22s ease-out;
+    }
+
+    @keyframes tabFadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Анимированный космос со звездами -->
+  <canvas id="stars-canvas"></canvas>
+
+  <!-- Небольшая парящая луна в правом верхнем углу -->
+  <div class="mini-moon"></div>
+
+  <div class="app-viewport">
+
+    <!-- Шапка -->
+    <header class="sticky top-0 z-40 px-4 py-3 bg-[#050507]/85 backdrop-blur-md border-b border-white/10 flex items-center justify-between">
+      <div class="flex items-center space-x-2.5">
+        <div class="w-8 h-8 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white shadow-[0_0_12px_rgba(255,255,255,0.12)]">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+          </svg>
+        </div>
+        <div>
+          <span class="font-extrabold text-sm tracking-wider text-white uppercase">MOON STORE</span>
+          <div class="text-[10px] text-zinc-400 font-semibold tracking-tight flex items-center gap-1.5">
+            <span class="status-dot-green"></span>
+            Online Marketplace
+          </div>
+        </div>
+      </div>
+
+      <div onclick="switchTab('cabinet')" class="cursor-pointer px-3 py-1.5 rounded-full bg-white/10 border border-white/15 flex items-center space-x-1.5 active:scale-95 transition">
+        <svg class="w-3.5 h-3.5 text-zinc-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/>
+        </svg>
+        <span id="user-balance" class="text-xs font-bold text-white font-mono">0.00 $</span>
+      </div>
+    </header>
+
+    <!-- Основные разделы -->
+    <main class="p-4 flex-1 relative z-10">
+      
+      <!-- 1. ГЛАВНАЯ -->
+      <section id="tab-home" class="tab-content space-y-4">
+        
+        <div class="mono-card p-5 relative overflow-hidden">
+          <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-[11px] font-bold text-white mb-3">
+            <svg class="w-3.5 h-3.5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/>
+            </svg>
+            Верифицированные аккаунты
+          </div>
+
+          <h1 class="text-xl font-black text-white leading-tight tracking-tight mb-2">
+            Криптобиржи, ЛК банков и необанки
+          </h1>
+          <p class="text-xs text-zinc-400 leading-relaxed mb-4">
+            Полный доступ, родная почта в комплекте, европейские и СНГ реквизиты, готовые связки под P2P арбитраж.
+          </p>
+
+          <div class="grid grid-cols-2 gap-2 text-xs">
+            <a href="https://t.me/Moon_store_news" target="_blank" class="p-2.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl flex items-center justify-center space-x-2 text-white font-semibold transition">
+              <svg class="w-3.5 h-3.5 text-zinc-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M22 2 11 13"/><path d="m22 2-7 20-4-9-9-4 20-7z"/>
+              </svg>
+              <span>Канал</span>
+            </a>
+            <a href="https://t.me/MoonStoreReviews" target="_blank" class="p-2.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl flex items-center justify-center space-x-2 text-white font-semibold transition">
+              <svg class="w-3.5 h-3.5 text-zinc-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+              </svg>
+              <span>Отзывы</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="mono-card overflow-hidden">
+          <div onclick="switchTab('info')" class="mono-row">
+            <div class="flex items-center space-x-3">
+              <div class="mono-icon-box">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+              </div>
+              <div>
+                <div class="text-xs font-bold text-white">Регламент и гарантии</div>
+                <div class="text-[10px] text-zinc-400">Гарантия 24ч на первичный вход</div>
+              </div>
+            </div>
+            <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
+
+          <div onclick="tgAlert('Пополнение доступно через USDT (TRC-20, TON) и CryptoBot')" class="mono-row">
+            <div class="flex items-center space-x-3">
+              <div class="mono-icon-box">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <rect x="2" y="5" width="20" height="14" rx="3"/><line x1="2" y1="10" x2="22" y2="10"/>
+                </svg>
+              </div>
+              <div>
+                <div class="text-xs font-bold text-white">Способы пополнения</div>
+                <div class="text-[10px] text-zinc-400">USDT (TRC-20, TON, BEP-20)</div>
+              </div>
+            </div>
+            <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
+        </div>
+
+        <button onclick="switchTab('catalog')" class="w-full py-4 bg-white hover:bg-zinc-200 active:scale-[0.98] text-black rounded-2xl font-bold text-xs tracking-wider uppercase transition flex items-center justify-center space-x-2 shadow-[0_4px_24px_rgba(255,255,255,0.2)]">
+          <span>Открыть витрину товаров</span>
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+      </section>
+
+      <!-- 2. КАТАЛОГ -->
+      <section id="tab-catalog" class="tab-content hidden space-y-3">
+        
+        <!-- Категории каталога -->
+        <div id="catalog-categories" class="space-y-2.5 animate-fadeIn">
+          <div class="flex items-center justify-between px-1">
+            <div class="text-[11px] font-bold text-zinc-400 uppercase tracking-widest">
+              Категории витрины
+            </div>
+            <span class="text-[10px] font-bold text-white bg-white/10 px-2 py-0.5 rounded-full border border-white/20">4 раздела</span>
+          </div>
+
+          <div class="space-y-2.5">
+            <!-- Крипто-биржи -->
+            <div onclick="openCategory('crypto')" class="mono-card p-4 flex items-center justify-between cursor-pointer">
+              <div class="flex items-center space-x-3.5">
+                <div class="mono-icon-box">
+                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <circle cx="12" cy="12" r="9"/><path d="M15 9.5a2.5 2.5 0 0 0-5 0v5a2.5 2.5 0 0 0 5 0"/><path d="M8 12h8"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="text-sm font-bold text-white">Крипто-биржи</div>
+                  <div class="text-[11px] text-zinc-400">Binance, Bybit, OKX, MEXC, KuCoin...</div>
+                </div>
+              </div>
+              <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+
+            <!-- ЛК банков -->
+            <div onclick="openCategory('banks')" class="mono-card p-4 flex items-center justify-between cursor-pointer">
+              <div class="flex items-center space-x-3.5">
+                <div class="mono-icon-box">
+                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <line x1="3" y1="21" x2="21" y2="21"/><line x1="3" y1="10" x2="21" y2="10"/><polyline points="5 6 12 3 19 6"/><line x1="6" y1="10" x2="6" y2="21"/><line x1="10" y1="10" x2="10" y2="21"/><line x1="14" y1="10" x2="14" y2="21"/><line x1="18" y1="10" x2="18" y2="21"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="text-sm font-bold text-white">ЛК банков</div>
+                  <div class="text-[11px] text-zinc-400">Tinkoff, Freedom, Bakai, Kaspi, Kapital...</div>
+                </div>
+              </div>
+              <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+
+            <!-- Платежки -->
+            <div onclick="openCategory('payment')" class="mono-card p-4 flex items-center justify-between cursor-pointer">
+              <div class="flex items-center space-x-3.5">
+                <div class="mono-icon-box">
+                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <rect x="2" y="5" width="20" height="14" rx="2.5"/><line x1="2" y1="10" x2="22" y2="10"/><circle cx="7" cy="15" r="1"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="text-sm font-bold text-white">Платёжки / Необанки</div>
+                  <div class="text-[11px] text-zinc-400">Wise, Revolut, Bunq, Stripe, Payoneer...</div>
+                </div>
+              </div>
+              <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+
+            <!-- Банк + Биржа -->
+            <div onclick="openCategory('bundle')" class="mono-card p-4 flex items-center justify-between cursor-pointer">
+              <div class="flex items-center space-x-3.5">
+                <div class="mono-icon-box">
+                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="m16 16 4-4-4-4"/><path d="M20 12H10"/><path d="m8 8-4 4 4 4"/><path d="M4 12h10"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="text-sm font-bold text-white">Банк + Биржа</div>
+                  <div class="text-[11px] text-zinc-400">Готовые связки под P2P арбитраж</div>
+                </div>
+              </div>
+              <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Переработанная витрина товаров -->
+        <div id="catalog-items" class="hidden space-y-3">
+          
+          <div class="flex items-center justify-between pb-1">
+            <button onclick="closeCategory()" class="text-xs font-semibold text-white hover:text-zinc-300 flex items-center space-x-1.5 py-1">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+              <span>Назад</span>
+            </button>
+            <span id="current-category-title" class="text-xs font-bold text-zinc-300 uppercase tracking-wider"></span>
+          </div>
+
+          <!-- Строка поиска внутри категории -->
+          <div class="relative">
+            <input type="text" id="catalog-search" oninput="filterItems()" placeholder="Поиск по названию или стране..." class="w-full bg-[#111116] border border-white/10 rounded-xl px-9 py-2.5 text-xs text-white placeholder-zinc-500 outline-none focus:border-white/30 transition">
+            <svg class="w-3.5 h-3.5 text-zinc-500 absolute left-3 top-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </div>
+
+          <!-- Контейнер товаров в новом стиле -->
+          <div id="items-list" class="space-y-2"></div>
+        </div>
+      </section>
+
+      <!-- 3. КОРЗИНА -->
+      <section id="tab-cart" class="tab-content hidden space-y-4">
+        <div class="mono-card p-8 flex flex-col items-center justify-center text-center">
+          <div class="mono-icon-box w-14 h-14 rounded-2xl mb-3 shadow-[0_0_20px_rgba(255,255,255,0.08)]">
+            <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>
+            </svg>
+          </div>
+          <div class="text-base font-bold text-white mb-1">Корзина пуста</div>
+          <p class="text-xs text-zinc-400 max-w-xs mb-5 leading-relaxed">
+            Выберите аккаунты криптобирж или банков в каталоге для мгновенного оформления.
+          </p>
+          <button onclick="switchTab('catalog')" class="px-6 py-2.5 rounded-xl bg-white text-black text-xs font-bold active:scale-95 transition">
+            Перейти в каталог
+          </button>
+        </div>
+      </section>
+
+      <!-- 4. ПРОФИЛЬ -->
+      <section id="tab-cabinet" class="tab-content hidden space-y-3.5">
+        <div class="mono-card p-5 flex flex-col items-center text-center">
+          <div class="w-16 h-16 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center text-white mb-3 shadow-[0_0_16px_rgba(255,255,255,0.1)]">
+            <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+            </svg>
+          </div>
+          <div id="user-name" class="font-bold text-base text-white">Moon Member</div>
+          <div class="text-[11px] text-zinc-400 font-medium mt-0.5">Личный кабинет</div>
+
+          <div class="mt-4 pt-3 border-t border-white/10 w-full flex justify-around">
+            <div>
+              <div class="text-[10px] text-zinc-400 uppercase font-semibold">Баланс</div>
+              <div class="text-xl font-black text-white font-mono">0.00 $</div>
+            </div>
+            <div class="w-[1px] bg-white/10"></div>
+            <div>
+              <div class="text-[10px] text-zinc-400 uppercase font-semibold">Заказов</div>
+              <div class="text-xl font-black text-white font-mono">0</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-2">
+          <button onclick="tgAlert('Пополнение счета через USDT (TRC-20, TON) или CryptoBot')" class="w-full py-3.5 rounded-xl font-bold text-xs uppercase tracking-wider bg-white text-black hover:bg-zinc-200 active:scale-98 transition flex items-center justify-center gap-2 shadow-[0_4px_16px_rgba(255,255,255,0.15)]">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            <span>Пополнить баланс</span>
+          </button>
+
+          <div class="mono-card overflow-hidden">
+            <div onclick="tgAlert('У вас еще нет совершенных заказов')" class="mono-row">
+              <div class="flex items-center space-x-3">
+                <div class="mono-icon-box">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                  </svg>
+                </div>
+                <span class="text-xs font-semibold text-white">Мои заказы</span>
+              </div>
+              <span class="text-xs text-zinc-400 font-mono">0 шт.</span>
+            </div>
+
+            <div onclick="tgPromptPromo()" class="mono-row">
+              <div class="flex items-center space-x-3">
+                <div class="mono-icon-box">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="M20.59 13.41 13.42 20.58a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82Z"/><circle cx="7" cy="7" r="1"/>
+                  </svg>
+                </div>
+                <span class="text-xs font-semibold text-white">Промокод</span>
+              </div>
+              <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+
+            <div onclick="tgAlert('Реферальная ссылка: https://t.me/moonstore_shop_bot?start=ref')" class="mono-row">
+              <div class="flex items-center space-x-3">
+                <div class="mono-icon-box">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                  </svg>
+                </div>
+                <span class="text-xs font-semibold text-white">Реферальная система</span>
+              </div>
+              <span class="text-[11px] font-bold text-white bg-white/10 px-2 py-0.5 rounded-md border border-white/20">5%</span>
+            </div>
+
+            <div onclick="toggleLang()" class="mono-row">
+              <div class="flex items-center space-x-3">
+                <div class="mono-icon-box">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                  </svg>
+                </div>
+                <span class="text-xs font-semibold text-white">Язык</span>
+              </div>
+              <span id="lang-label" class="text-xs font-bold text-white font-mono">RU</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. ИНФО (FAQ) -->
+      <section id="tab-info" class="tab-content hidden space-y-3">
+        <div class="mono-card p-4 space-y-2">
+          <div class="flex items-center gap-2 text-white font-bold text-xs uppercase tracking-wider">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/>
+            </svg>
+            <span>О сервисе MOON STORE</span>
+          </div>
+          <p class="text-xs text-zinc-300 leading-relaxed">
+            Все аккаунты регистрируются на реальных дропов с полным пакетом документов. Предоставляем логин, пароль, почту, 2FA и селфи при запросе верификации.
+          </p>
+        </div>
+
+        <div class="mono-card p-4 space-y-2">
+          <div class="font-bold text-xs text-white">Регламент и гарантии</div>
+          <div class="text-xs text-zinc-400 space-y-1.5 leading-relaxed">
+            <p>• Гарантия на первичный вход в аккаунт — 24 часа с момента выдачи данных.</p>
+            <p>• Используйте чистые резидентские прокси страны выпуска аккаунта.</p>
+            <p>• Смените пароли и сохраните резервные коды после проверки.</p>
+          </div>
+        </div>
+
+        <div class="mono-card p-4 flex items-center justify-between">
+          <div>
+            <div class="text-xs font-bold text-white">Поддержка</div>
+            <div class="text-[10px] text-zinc-400">Ответ до 15 минут</div>
+          </div>
+          <a href="https://t.me/Moon_store_news" target="_blank" class="px-3.5 py-1.5 rounded-xl bg-white text-black text-xs font-bold transition active:scale-95 flex items-center gap-1.5 shadow-[0_2px_12px_rgba(255,255,255,0.15)]">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            <span>Написать</span>
+          </a>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Парящий капсульный таб-бар iOS со скользящим ползунком -->
+    <div class="tabbar-wrapper">
+      <div class="tabbar">
+        
+        <div id="tab-slider" class="tab-slider"></div>
+
+        <button onclick="switchTab('home')" id="nav-home" class="tab-btn active">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+          <span class="tab-label">Главная</span>
+        </button>
+
+        <button onclick="switchTab('catalog')" id="nav-catalog" class="tab-btn">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="6" x2="15" y2="6"/><line x1="3" y1="12" x2="11" y2="12"/><line x1="3" y1="18" x2="13" y2="18"/>
+            <circle cx="16" cy="14" r="3"/><line x1="18.5" y1="16.5" x2="21" y2="19"/>
+          </svg>
+          <span class="tab-label">Каталог</span>
+        </button>
+
+        <button onclick="switchTab('cart')" id="nav-cart" class="tab-btn">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>
+          </svg>
+          <span class="tab-label">Корзина</span>
+        </button>
+
+        <button onclick="switchTab('cabinet')" id="nav-cabinet" class="tab-btn">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+          </svg>
+          <span class="tab-label">Профиль</span>
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // Анимация звездного неба
+    const canvas = document.getElementById('stars-canvas');
+    const ctx = canvas.getContext('2d');
+    let stars = [];
+    let shootingStar = null;
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      initStars();
+    }
+
+    function initStars() {
+      stars = [];
+      const count = Math.floor((canvas.width * canvas.height) / 3200);
+      for (let i = 0; i < count; i++) {
+        stars.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          radius: Math.random() * 1.2 + 0.3,
+          alpha: Math.random(),
+          speed: Math.random() * 0.02 + 0.005,
+          increasing: Math.random() > 0.5
+        });
+      }
+    }
+
+    function drawStars() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for (let s of stars) {
+        if (s.increasing) {
+          s.alpha += s.speed;
+          if (s.alpha >= 0.95) s.increasing = false;
+        } else {
+          s.alpha -= s.speed;
+          if (s.alpha <= 0.15) s.increasing = true;
+        }
+
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 255, 255, ${s.alpha})`;
+        ctx.fill();
+      }
+
+      if (!shootingStar && Math.random() < 0.008) {
+        shootingStar = {
+          x: Math.random() * canvas.width,
+          y: Math.random() * (canvas.height * 0.4),
+          length: Math.random() * 80 + 40,
+          speed: Math.random() * 10 + 12,
+          opacity: 1
+        };
+      }
+
+      if (shootingStar) {
+        ctx.beginPath();
+        ctx.moveTo(shootingStar.x, shootingStar.y);
+        ctx.lineTo(shootingStar.x - shootingStar.length, shootingStar.y + shootingStar.length * 0.6);
+        ctx.strokeStyle = `rgba(255, 255, 255, ${shootingStar.opacity})`;
+        ctx.lineWidth = 1.2;
+        ctx.stroke();
+
+        shootingStar.x += shootingStar.speed;
+        shootingStar.y += shootingStar.speed * 0.6;
+        shootingStar.opacity -= 0.025;
+
+        if (shootingStar.opacity <= 0) shootingStar = null;
+      }
+
+      requestAnimationFrame(drawStars);
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+    drawStars();
+
+    // Telegram WebApp
+    const tg = window.Telegram?.WebApp;
+    if (tg) {
+      tg.expand();
+      tg.ready();
+      tg.setHeaderColor('#050507');
+      tg.setBackgroundColor('#050507');
+      if (tg.initDataUnsafe?.user) {
+        const u = tg.initDataUnsafe.user;
+        document.getElementById('user-name').innerText = [u.first_name, u.last_name].filter(Boolean).join(' ') || u.username || 'Пользователь';
+      }
+    }
+
+    function haptic(style = 'light') {
+      if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred(style);
+    }
+
+    // База данных товаров
+    const catalogData = {
+      crypto: {
+        title: "Крипто-биржи",
+        items: [
+          { name: "Binance", badge: "KYC Plus", region: "Global", icon: "🪙" },
+          { name: "Bybit", badge: "Level 1-2", region: "Global", icon: "🪙" },
+          { name: "Bybit (Maker)", badge: "P2P Maker", region: "Verified", icon: "⚡" },
+          { name: "OKX", badge: "KYC 2", region: "Global", icon: "🪙" },
+          { name: "MEXC", badge: "Full Verified", region: "No KYC", icon: "🪙" },
+          { name: "Bitget", badge: "Tier 1", region: "Global", icon: "🪙" },
+          { name: "KuCoin", badge: "Verified", region: "Global", icon: "🪙" },
+          { name: "Kraken", badge: "Intermediate", region: "USA / EU", icon: "🪙" },
+          { name: "Coinbase", badge: "EU / USA", region: "High limits", icon: "🪙" },
+          { name: "Gate.io", badge: "KYC 2", region: "Global", icon: "🪙" },
+          { name: "HTX (Huobi)", badge: "Verified", region: "Asia", icon: "🪙" },
+          { name: "BingX", badge: "Full Access", region: "Global", icon: "🪙" },
+          { name: "Crypto.com", badge: "EU Verified", region: "Card", icon: "🪙" }
+        ]
+      },
+      payment: {
+        title: "Платёжки / Необанки",
+        items: [
+          { name: "Stripe Business", badge: "Merchant", region: "Польша 🇵🇱", icon: "💳" },
+          { name: "Wise (Personal)", badge: "EU IBAN", region: "Europe 🇪🇺", icon: "💳" },
+          { name: "Wise (Business)", badge: "Company", region: "UK / EU 🇪🇺", icon: "🏢" },
+          { name: "Revolut (Personal)", badge: "EU / LT", region: "Europe 🇪🇺", icon: "💳" },
+          { name: "Revolut (Business)", badge: "Business", region: "Lithuania 🇱🇹", icon: "🏢" },
+          { name: "Bunq (Personal)", badge: "NL / DE", region: "Netherlands 🇳🇱", icon: "💳" },
+          { name: "Bunq (Business)", badge: "Лимиты", region: "Europe 🇪🇺", icon: "🏢" },
+          { name: "PayPal (Personal)", badge: "Прогретый", region: "Global", icon: "💳" },
+          { name: "Payoneer", badge: "Global", region: "USD / EUR", icon: "💳" },
+          { name: "Blackcatcard", badge: "EU Card", region: "Malta 🇲🇹", icon: "💳" },
+          { name: "Vivid Money", badge: "DE IBAN", region: "Germany 🇩🇪", icon: "💳" },
+          { name: "N26 Bank", badge: "Standard", region: "Germany 🇩🇪", icon: "💳" },
+          { name: "Wirex", badge: "Crypto Card", region: "Europe 🇪🇺", icon: "💳" },
+          { name: "Pyypl", badge: "VCC Card", region: "UAE 🇦🇪", icon: "💳" },
+          { name: "Skrill / Neteller", badge: "VIP", region: "Global", icon: "💳" },
+          { name: "Paysera", badge: "Unlimited", region: "Lithuania 🇱🇹", icon: "💳" },
+          { name: "Icard", badge: "EU Account", region: "Bulgaria 🇧🇬", icon: "💳" },
+          { name: "UP bank", badge: "AU Account", region: "Australia 🇦🇺", icon: "💳" }
+        ]
+      },
+      bundle: {
+        title: "Банк + Биржа",
+        items: [
+          { name: "Kapital + OKX", badge: "AZ Связка", region: "Азербайджан 🇦🇿", icon: "🔗" },
+          { name: "Stripe + Bybit + Bunq", badge: "PL Связка", region: "Польша 🇵🇱", icon: "🔗" },
+          { name: "Privat + Binance", badge: "UA Связка", region: "Украина 🇺🇦", icon: "🔗" },
+          { name: "Mono + Binance", badge: "UA Связка", region: "Украина 🇺🇦", icon: "🔗" },
+          { name: "A-Bank + Binance", badge: "UA Связка", region: "Украина 🇺🇦", icon: "🔗" },
+          { name: "Tinkoff + Bybit", badge: "RU Связка", region: "Россия 🇷🇺", icon: "🔗" },
+          { name: "Sber + Bybit (Maker)", badge: "RU Связка", region: "Россия 🇷🇺", icon: "🔗" },
+          { name: "Bakai + OKX", badge: "KG Связка", region: "Кыргызстан 🇰🇬", icon: "🔗" },
+          { name: "Freedom + Binance", badge: "KZ Связка", region: "Казахстан 🇰🇿", icon: "🔗" }
+        ]
+      },
+      banks: {
+        title: "ЛК Банков",
+        items: [
+          { name: "Kapital Bank", badge: "AZ Visa", region: "Азербайджан 🇦🇿", icon: "🏦" },
+          { name: "Freedom Bank KZ", badge: "Мультивалюта", region: "Казахстан 🇰🇿", icon: "🏦" },
+          { name: "Kaspi Gold", badge: "KZ Card", region: "Казахстан 🇰🇿", icon: "🏦" },
+          { name: "Bakai Bank", badge: "KG Карта", region: "Кыргызстан 🇰🇬", icon: "🏦" },
+          { name: "Tinkoff Bank", badge: "Black / Plat", region: "Россия 🇷🇺", icon: "🏦" },
+          { name: "Sber Bank", badge: "Gold", region: "Россия 🇷🇺", icon: "🏦" },
+          { name: "Raiffeisen", badge: "RU / EU", region: "Россия 🇷🇺", icon: "🏦" }
+        ]
+      }
+    };
+
+    let activeCategoryItems = [];
+    const tabIndices = { 'home': 0, 'catalog': 1, 'cart': 2, 'cabinet': 3 };
+
+    function switchTab(tabId) {
+      haptic();
+
+      // СБРОС СОСТОЯНИЯ КАТАЛОГА:
+      // При переключении сбрасываем отображение товаров на главные категории.
+      if (tabId !== 'catalog') {
+        closeCategory();
+      }
+
+      ['home', 'catalog', 'cart', 'cabinet', 'info'].forEach(t => {
+        const el = document.getElementById('tab-' + t);
+        if (el) el.classList.add('hidden');
+      });
+
+      ['home', 'catalog', 'cart', 'cabinet'].forEach(t => {
+        const nav = document.getElementById('nav-' + t);
+        if (nav) nav.classList.remove('active');
+      });
+
+      const currentSec = document.getElementById('tab-' + tabId);
+      if (currentSec) currentSec.classList.remove('hidden');
+
+      if (tabIndices.hasOwnProperty(tabId)) {
+        const idx = tabIndices[tabId];
+        const slider = document.getElementById('tab-slider');
+        if (slider) slider.style.transform = `translateX(${idx * 100}%)`;
+
+        const currentNav = document.getElementById('nav-' + tabId);
+        if (currentNav) currentNav.classList.add('active');
+      }
+
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+
+    function renderItems(items) {
+      const container = document.getElementById('items-list');
+      container.innerHTML = '';
+
+      if (items.length === 0) {
+        container.innerHTML = `<div class="p-6 text-center text-xs text-zinc-500">Позиций не найдено</div>`;
+        return;
+      }
+
+      items.forEach(item => {
+        const card = document.createElement('div');
+        card.className = "mono-card p-3.5 flex items-center justify-between cursor-pointer border border-white/10 active:scale-[0.99] transition";
+        card.innerHTML = `
+          <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-base">
+              ${item.icon}
+            </div>
+            <div>
+              <div class="flex items-center space-x-2">
+                <span class="text-xs font-bold text-white">${item.name}</span>
+                <span class="text-[9px] font-bold text-zinc-400 bg-white/10 px-1.5 py-0.2 rounded border border-white/10">${item.badge}</span>
+              </div>
+              <div class="text-[10px] text-zinc-400 mt-0.5">${item.region}</div>
+            </div>
+          </div>
+          
+          <div class="flex flex-col items-end space-y-1">
+            <div class="flex items-center space-x-1.5">
+              <span class="status-dot-green"></span>
+              <span class="text-[10px] text-emerald-400 font-semibold tracking-tight">В наличии</span>
+            </div>
+            <button class="px-2.5 py-1 bg-white hover:bg-zinc-200 text-black rounded-lg text-[10px] font-bold transition">
+              Купить
+            </button>
+          </div>
+        `;
+        card.onclick = () => selectItem(item.name);
+        container.appendChild(card);
+      });
+    }
+
+    function openCategory(key) {
+      haptic('medium');
+      const category = catalogData[key];
+      if (!category) return;
+
+      activeCategoryItems = category.items;
+
+      document.getElementById('catalog-categories').classList.add('hidden');
+      document.getElementById('catalog-items').classList.remove('hidden');
+      document.getElementById('current-category-title').innerText = category.title;
+      document.getElementById('catalog-search').value = '';
+
+      renderItems(activeCategoryItems);
+    }
+
+    function filterItems() {
+      const q = document.getElementById('catalog-search').value.toLowerCase().trim();
+      const filtered = activeCategoryItems.filter(i => 
+        i.name.toLowerCase().includes(q) || 
+        i.region.toLowerCase().includes(q) || 
+        i.badge.toLowerCase().includes(q)
+      );
+      renderItems(filtered);
+    }
+
+    function closeCategory() {
+      // Сброс на корневой список категорий
+      const catalogItems = document.getElementById('catalog-items');
+      const catalogCategories = document.getElementById('catalog-categories');
+      if (catalogItems) catalogItems.classList.add('hidden');
+      if (catalogCategories) catalogCategories.classList.remove('hidden');
+    }
+
+    function selectItem(name) {
+      haptic('heavy');
+      if (tg?.showPopup) {
+        tg.showPopup({
+          title: 'Покупка товара',
+          message: `Товар: ${name}\nДля завершения заказа пополните баланс личного кабинета.`,
+          buttons: [
+            { id: 'pay', type: 'default', text: 'Пополнить баланс' },
+            { type: 'cancel', text: 'Закрыть' }
+          ]
+        }, (btnId) => {
+          if (btnId === 'pay') switchTab('cabinet');
+        });
+      } else {
+        alert(`Товар: ${name}\nПополните баланс в кабинете.`);
+      }
+    }
+
+    function tgAlert(msg) {
+      haptic();
+      if (tg?.showAlert) tg.showAlert(msg);
+      else alert(msg);
+    }
+
+    function tgPromptPromo() {
+      haptic();
+      const code = prompt("Введите промокод:");
+      if (code) tgAlert("Промокод не найден или истек.");
+    }
+
+    let lang = 'RU';
+    function toggleLang() {
+      haptic();
+      lang = lang === 'RU' ? 'EN' : 'RU';
+      document.getElementById('lang-label').innerText = lang;
+    }
+  </script>
+</body>
+</html>
