@@ -8,10 +8,7 @@
   <!-- Telegram WebApp SDK -->
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
-  <!-- Шрифты San Francisco / Plus Jakarta Sans -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Иконки Lucide -->
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <!-- Tailwind CSS -->
@@ -21,17 +18,17 @@
       theme: {
         extend: {
           fontFamily: {
-            sans: ['-apple-system', 'BlinkMacSystemFont', '"Plus Jakarta Sans"', 'sans-serif'],
+            sans: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Display"', '"SF Pro Text"', 'system-ui', 'sans-serif'],
           },
           colors: {
-            ios: {
-              bg: '#000000',
-              card: 'rgba(28, 28, 30, 0.7)',
-              pillBg: '#1C1C1E',
-              activePill: '#2C2C2E',
-              border: 'rgba(255, 255, 255, 0.1)',
-              blue: '#0A84FF',
-              textSecondary: '#8E8E93',
+            app: {
+              bg: '#0F0F10',
+              card: '#18181A',
+              cardHover: '#202022',
+              border: '#262629',
+              muted: '#71717A',
+              subtext: '#A1A1AA',
+              accent: '#3B82F6'
             }
           }
         }
@@ -41,76 +38,36 @@
 
   <style>
     body {
-      background-color: #000000;
-      color: #FFFFFF;
+      background-color: #0F0F10;
+      color: #FAFAFA;
       user-select: none;
       -webkit-tap-highlight-color: transparent;
-      padding-bottom: calc(90px + env(safe-area-inset-bottom, 20px));
+      padding-bottom: calc(88px + env(safe-area-inset-bottom, 16px));
     }
 
-    /* Фоновые градиенты Apple Glow */
-    .ios-glow {
+    /* Капсульный таб-бар iOS */
+    .tabbar-container {
       position: fixed;
-      top: -140px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 380px;
-      height: 380px;
-      background: radial-gradient(circle, rgba(10, 132, 255, 0.18) 0%, rgba(94, 92, 230, 0.1) 50%, transparent 80%);
-      filter: blur(70px);
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    /* Нативное стекло iOS */
-    .ios-glass {
-      background: rgba(28, 28, 30, 0.65);
-      backdrop-filter: blur(24px) saturate(190%);
-      -webkit-backdrop-filter: blur(24px) saturate(190%);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-    }
-
-    .ios-card {
-      background: rgba(28, 28, 30, 0.55);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 22px;
-      transition: transform 0.16s ease, border-color 0.16s ease;
-    }
-
-    .ios-card:active {
-      transform: scale(0.975);
-      border-color: rgba(255, 255, 255, 0.18);
-    }
-
-    /* Парящий капсульный таб-бар iOS */
-    .ios-tabbar-container {
-      position: fixed;
-      bottom: calc(14px + env(safe-area-inset-bottom, 12px));
+      bottom: calc(12px + env(safe-area-inset-bottom, 12px));
       left: 50%;
       transform: translateX(-50%);
       width: calc(100% - 32px);
-      max-width: 420px;
+      max-width: 390px;
       z-index: 50;
     }
 
-    .ios-tabbar {
+    .tabbar {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 6px;
-      background: rgba(28, 28, 30, 0.88);
-      backdrop-filter: blur(30px) saturate(210%);
-      -webkit-backdrop-filter: blur(30px) saturate(210%);
+      padding: 5px;
+      background: #1C1C1E;
+      border: 1px solid #2C2C2E;
       border-radius: 9999px;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.12);
-      position: relative;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
     }
 
-    .ios-tab-item {
-      position: relative;
+    .tab-item {
       flex: 1;
       display: flex;
       flex-direction: column;
@@ -118,287 +75,234 @@
       justify-content: center;
       padding: 7px 0;
       border-radius: 9999px;
-      color: #8E8E93;
-      transition: color 0.2s cubic-bezier(0.2, 0, 0, 1), transform 0.15s ease;
-      z-index: 2;
+      color: #71717A;
+      transition: all 0.15s ease;
+      cursor: pointer;
     }
 
-    .ios-tab-item:active {
-      transform: scale(0.92);
+    .tab-item.active {
+      color: #FAFAFA;
+      background: #2C2C2E;
     }
 
-    .ios-tab-item.active {
-      color: #FFFFFF;
-      background: #111112;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.14);
-    }
-
-    .ios-tab-label {
+    .tab-label {
       font-size: 11px;
-      font-weight: 600;
-      letter-spacing: -0.2px;
+      font-weight: 500;
       margin-top: 3px;
+    }
+
+    /* Нативные плоские списки iOS */
+    .row-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 13px 14px;
+      transition: background 0.15s ease;
+    }
+
+    .row-item:active {
+      background: #202022;
+    }
+
+    .row-item:not(:last-child) {
+      border-bottom: 1px solid #232326;
     }
   </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between font-sans antialiased overflow-x-hidden">
+<body class="min-h-screen flex flex-col justify-between font-sans antialiased">
 
-  <!-- Размытое свечение на фоне -->
-  <div class="ios-glow"></div>
-
-  <!-- Верхний навигационный бар -->
-  <header class="sticky top-0 z-40 px-5 py-3.5 ios-glass border-b border-white/5 flex items-center justify-between">
-    <div class="flex items-center space-x-3">
-      <div class="w-9 h-9 rounded-2xl bg-white/10 flex items-center justify-center border border-white/15 shadow-sm">
-        <i data-lucide="moon" class="w-5 h-5 text-white stroke-[2.2]"></i>
+  <!-- Шапка -->
+  <header class="sticky top-0 z-40 px-4 py-3 bg-[#0F0F10]/90 backdrop-blur-md border-b border-app-border flex items-center justify-between">
+    <div class="flex items-center space-x-2.5">
+      <div class="w-7 h-7 rounded-lg bg-zinc-800 border border-zinc-700 flex items-center justify-center font-bold text-xs text-white">
+        M
       </div>
-      <div>
-        <div class="text-[15px] font-extrabold tracking-tight text-white leading-tight">MOON STORE</div>
-        <div class="text-[11px] text-ios-blue font-semibold flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-          Онлайн-витрина
-        </div>
-      </div>
+      <span class="font-bold text-sm tracking-tight text-white">Moon Store</span>
     </div>
 
-    <!-- Баланс -->
-    <div onclick="switchTab('cabinet')" class="cursor-pointer px-3.5 py-1.5 rounded-full bg-white/10 border border-white/10 flex items-center space-x-2 active:scale-95 transition">
-      <span class="text-[11px] text-ios-textSecondary font-medium">Баланс:</span>
-      <span id="header-balance" class="text-xs font-bold text-white tracking-tight">0.00 $</span>
+    <div onclick="switchTab('cabinet')" class="cursor-pointer px-3 py-1 rounded-full bg-zinc-800/80 border border-zinc-700 flex items-center space-x-1.5 active:opacity-75 transition">
+      <span class="text-[11px] text-app-muted">Баланс:</span>
+      <span class="text-xs font-semibold text-white font-mono">0.00 $</span>
     </div>
   </header>
 
-  <!-- Контентные экраны -->
-  <main class="relative z-10 px-4 pt-4 flex-1">
+  <!-- Основная область контента -->
+  <main class="px-4 pt-4 flex-1 max-w-lg mx-auto w-full">
     
     <!-- 1. ГЛАВНАЯ -->
     <section id="tab-home" class="space-y-4">
-      <div class="ios-card p-6 relative overflow-hidden">
-        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-ios-blue/15 border border-ios-blue/30 text-[11px] font-semibold text-ios-blue mb-3">
-          <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
-          Проверенный поставщик
-        </div>
-        <h1 class="text-2xl font-black tracking-tight text-white leading-tight mb-2">
-          Готовые аккаунты криптобирж и необанков
+      <div class="bg-app-card border border-app-border rounded-2xl p-4">
+        <h1 class="text-base font-bold text-white mb-1">
+          Верифицированные аккаунты
         </h1>
-        <p class="text-xs text-ios-textSecondary leading-relaxed mb-5">
-          Европейские и СНГ реквизиты, верифицированные ЛК, связки для P2P-арбитража и международные платежные сервисы.
+        <p class="text-xs text-app-subtext leading-relaxed mb-4">
+          Магазин аккаунтов криптобирж, ЛК банков, платежных систем и необанков с полным комплектом доступов.
         </p>
 
-        <div class="grid grid-cols-2 gap-2.5 text-xs">
-          <a href="https://t.me/Moon_store_news" target="_blank" class="p-3 bg-white/5 hover:bg-white/10 border border-white/5 rounded-2xl flex items-center justify-center gap-2 transition font-semibold text-slate-200">
-            <i data-lucide="send" class="w-4 h-4 text-ios-blue"></i>
-            <span>Канал</span>
+        <div class="grid grid-cols-2 gap-2 text-xs">
+          <a href="https://t.me/Moon_store_news" target="_blank" class="p-2.5 bg-zinc-800/60 hover:bg-zinc-800 border border-zinc-700/60 rounded-xl flex items-center justify-center space-x-2 text-zinc-200 transition">
+            <i data-lucide="send" class="w-3.5 h-3.5 text-zinc-400"></i>
+            <span class="font-medium">Канал сервиса</span>
           </a>
-          <a href="https://t.me/MoonStoreReviews" target="_blank" class="p-3 bg-white/5 hover:bg-white/10 border border-white/5 rounded-2xl flex items-center justify-center gap-2 transition font-semibold text-slate-200">
-            <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
-            <span>Отзывы</span>
+          <a href="https://t.me/MoonStoreReviews" target="_blank" class="p-2.5 bg-zinc-800/60 hover:bg-zinc-800 border border-zinc-700/60 rounded-xl flex items-center justify-center space-x-2 text-zinc-200 transition">
+            <i data-lucide="message-square" class="w-3.5 h-3.5 text-zinc-400"></i>
+            <span class="font-medium">Отзывы</span>
           </a>
         </div>
       </div>
 
-      <!-- FAQ баннер -->
-      <div onclick="switchTab('info')" class="ios-card p-4 flex items-center justify-between cursor-pointer">
-        <div class="flex items-center space-x-3.5">
-          <div class="w-9 h-9 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-ios-blue">
-            <i data-lucide="file-text" class="w-4 h-4"></i>
+      <div class="bg-app-card border border-app-border rounded-2xl overflow-hidden">
+        <div onclick="switchTab('info')" class="row-item cursor-pointer">
+          <div class="flex items-center space-x-3">
+            <i data-lucide="file-text" class="w-4 h-4 text-app-muted"></i>
+            <span class="text-xs font-medium text-white">Регламент работы и FAQ</span>
           </div>
-          <div>
-            <div class="text-xs font-bold text-white">Регламент и гарантии</div>
-            <div class="text-[11px] text-ios-textSecondary">Ознакомьтесь с правилами до покупки</div>
-          </div>
+          <i data-lucide="chevron-right" class="w-4 h-4 text-zinc-600"></i>
         </div>
-        <i data-lucide="chevron-right" class="w-4 h-4 text-ios-textSecondary"></i>
+        <div onclick="tgAlert('Пополнение доступно в разделе Профиль')" class="row-item cursor-pointer">
+          <div class="flex items-center space-x-3">
+            <i data-lucide="wallet" class="w-4 h-4 text-app-muted"></i>
+            <span class="text-xs font-medium text-white">Способы оплаты (USDT, TON)</span>
+          </div>
+          <i data-lucide="chevron-right" class="w-4 h-4 text-zinc-600"></i>
+        </div>
       </div>
 
-      <!-- Кнопка перехода в каталог -->
-      <button onclick="switchTab('catalog')" class="w-full py-4 rounded-2xl font-bold text-[15px] bg-white text-black active:opacity-90 active:scale-[0.98] transition flex items-center justify-center gap-2 shadow-lg">
-        <span>Перейти к товарам</span>
-        <i data-lucide="arrow-right" class="w-4 h-4 stroke-[2.5]"></i>
+      <button onclick="switchTab('catalog')" class="w-full py-3.5 bg-white hover:bg-zinc-200 active:scale-[0.99] text-black rounded-xl font-semibold text-xs transition flex items-center justify-center space-x-1.5">
+        <span>Перейти в каталог</span>
+        <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
       </button>
     </section>
 
     <!-- 2. КАТАЛОГ -->
-    <section id="tab-catalog" class="hidden space-y-4">
+    <section id="tab-catalog" class="hidden space-y-3">
       <!-- Список категорий -->
-      <div id="catalog-categories" class="space-y-2.5">
-        <div class="flex items-center justify-between px-1">
-          <h2 class="text-xs font-bold text-ios-textSecondary uppercase tracking-wider">Категории витрины</h2>
-          <span class="text-[11px] text-ios-textSecondary">4 раздела</span>
+      <div id="catalog-categories" class="space-y-2">
+        <div class="text-[11px] font-semibold text-app-muted uppercase tracking-wider px-1">
+          Категории товаров
         </div>
 
-        <div class="space-y-2.5">
-          <div onclick="openCategory('crypto')" class="ios-card p-4 flex items-center justify-between cursor-pointer">
-            <div class="flex items-center space-x-3.5">
-              <div class="w-10 h-10 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-ios-blue">
-                <i data-lucide="bitcoin" class="w-5 h-5"></i>
-              </div>
-              <div>
-                <div class="text-[14px] font-bold text-white">Крипто-биржи</div>
-                <div class="text-[11px] text-ios-textSecondary">Binance, Bybit, OKX, MEXC, KuCoin...</div>
-              </div>
+        <div class="bg-app-card border border-app-border rounded-2xl overflow-hidden">
+          <div onclick="openCategory('crypto')" class="row-item cursor-pointer">
+            <div>
+              <div class="text-xs font-semibold text-white">Крипто-биржи</div>
+              <div class="text-[11px] text-app-muted">Binance, Bybit, OKX, MEXC, KuCoin...</div>
             </div>
-            <i data-lucide="chevron-right" class="w-4 h-4 text-ios-textSecondary"></i>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-zinc-600"></i>
           </div>
 
-          <div onclick="openCategory('banks')" class="ios-card p-4 flex items-center justify-between cursor-pointer">
-            <div class="flex items-center space-x-3.5">
-              <div class="w-10 h-10 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
-                <i data-lucide="landmark" class="w-5 h-5"></i>
-              </div>
-              <div>
-                <div class="text-[14px] font-bold text-white">ЛК банков</div>
-                <div class="text-[11px] text-ios-textSecondary">Tinkoff, Freedom KZ, Bakai, Kaspi, Sber...</div>
-              </div>
+          <div onclick="openCategory('banks')" class="row-item cursor-pointer">
+            <div>
+              <div class="text-xs font-semibold text-white">ЛК банков</div>
+              <div class="text-[11px] text-app-muted">Tinkoff, Freedom, Bakai, Kaspi, Sber...</div>
             </div>
-            <i data-lucide="chevron-right" class="w-4 h-4 text-ios-textSecondary"></i>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-zinc-600"></i>
           </div>
 
-          <div onclick="openCategory('payment')" class="ios-card p-4 flex items-center justify-between cursor-pointer">
-            <div class="flex items-center space-x-3.5">
-              <div class="w-10 h-10 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400">
-                <i data-lucide="credit-card" class="w-5 h-5"></i>
-              </div>
-              <div>
-                <div class="text-[14px] font-bold text-white">Платёжки / Необанки</div>
-                <div class="text-[11px] text-ios-textSecondary">Wise, Revolut, Bunq, Stripe, Payoneer...</div>
-              </div>
+          <div onclick="openCategory('payment')" class="row-item cursor-pointer">
+            <div>
+              <div class="text-xs font-semibold text-white">Платёжки / Необанки</div>
+              <div class="text-[11px] text-app-muted">Wise, Revolut, Bunq, Stripe, Payoneer...</div>
             </div>
-            <i data-lucide="chevron-right" class="w-4 h-4 text-ios-textSecondary"></i>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-zinc-600"></i>
           </div>
 
-          <div onclick="openCategory('bundle')" class="ios-card p-4 flex items-center justify-between cursor-pointer">
-            <div class="flex items-center space-x-3.5">
-              <div class="w-10 h-10 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400">
-                <i data-lucide="layers" class="w-5 h-5"></i>
-              </div>
-              <div>
-                <div class="text-[14px] font-bold text-white">Банк + Биржа</div>
-                <div class="text-[11px] text-ios-textSecondary">Готовые связки для P2P арбитража</div>
-              </div>
+          <div onclick="openCategory('bundle')" class="row-item cursor-pointer">
+            <div>
+              <div class="text-xs font-semibold text-white">Банк + Биржа</div>
+              <div class="text-[11px] text-app-muted">Готовые связки для P2P</div>
             </div>
-            <i data-lucide="chevron-right" class="w-4 h-4 text-ios-textSecondary"></i>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-zinc-600"></i>
           </div>
         </div>
       </div>
 
-      <!-- Товары категории -->
-      <div id="catalog-items" class="hidden space-y-3">
+      <!-- Список конкретных товаров -->
+      <div id="catalog-items" class="hidden space-y-2.5">
         <div class="flex items-center justify-between pb-1">
-          <button onclick="closeCategory()" class="text-xs font-semibold text-ios-blue flex items-center gap-1.5 py-1 active:opacity-70">
-            <i data-lucide="chevron-left" class="w-4 h-4"></i>
+          <button onclick="closeCategory()" class="text-xs font-medium text-app-subtext hover:text-white flex items-center space-x-1">
+            <i data-lucide="chevron-left" class="w-3.5 h-3.5"></i>
             <span>Назад</span>
           </button>
-          <span id="current-category-title" class="text-xs font-bold text-ios-textSecondary"></span>
+          <span id="current-category-title" class="text-xs font-semibold text-zinc-300"></span>
         </div>
 
-        <div id="items-grid" class="grid grid-cols-2 gap-2.5"></div>
+        <div id="items-container" class="bg-app-card border border-app-border rounded-2xl overflow-hidden">
+          <!-- Заполняется через JS -->
+        </div>
       </div>
     </section>
 
     <!-- 3. КОРЗИНА -->
     <section id="tab-cart" class="hidden space-y-4">
-      <div class="ios-card p-8 flex flex-col items-center justify-center text-center">
-        <div class="w-16 h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mb-3 text-ios-textSecondary">
-          <i data-lucide="shopping-basket" class="w-7 h-7"></i>
+      <div class="bg-app-card border border-app-border rounded-2xl p-6 text-center">
+        <div class="w-12 h-12 rounded-full bg-zinc-800 border border-zinc-700 mx-auto flex items-center justify-center text-zinc-400 mb-3">
+          <i data-lucide="shopping-basket" class="w-5 h-5"></i>
         </div>
-        <div class="text-base font-bold text-white mb-1">Корзина пуста</div>
-        <p class="text-xs text-ios-textSecondary max-w-xs mb-5">
-          Выберите нужные биржи или платежные сервисы в каталоге, чтобы быстро оформить заказ в один клик.
+        <div class="text-sm font-semibold text-white mb-1">Корзина пуста</div>
+        <p class="text-xs text-app-muted leading-relaxed max-w-xs mx-auto mb-4">
+          Добавьте аккаунты из каталога, чтобы сформировать заказ.
         </p>
-        <button onclick="switchTab('catalog')" class="px-6 py-3 rounded-full bg-white text-black text-xs font-bold active:scale-95 transition">
-          Перейти в каталог
+        <button onclick="switchTab('catalog')" class="px-4 py-2 bg-zinc-800 hover:bg-zinc-700 border border-zinc-600 rounded-xl text-xs font-medium text-white transition">
+          Открыть каталог
         </button>
       </div>
     </section>
 
-    <!-- 4. ПРОФИЛЬ / КАБИНЕТ -->
-    <section id="tab-cabinet" class="hidden space-y-4">
-      <div class="ios-card p-6 flex flex-col items-center text-center">
-        <div class="w-16 h-16 rounded-full bg-white/10 border border-white/15 flex items-center justify-center mb-3">
-          <i data-lucide="user" class="w-7 h-7 text-white"></i>
-        </div>
-        <div id="user-name" class="font-bold text-base text-white">Telegram User</div>
-        <div class="text-xs text-ios-textSecondary mt-0.5">Личный аккаунт</div>
-
-        <div class="mt-5 pt-4 border-t border-white/5 w-full flex justify-around">
-          <div>
-            <div class="text-[10px] text-ios-textSecondary uppercase font-semibold">Баланс</div>
-            <div class="text-xl font-black text-white font-mono">0.00 $</div>
+    <!-- 4. ПРОФИЛЬ -->
+    <section id="tab-cabinet" class="hidden space-y-3">
+      <div class="bg-app-card border border-app-border rounded-2xl p-4 flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 rounded-full bg-zinc-800 border border-zinc-700 flex items-center justify-center text-zinc-300 font-bold text-xs">
+            ID
           </div>
-          <div class="w-[1px] bg-white/10"></div>
           <div>
-            <div class="text-[10px] text-ios-textSecondary uppercase font-semibold">Заказов</div>
-            <div class="text-xl font-black text-white font-mono">0</div>
+            <div id="user-name" class="text-xs font-semibold text-white">Пользователь</div>
+            <div class="text-[11px] text-app-muted font-mono">Баланс: 0.00 $</div>
           </div>
         </div>
+        <button onclick="tgAlert('Пополнение: USDT (TRC20, TON) через оператора или CryptoBot')" class="px-3 py-1.5 bg-white text-black hover:bg-zinc-200 rounded-lg text-xs font-semibold transition">
+          Пополнить
+        </button>
       </div>
 
-      <div class="space-y-2">
-        <button onclick="tgAlert('Доступно пополнение через USDT TRC20, TON или CryptoBot')" class="w-full py-3.5 rounded-2xl font-bold text-sm bg-ios-blue text-white active:scale-98 transition flex items-center justify-center gap-2 shadow-lg">
-          <i data-lucide="plus" class="w-4 h-4 stroke-[3]"></i>
-          <span>Пополнить баланс</span>
-        </button>
-
-        <div onclick="tgAlert('Список покупок пока пуст')" class="ios-card p-3.5 flex items-center justify-between cursor-pointer">
-          <div class="flex items-center space-x-3">
-            <i data-lucide="package" class="w-4 h-4 text-ios-blue"></i>
-            <span class="text-xs font-semibold text-white">Мои заказы</span>
-          </div>
-          <i data-lucide="chevron-right" class="w-4 h-4 text-ios-textSecondary"></i>
+      <div class="bg-app-card border border-app-border rounded-2xl overflow-hidden">
+        <div onclick="tgAlert('История покупок пуста')" class="row-item cursor-pointer">
+          <span class="text-xs font-medium text-white">Мои заказы</span>
+          <span class="text-xs text-app-muted">0 шт.</span>
         </div>
-
-        <div onclick="tgPromptPromo()" class="ios-card p-3.5 flex items-center justify-between cursor-pointer">
-          <div class="flex items-center space-x-3">
-            <i data-lucide="tag" class="w-4 h-4 text-purple-400"></i>
-            <span class="text-xs font-semibold text-white">Промокод</span>
-          </div>
-          <i data-lucide="chevron-right" class="w-4 h-4 text-ios-textSecondary"></i>
+        <div onclick="tgPromptPromo()" class="row-item cursor-pointer">
+          <span class="text-xs font-medium text-white">Промокод</span>
+          <i data-lucide="chevron-right" class="w-4 h-4 text-zinc-600"></i>
         </div>
-
-        <div onclick="tgAlert('Реферальная ссылка: https://t.me/moonstore_shop_bot?start=ref')" class="ios-card p-3.5 flex items-center justify-between cursor-pointer">
-          <div class="flex items-center space-x-3">
-            <i data-lucide="users" class="w-4 h-4 text-amber-400"></i>
-            <span class="text-xs font-semibold text-white">Реферальная программа</span>
-          </div>
-          <span class="text-[11px] text-amber-400 font-bold">5%</span>
+        <div onclick="tgAlert('Реферальная ссылка: https://t.me/moonstore_shop_bot?start=ref')" class="row-item cursor-pointer">
+          <span class="text-xs font-medium text-white">Реферальная программа</span>
+          <span class="text-xs text-zinc-400">5%</span>
         </div>
-
-        <div onclick="toggleLang()" class="ios-card p-3.5 flex items-center justify-between cursor-pointer">
-          <div class="flex items-center space-x-3">
-            <i data-lucide="globe" class="w-4 h-4 text-slate-400"></i>
-            <span class="text-xs font-semibold text-white">Язык</span>
-          </div>
-          <span id="lang-label" class="text-xs font-bold text-ios-blue">RU</span>
+        <div onclick="toggleLang()" class="row-item cursor-pointer">
+          <span class="text-xs font-medium text-white">Язык</span>
+          <span id="lang-label" class="text-xs text-zinc-400 font-medium">RU</span>
         </div>
       </div>
     </section>
 
-    <!-- 5. ИНФО (скрытый экран, доступен из баннера) -->
-    <section id="tab-info" class="hidden space-y-3.5">
-      <div class="ios-card p-5 space-y-2">
-        <div class="flex items-center gap-2 text-ios-blue font-bold text-xs uppercase tracking-wider">
-          <i data-lucide="info" class="w-4 h-4"></i>
-          <span>О нас и правилах сервиса</span>
+    <!-- 5. ИНФО (FAQ) -->
+    <section id="tab-info" class="hidden space-y-3">
+      <div class="bg-app-card border border-app-border rounded-2xl p-4 space-y-2">
+        <div class="text-xs font-semibold text-white">Правила и гарантии</div>
+        <div class="text-xs text-app-subtext space-y-1.5 leading-relaxed">
+          <p>• Гарантия на первичный вход в аккаунт — 24 часа с момента выдачи данных.</p>
+          <p>• Комплектация: логин, пароль, родная почта, резервные ключи и 2FA.</p>
+          <p>• При входе обязательно соблюдайте требования по прокси соответствующей страны.</p>
         </div>
-        <p class="text-xs text-ios-textSecondary leading-relaxed">
-          Все аккаунты регистрируются на реальных дропов с полным пакетом документов. Предоставляем логины, пароли, почту, 2FA и селфи при запросе верификации.
-        </p>
       </div>
 
-      <div class="ios-card p-5 space-y-2">
-        <div class="font-bold text-xs text-white">Гарантийный период</div>
-        <p class="text-xs text-ios-textSecondary leading-relaxed">
-          Гарантия на первичный вход в личный кабинет составляет 24 часа с момента передачи товара покупателю.
-        </p>
-      </div>
-
-      <div class="ios-card p-4 flex items-center justify-between">
+      <div class="bg-app-card border border-app-border rounded-2xl p-4 flex items-center justify-between">
         <div>
-          <div class="text-xs font-bold text-white">Служба заботы</div>
-          <div class="text-[10px] text-ios-textSecondary">Поддержка 24/7</div>
+          <div class="text-xs font-semibold text-white">Служба поддержки</div>
+          <div class="text-[11px] text-app-muted">Отвечаем в течение 15 минут</div>
         </div>
-        <a href="https://t.me/Moon_store_news" target="_blank" class="px-4 py-2 rounded-full bg-white text-black text-xs font-bold transition active:scale-95">
+        <a href="https://t.me/Moon_store_news" target="_blank" class="px-3 py-1.5 bg-zinc-800 hover:bg-zinc-700 border border-zinc-600 rounded-lg text-xs font-medium text-white transition">
           Написать
         </a>
       </div>
@@ -406,31 +310,27 @@
 
   </main>
 
-  <!-- Капсульный плавающий таб-бар в стиле скриншота -->
-  <div class="ios-tabbar-container">
-    <div class="ios-tabbar">
-      <!-- 1. Главная -->
-      <button onclick="switchTab('home')" id="nav-home" class="ios-tab-item active">
-        <i data-lucide="home" class="w-5 h-5 stroke-[2]"></i>
-        <span class="ios-tab-label">Главная</span>
+  <!-- Капсульный нижний таб-бар -->
+  <div class="tabbar-container">
+    <div class="tabbar">
+      <button onclick="switchTab('home')" id="nav-home" class="tab-item active">
+        <i data-lucide="home" class="w-4 h-4 stroke-[2]"></i>
+        <span class="tab-label">Главная</span>
       </button>
 
-      <!-- 2. Каталог -->
-      <button onclick="switchTab('catalog')" id="nav-catalog" class="ios-tab-item">
-        <i data-lucide="search" class="w-5 h-5 stroke-[2]"></i>
-        <span class="ios-tab-label">Каталог</span>
+      <button onclick="switchTab('catalog')" id="nav-catalog" class="tab-item">
+        <i data-lucide="search" class="w-4 h-4 stroke-[2]"></i>
+        <span class="tab-label">Каталог</span>
       </button>
 
-      <!-- 3. Корзина -->
-      <button onclick="switchTab('cart')" id="nav-cart" class="ios-tab-item">
-        <i data-lucide="shopping-basket" class="w-5 h-5 stroke-[2]"></i>
-        <span class="ios-tab-label">Корзина</span>
+      <button onclick="switchTab('cart')" id="nav-cart" class="tab-item">
+        <i data-lucide="shopping-basket" class="w-4 h-4 stroke-[2]"></i>
+        <span class="tab-label">Корзина</span>
       </button>
 
-      <!-- 4. Профиль -->
-      <button onclick="switchTab('cabinet')" id="nav-cabinet" class="ios-tab-item">
-        <i data-lucide="user" class="w-5 h-5 stroke-[2]"></i>
-        <span class="ios-tab-label">Профиль</span>
+      <button onclick="switchTab('cabinet')" id="nav-cabinet" class="tab-item">
+        <i data-lucide="user" class="w-4 h-4 stroke-[2]"></i>
+        <span class="tab-label">Профиль</span>
       </button>
     </div>
   </div>
@@ -440,8 +340,8 @@
     if (tg) {
       tg.expand();
       tg.ready();
-      tg.setHeaderColor('#000000');
-      tg.setBackgroundColor('#000000');
+      tg.setHeaderColor('#0F0F10');
+      tg.setBackgroundColor('#0F0F10');
       if (tg.initDataUnsafe?.user) {
         const u = tg.initDataUnsafe.user;
         document.getElementById('user-name').innerText = [u.first_name, u.last_name].filter(Boolean).join(' ') || u.username || 'Пользователь';
@@ -458,170 +358,13 @@
       crypto: {
         title: "Крипто-биржи",
         items: [
-          { name: "Binance", tag: "Plus Verified" },
-          { name: "Bybit", tag: "KYC Level 1-2" },
-          { name: "Bybit (Maker)", tag: "P2P Maker" },
-          { name: "OKX", tag: "KYC 2" },
-          { name: "MEXC", tag: "Full Verified" },
-          { name: "Bitget", tag: "Tier 1" },
-          { name: "KuCoin", tag: "KYC Verified" },
-          { name: "Kraken", tag: "Intermediate" },
-          { name: "Coinbase", tag: "EU / USA" },
-          { name: "Gate.io", tag: "KYC 2" },
-          { name: "HTX (Huobi)", tag: "Verified" },
-          { name: "BingX", tag: "Full Access" },
-          { name: "Crypto.com", tag: "EU Verified" }
+          "Binance", "Bybit", "Bybit (Maker)", "OKX", "MEXC", 
+          "Bitget", "KuCoin", "Kraken", "Coinbase", "Gate.io", 
+          "HTX (Huobi)", "BingX", "Crypto.com"
         ]
       },
       payment: {
         title: "Платёжки / Необанки",
         items: [
-          { name: "Wise (Personal)", tag: "EU IBAN" },
-          { name: "Wise (Business)", tag: "Company" },
-          { name: "Revolut (Personal)", tag: "EU / LT" },
-          { name: "Revolut (Business)", tag: "EU Company" },
-          { name: "Bunq (Personal)", tag: "NL / DE IBAN" },
-          { name: "Bunq (Business)", tag: "Высокие лимиты" },
-          { name: "Stripe Business", tag: "Merchant" },
-          { name: "PayPal (Personal)", tag: "Прогретый" },
-          { name: "Payoneer", tag: "Global" },
-          { name: "Blackcatcard", tag: "EU Card" },
-          { name: "Vivid Money", tag: "DE IBAN" },
-          { name: "N26 Bank", tag: "Standard / Metal" },
-          { name: "Wirex", tag: "Crypto Card" },
-          { name: "Pyypl", tag: "Prepaid VCC" },
-          { name: "Skrill / Neteller", tag: "VIP Silver" },
-          { name: "Paysera", tag: "Unlimited" },
-          { name: "Icard", tag: "EU Account" },
-          { name: "UP bank", tag: "Australia" }
-        ]
-      },
-      bundle: {
-        title: "Банк + Биржа",
-        items: [
-          { name: "Privat + Binance", tag: "Связка UA" },
-          { name: "Mono + Binance", tag: "Связка UA" },
-          { name: "A-Bank + Binance", tag: "Связка UA" },
-          { name: "Tinkoff + Bybit", tag: "Связка RU" },
-          { name: "Sber + Bybit (Maker)", tag: "Связка RU" },
-          { name: "Kapital + OKX", tag: "Связка UZ" },
-          { name: "Bakai + OKX", tag: "Связка KG" },
-          { name: "Freedom + Binance", tag: "Связка KZ" },
-          { name: "Stripe + Bybit + Bunq", tag: "VIP Arbitrage" }
-        ]
-      },
-      banks: {
-        title: "ЛК Банков",
-        items: [
-          { name: "Tinkoff Bank", tag: "Black / Platinum" },
-          { name: "Sber Bank", tag: "Gold" },
-          { name: "Raiffeisen", tag: "RU / EU" },
-          { name: "Freedom Bank KZ", tag: "Мультивалютный" },
-          { name: "Kaspi Gold", tag: "KZ" },
-          { name: "Bakai Bank", tag: "KG с картой" },
-          { name: "Kapital Bank", tag: "UZ Visa / Master" }
-        ]
-      }
-    };
-
-    function switchTab(tabId) {
-      haptic();
-      ['home', 'catalog', 'cart', 'cabinet', 'info'].forEach(t => {
-        const el = document.getElementById('tab-' + t);
-        if (el) el.classList.add('hidden');
-      });
-
-      ['home', 'catalog', 'cart', 'cabinet'].forEach(t => {
-        const nav = document.getElementById('nav-' + t);
-        if (nav) nav.classList.remove('active');
-      });
-
-      const currentSec = document.getElementById('tab-' + tabId);
-      if (currentSec) currentSec.classList.remove('hidden');
-
-      const currentNav = document.getElementById('nav-' + tabId);
-      if (currentNav) currentNav.classList.add('active');
-
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function openCategory(key) {
-      haptic('medium');
-      const category = catalogData[key];
-      if (!category) return;
-
-      document.getElementById('catalog-categories').classList.add('hidden');
-      document.getElementById('catalog-items').classList.remove('hidden');
-      document.getElementById('current-category-title').innerText = category.title;
-
-      const container = document.getElementById('items-grid');
-      container.innerHTML = '';
-
-      category.items.forEach(item => {
-        const card = document.createElement('div');
-        card.className = "ios-card p-3.5 flex flex-col justify-between cursor-pointer border border-white/5 active:scale-95 transition";
-        card.innerHTML = `
-          <div>
-            <div class="text-[10px] text-ios-blue font-semibold uppercase tracking-wider mb-1">${item.tag}</div>
-            <div class="text-xs font-bold text-white leading-snug">${item.name}</div>
-          </div>
-          <div class="mt-3 pt-2 border-t border-white/5 flex items-center justify-between">
-            <span class="text-[10px] text-ios-textSecondary">Готов к сдаче</span>
-            <span class="text-[10px] text-white font-bold">Купить →</span>
-          </div>
-        `;
-        card.onclick = () => selectItem(item.name);
-        container.appendChild(card);
-      });
-      lucide.createIcons();
-    }
-
-    function closeCategory() {
-      haptic();
-      document.getElementById('catalog-items').classList.add('hidden');
-      document.getElementById('catalog-categories').classList.remove('hidden');
-    }
-
-    function selectItem(name) {
-      haptic('heavy');
-      if (tg?.showPopup) {
-        tg.showPopup({
-          title: 'Оформление покупки',
-          message: `Вы выбрали позицию: ${name}.\nБаланс аккаунта: 0.00 $. Пополните баланс для завершения операции.`,
-          buttons: [
-            { id: 'pay', type: 'default', text: 'Пополнить баланс' },
-            { type: 'cancel', text: 'Закрыть' }
-          ]
-        }, (btnId) => {
-          if (btnId === 'pay') switchTab('cabinet');
-        });
-      } else {
-        alert(`Товар: ${name}\nДля покупки необходимо пополнить баланс.`);
-      }
-    }
-
-    function tgAlert(msg) {
-      haptic();
-      if (tg?.showAlert) tg.showAlert(msg);
-      else alert(msg);
-    }
-
-    function tgPromptPromo() {
-      haptic();
-      const code = prompt("Введите промокод:");
-      if (code) tgAlert("Промокод не найден или срок его действия истек.");
-    }
-
-    let lang = 'RU';
-    function toggleLang() {
-      haptic();
-      lang = lang === 'RU' ? 'EN' : 'RU';
-      document.getElementById('lang-label').innerText = lang;
-    }
-
-    document.addEventListener("DOMContentLoaded", () => {
-      lucide.createIcons();
-    });
-  </script>
-</body>
-</html>
+          "Wise (Personal)", "Wise (Business)", "Revolut (Personal)", 
+          "Revolut (Business)", "Bunq (Personal)", "Bun
