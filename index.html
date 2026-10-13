@@ -5,7 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <title>MOON STORE</title>
 
+  <!-- Telegram WebApp SDK -->
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
@@ -106,7 +108,7 @@
       background: #101014;
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 14px;
-      padding: 13px 16px;
+      padding: 11px 15px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -169,6 +171,7 @@
       overflow: hidden;
     }
 
+    /* Капсульный таб-бар iOS */
     .tabbar-wrapper {
       position: fixed;
       bottom: calc(14px + env(safe-area-inset-bottom, 8px));
@@ -369,7 +372,7 @@
       <!-- 2. КАТАЛОГ -->
       <section id="tab-catalog" class="tab-content hidden space-y-3">
         
-        <!-- Уровень 1: 4 Главные категории -->
+        <!-- Уровень 1: Главные 4 категории -->
         <div id="catalog-categories" class="space-y-2.5">
           <div class="flex items-center justify-between px-1">
             <div class="text-[11px] font-bold text-zinc-400 uppercase tracking-widest">
@@ -379,6 +382,7 @@
           </div>
 
           <div class="space-y-2.5">
+            <!-- 1. Биржи -> открывает список бирж -->
             <div onclick="openCryptoExchanges()" class="mono-card p-4 flex items-center justify-between cursor-pointer">
               <div class="flex items-center space-x-3.5">
                 <div class="mono-icon-box">
@@ -394,6 +398,7 @@
               <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg>
             </div>
 
+            <!-- 2. Банки -->
             <div onclick="openDirectCategory('banks')" class="mono-card p-4 flex items-center justify-between cursor-pointer">
               <div class="flex items-center space-x-3.5">
                 <div class="mono-icon-box">
@@ -409,6 +414,7 @@
               <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg>
             </div>
 
+            <!-- 3. Платежки -->
             <div onclick="openDirectCategory('payment')" class="mono-card p-4 flex items-center justify-between cursor-pointer">
               <div class="flex items-center space-x-3.5">
                 <div class="mono-icon-box">
@@ -424,6 +430,7 @@
               <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg>
             </div>
 
+            <!-- 4. Банк + Биржа -->
             <div onclick="openDirectCategory('bundle')" class="mono-card p-4 flex items-center justify-between cursor-pointer">
               <div class="flex items-center space-x-3.5">
                 <div class="mono-icon-box">
@@ -454,7 +461,7 @@
           <div id="exchanges-list" class="space-y-2"></div>
         </div>
 
-        <!-- Уровень 3: Список стран -->
+        <!-- Уровень 3: Список стран с флагами перед названием -->
         <div id="catalog-countries" class="hidden space-y-3">
           <div class="flex items-center justify-between pb-1">
             <button onclick="backToExchanges()" class="text-xs font-semibold text-white hover:text-zinc-300 flex items-center space-x-1.5 py-1">
@@ -754,7 +761,7 @@
       if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred(style);
     }
 
-    // Список бирж
+    // Список бирж (Уровень 2)
     const cryptoExchangesList = [
       { id: "binance", name: "Binance", badge: "KYC Plus", desc: "Самая популярная биржа", img: "" },
       { id: "bybit", name: "Bybit", badge: "Level 1-2", desc: "Лучший P2P рынок", img: "" },
@@ -771,7 +778,7 @@
       { id: "crypto_com", name: "Crypto.com", badge: "EU Verified", desc: "Европейские карты и стейкинг", img: "" }
     ];
 
-    // Единый список стран (СНГ впереди, флаг перед названием)
+    // Единый упорядоченный список стран: СНГ впереди, остальные следом
     const orderedCountries = [
       { name: "Ukraine", flag: "🇺🇦" },
       { name: "Kazakhstan", flag: "🇰🇿" },
@@ -883,7 +890,7 @@
       window.scrollTo({ top: 0, behavior: 'instant' });
     }
 
-    // 1. Открытие бирж
+    // 1. Открытие списка бирж
     function openCryptoExchanges() {
       haptic('medium');
       document.getElementById('catalog-categories').classList.add('hidden');
@@ -927,7 +934,7 @@
       });
     }
 
-    // 2. Открытие стран для биржи
+    // 2. Открытие списка стран с флагами перед названием
     function selectExchangeAndOpenCountries(exchange) {
       haptic('medium');
       selectedExchange = exchange;
@@ -948,9 +955,9 @@
         const btn = document.createElement('div');
         btn.className = "country-btn";
         btn.innerHTML = `
-          <div class="flex items-center space-x-2.5">
-            <span class="text-base">${c.flag}</span>
-            <span class="text-xs font-semibold text-white">${c.name}</span>
+          <div class="flex items-center space-x-3">
+            <span class="text-lg leading-none select-none">${c.flag}</span>
+            <span class="text-xs font-semibold text-white tracking-wide">${c.name}</span>
           </div>
           <div class="flex items-center space-x-2">
             <span class="status-dot-green"></span>
@@ -964,11 +971,11 @@
 
     function buyExchangeAccount(countryName, flag) {
       haptic('heavy');
-      const title = `${selectedExchange.name} (${countryName} ${flag})`;
+      const title = `${selectedExchange.name} (${flag} ${countryName})`;
       selectItem(title);
     }
 
-    // 3. Открытие других категорий
+    // 3. Прямые категории
     function openDirectCategory(key) {
       haptic('medium');
       const cat = directCategories[key];
