@@ -24,6 +24,7 @@
       margin: 0;
       padding: 0;
       min-height: 100vh;
+      min-height: 100dvh;
       display: flex;
       justify-content: center;
       overflow-x: hidden;
@@ -42,7 +43,7 @@
     .mini-moon {
       position: fixed;
       top: 18px;
-      right: calc(50% - 190px);
+      right: calc(50% - 240px);
       width: 74px;
       height: 74px;
       border-radius: 50%;
@@ -79,27 +80,30 @@
       }
     }
 
+    /* Адаптивный мобильный фрейм */
     .app-viewport {
       width: 100%;
-      max-width: 440px;
+      max-width: 540px;
       min-height: 100vh;
+      min-height: 100dvh;
       display: flex;
       flex-direction: column;
       position: relative;
-      padding-bottom: calc(96px + env(safe-area-inset-bottom, 20px));
+      padding-bottom: calc(90px + env(safe-area-inset-bottom, 16px));
       z-index: 10;
+      box-shadow: 0 0 50px rgba(0, 0, 0, 0.7);
     }
 
     .mono-card {
       background: #101014;
       border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 20px;
+      border-radius: 18px;
       box-shadow: 0 10px 28px rgba(0, 0, 0, 0.7);
       transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .mono-card:active {
-      transform: scale(0.985);
+      transform: scale(0.99);
       border-color: rgba(255, 255, 255, 0.25);
       background: #15151A;
     }
@@ -108,7 +112,7 @@
       background: #101014;
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 14px;
-      padding: 13px 16px;
+      padding: 12px 16px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -117,7 +121,7 @@
     }
 
     .country-btn:active {
-      transform: scale(0.985);
+      transform: scale(0.99);
       border-color: rgba(255, 255, 255, 0.25);
       background: #16161C;
     }
@@ -171,27 +175,27 @@
       overflow: hidden;
     }
 
-    /* Нижняя полупрозрачная матовая плашка до самого низа (как хедер) */
+    /* Нижний док, ограниченный шириной контента */
     .tabbar-dock {
       position: fixed;
       bottom: 0;
-      left: 0;
-      right: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 540px;
       background: rgba(5, 5, 7, 0.85);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border-top: 1px solid rgba(255, 255, 255, 0.1);
       display: flex;
       justify-content: center;
-      padding-top: 10px;
-      padding-bottom: calc(10px + env(safe-area-inset-bottom, 8px));
+      padding: 8px 16px calc(10px + env(safe-area-inset-bottom, 8px)) 16px;
       z-index: 50;
     }
 
-    /* Сам капсульный таб-бар внутри плашки */
     .tabbar {
-      width: calc(100% - 32px);
-      max-width: 380px;
+      width: 100%;
+      max-width: 440px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -583,7 +587,7 @@
               <div class="flex items-center space-x-3">
                 <div class="mono-icon-box">
                   <svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                    <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                    <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1 4-10z"/>
                   </svg>
                 </div>
                 <span class="text-xs font-semibold text-white">Язык</span>
@@ -631,7 +635,7 @@
 
     </main>
 
-    <!-- Нижняя полупрозрачная матовая плашка до самого низа экрана -->
+    <!-- Нижняя панель-док -->
     <div class="tabbar-dock">
       <div class="tabbar">
         <div id="tab-slider" class="tab-slider"></div>
@@ -762,7 +766,6 @@
       if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred(style);
     }
 
-    // Список бирж
     const cryptoExchangesList = [
       { id: "binance", name: "Binance", badge: "KYC Plus", desc: "Самая популярная биржа", img: "" },
       { id: "bybit", name: "Bybit", badge: "Level 1-2", desc: "Лучший P2P рынок", img: "" },
@@ -779,28 +782,28 @@
       { id: "crypto_com", name: "Crypto.com", badge: "EU Verified", desc: "Европейские карты и стейкинг", img: "" }
     ];
 
-    // Единый список стран
+    // Страны с векторными графическими флагами (гарантия отображения на всех устройствах)
     const orderedCountries = [
-      { name: "Ukraine", flag: "🇺🇦" },
-      { name: "Kazakhstan", flag: "🇰🇿" },
-      { name: "Belarus", flag: "🇧🇾" },
-      { name: "Moldova", flag: "🇲🇩" },
-      { name: "Azerbaijan", flag: "🇦🇿" },
-      { name: "Kyrgyzstan", flag: "🇰🇬" },
-      { name: "Uzbekistan", flag: "🇺🇿" },
-      { name: "Georgia", flag: "🇬🇪" },
-      { name: "Poland", flag: "🇵🇱" },
-      { name: "Germany", flag: "🇩🇪" },
-      { name: "Spain", flag: "🇪🇸" },
-      { name: "Estonia", flag: "🇪🇪" },
-      { name: "Latvia", flag: "🇱🇻" },
-      { name: "Lithuania", flag: "🇱🇹" },
-      { name: "Italy", flag: "🇮🇹" },
-      { name: "Turkey", flag: "🇹🇷" },
-      { name: "Indonesia", flag: "🇮🇩" },
-      { name: "Kenya", flag: "🇰🇪" },
-      { name: "Nigeria", flag: "🇳🇬" },
-      { name: "USA", flag: "🇺🇸" }
+      { code: "ua", name: "Ukraine" },
+      { code: "kz", name: "Kazakhstan" },
+      { code: "by", name: "Belarus" },
+      { code: "md", name: "Moldova" },
+      { code: "az", name: "Azerbaijan" },
+      { code: "kg", name: "Kyrgyzstan" },
+      { code: "uz", name: "Uzbekistan" },
+      { code: "ge", name: "Georgia" },
+      { code: "pl", name: "Poland" },
+      { code: "de", name: "Germany" },
+      { code: "es", name: "Spain" },
+      { code: "ee", name: "Estonia" },
+      { code: "lv", name: "Latvia" },
+      { code: "lt", name: "Lithuania" },
+      { code: "it", name: "Italy" },
+      { code: "tr", name: "Turkey" },
+      { code: "id", name: "Indonesia" },
+      { code: "ke", name: "Kenya" },
+      { code: "ng", name: "Nigeria" },
+      { code: "us", name: "USA" }
     ];
 
     const directCategories = {
@@ -955,7 +958,12 @@
         btn.className = "country-btn";
         btn.innerHTML = `
           <div class="flex items-center space-x-3">
-            <span class="text-lg leading-none select-none">${c.flag}</span>
+            <img src="https://flagcdn.com/w40/${c.code}.png" 
+                 srcset="https://flagcdn.com/w80/${c.code}.png 2x" 
+                 width="22" 
+                 height="15" 
+                 alt="${c.name}"
+                 class="rounded-sm object-cover shadow-sm flex-shrink-0" />
             <span class="text-xs font-semibold text-white tracking-wide">${c.name}</span>
           </div>
           <div class="flex items-center space-x-2">
@@ -963,14 +971,14 @@
             <span class="text-[10px] text-zinc-400 font-medium">Купить →</span>
           </div>
         `;
-        btn.onclick = () => buyExchangeAccount(c.name, c.flag);
+        btn.onclick = () => buyExchangeAccount(c.name);
         container.appendChild(btn);
       });
     }
 
-    function buyExchangeAccount(countryName, flag) {
+    function buyExchangeAccount(countryName) {
       haptic('heavy');
-      const title = `${selectedExchange.name} (${flag} ${countryName})`;
+      const title = `${selectedExchange.name} (${countryName})`;
       selectItem(title);
     }
 
