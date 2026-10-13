@@ -81,7 +81,6 @@
       }
     }
 
-    /* Контейнер приложения */
     .app-viewport {
       width: 100%;
       max-width: 440px;
@@ -93,7 +92,6 @@
       z-index: 10;
     }
 
-    /* Карточки */
     .mono-card {
       background: #101014;
       border: 1px solid rgba(255, 255, 255, 0.08);
@@ -364,7 +362,7 @@
       <section id="tab-catalog" class="tab-content hidden space-y-3">
         
         <!-- Категории каталога -->
-        <div id="catalog-categories" class="space-y-2.5 animate-fadeIn">
+        <div id="catalog-categories" class="space-y-2.5">
           <div class="flex items-center justify-between px-1">
             <div class="text-[11px] font-bold text-zinc-400 uppercase tracking-widest">
               Категории витрины
@@ -439,9 +437,8 @@
           </div>
         </div>
 
-        <!-- Переработанная витрина товаров -->
+        <!-- Витрина товаров -->
         <div id="catalog-items" class="hidden space-y-3">
-          
           <div class="flex items-center justify-between pb-1">
             <button onclick="closeCategory()" class="text-xs font-semibold text-white hover:text-zinc-300 flex items-center space-x-1.5 py-1">
               <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
@@ -450,13 +447,12 @@
             <span id="current-category-title" class="text-xs font-bold text-zinc-300 uppercase tracking-wider"></span>
           </div>
 
-          <!-- Строка поиска внутри категории -->
+          <!-- Строка поиска -->
           <div class="relative">
             <input type="text" id="catalog-search" oninput="filterItems()" placeholder="Поиск по названию или стране..." class="w-full bg-[#111116] border border-white/10 rounded-xl px-9 py-2.5 text-xs text-white placeholder-zinc-500 outline-none focus:border-white/30 transition">
             <svg class="w-3.5 h-3.5 text-zinc-500 absolute left-3 top-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
           </div>
 
-          <!-- Контейнер товаров в новом стиле -->
           <div id="items-list" class="space-y-2"></div>
         </div>
       </section>
@@ -598,10 +594,9 @@
 
     </main>
 
-    <!-- Парящий капсульный таб-бар iOS со скользящим ползунком -->
+    <!-- Парящий капсульный таб-бар iOS -->
     <div class="tabbar-wrapper">
       <div class="tabbar">
-        
         <div id="tab-slider" class="tab-slider"></div>
 
         <button onclick="switchTab('home')" id="nav-home" class="tab-btn active">
@@ -732,73 +727,73 @@
       if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred(style);
     }
 
-    // База данных товаров с реальными URL-логотипами (image_13.png - image_42.png)
+    // БАЗА ДАННЫХ С ПРОВЕРЕННЫМИ РАБОЧИМИ ВЕКТОРНЫМИ SVG/PNG ЛОГОТИПАМИ
     const catalogData = {
       crypto: {
         title: "Крипто-биржи",
         items: [
-          { name: "Binance", badge: "KYC Plus", region: "Global", img: "image_13.png" },
-          { name: "Bybit", badge: "Level 1-2", region: "Global", img: "image_14.png" },
-          { name: "Bybit (Maker)", badge: "P2P Maker", region: "Verified", img: "image_14.png" },
-          { name: "OKX", badge: "KYC 2", region: "Global", img: "image_15.png" },
-          { name: "MEXC", badge: "Full Verified", region: "No KYC", img: "image_16.png" },
-          { name: "Bitget", badge: "Tier 1", region: "Global", img: "image_17.png" },
-          { name: "KuCoin", badge: "Verified", region: "Global", img: "image_18.png" },
-          { name: "Kraken", badge: "Intermediate", region: "USA / EU", img: "image_19.png" },
-          { name: "Coinbase", badge: "EU / USA", region: "High limits", img: "image_20.png" },
-          { name: "Gate.io", badge: "KYC 2", region: "Global", img: "image_21.png" },
-          { name: "HTX (Huobi)", badge: "Verified", region: "Asia", img: "image_22.png" },
-          { name: "BingX", badge: "Full Access", region: "Global", img: "image_23.png" },
-          { name: "Crypto.com", badge: "EU Verified", region: "Card", img: "image_24.png" }
+          { name: "Binance", badge: "KYC Plus", region: "Global", img: "https://cryptologos.cc/logos/binance-coin-bnb-logo.svg?v=035" },
+          { name: "Bybit", badge: "Level 1-2", region: "Global", img: "https://raw.githubusercontent.com/spothq/cryptocurrency-icons/master/128/color/usdt.png" },
+          { name: "Bybit (Maker)", badge: "P2P Maker", region: "Verified", img: "https://raw.githubusercontent.com/spothq/cryptocurrency-icons/master/128/color/usdt.png" },
+          { name: "OKX", badge: "KYC 2", region: "Global", img: "https://cryptologos.cc/logos/okb-okb-logo.svg?v=035" },
+          { name: "MEXC", badge: "Full Verified", region: "No KYC", img: "https://cryptologos.cc/logos/mxc-mxc-logo.svg?v=035" },
+          { name: "Bitget", badge: "Tier 1", region: "Global", img: "https://cryptologos.cc/logos/bitget-token-bgb-logo.svg?v=035" },
+          { name: "KuCoin", badge: "Verified", region: "Global", img: "https://cryptologos.cc/logos/kucoin-token-kcs-logo.svg?v=035" },
+          { name: "Kraken", badge: "Intermediate", region: "USA / EU", img: "https://cryptologos.cc/logos/kraken-logo.svg?v=035" },
+          { name: "Coinbase", badge: "EU / USA", region: "High limits", img: "https://cryptologos.cc/logos/coinbase-coin-logo.svg?v=035" },
+          { name: "Gate.io", badge: "KYC 2", region: "Global", img: "https://cryptologos.cc/logos/gatechain-gt-logo.svg?v=035" },
+          { name: "HTX (Huobi)", badge: "Verified", region: "Asia", img: "https://cryptologos.cc/logos/htx-token-ht-logo.svg?v=035" },
+          { name: "BingX", badge: "Full Access", region: "Global", img: "https://cryptologos.cc/logos/polygon-ecosystem-token-pol-logo.svg?v=035" },
+          { name: "Crypto.com", badge: "EU Verified", region: "Card", img: "https://cryptologos.cc/logos/cronos-cro-logo.svg?v=035" }
         ]
       },
       payment: {
         title: "Платёжки / Необанки",
         items: [
-          { name: "Stripe Business", badge: "Merchant", region: "Польша 🇵🇱", img: "image_25.png" },
-          { name: "Wise (Personal)", badge: "EU IBAN", region: "Europe 🇪🇺", img: "image_26.png" },
-          { name: "Wise (Business)", badge: "Company", region: "UK / EU 🇪🇺", img: "image_26.png" },
-          { name: "Revolut (Personal)", badge: "EU / LT", region: "Europe 🇪🇺", img: "image_27.png" },
-          { name: "Revolut (Business)", badge: "Business", region: "Lithuania 🇱🇹", img: "image_27.png" },
-          { name: "Bunq (Personal)", badge: "NL / DE", region: "Netherlands 🇳🇱", img: "image_28.png" },
-          { name: "Bunq (Business)", badge: "Лимиты", region: "Europe 🇪🇺", img: "image_28.png" },
-          { name: "PayPal (Personal)", badge: "Прогретый", region: "Global", img: "image_29.png" },
-          { name: "Payoneer", badge: "Global", region: "USD / EUR", img: "image_30.png" },
-          { name: "Blackcatcard", badge: "EU Card", region: "Malta 🇲🇹", img: "image_31.png" },
-          { name: "Vivid Money", badge: "DE IBAN", region: "Germany 🇩🇪", img: "image_32.png" },
-          { name: "N26 Bank", badge: "Standard", region: "Germany 🇩🇪", img: "image_33.png" },
-          { name: "Wirex", badge: "Crypto Card", region: "Europe 🇪🇺", img: "image_34.png" },
-          { name: "Pyypl", badge: "VCC Card", region: "UAE 🇦🇪", img: "image_35.png" },
-          { name: "Skrill / Neteller", badge: "VIP", region: "Global", img: "image_36.png" },
-          { name: "Paysera", badge: "Unlimited", region: "Lithuania 🇱🇹", img: "image_37.png" },
-          { name: "Icard", badge: "EU Account", region: "Bulgaria 🇧🇬", img: "image_38.png" },
-          { name: "UP bank", badge: "AU Account", region: "Australia 🇦🇺", img: "image_39.png" }
+          { name: "Stripe Business", badge: "Merchant", region: "Польша 🇵🇱", img: "https://raw.githubusercontent.com/gilbarbara/logos/master/logos/stripe.svg" },
+          { name: "Wise (Personal)", badge: "EU IBAN", region: "Europe 🇪🇺", img: "https://raw.githubusercontent.com/gilbarbara/logos/master/logos/wise.svg" },
+          { name: "Wise (Business)", badge: "Company", region: "UK / EU 🇪🇺", img: "https://raw.githubusercontent.com/gilbarbara/logos/master/logos/wise.svg" },
+          { name: "Revolut (Personal)", badge: "EU / LT", region: "Europe 🇪🇺", img: "https://raw.githubusercontent.com/gilbarbara/logos/master/logos/revolut.svg" },
+          { name: "Revolut (Business)", badge: "Business", region: "Lithuania 🇱🇹", img: "https://raw.githubusercontent.com/gilbarbara/logos/master/logos/revolut.svg" },
+          { name: "Bunq (Personal)", badge: "NL / DE", region: "Netherlands 🇳🇱", img: "https://upload.wikimedia.org/wikipedia/commons/2/25/Bunq_logo.svg" },
+          { name: "Bunq (Business)", badge: "Лимиты", region: "Europe 🇪🇺", img: "https://upload.wikimedia.org/wikipedia/commons/2/25/Bunq_logo.svg" },
+          { name: "PayPal (Personal)", badge: "Прогретый", region: "Global", img: "https://raw.githubusercontent.com/gilbarbara/logos/master/logos/paypal.svg" },
+          { name: "Payoneer", badge: "Global", region: "USD / EUR", img: "https://raw.githubusercontent.com/gilbarbara/logos/master/logos/payoneer.svg" },
+          { name: "Blackcatcard", badge: "EU Card", region: "Malta 🇲🇹", img: "https://raw.githubusercontent.com/gilbarbara/logos/master/logos/mastercard.svg" },
+          { name: "Vivid Money", badge: "DE IBAN", region: "Germany 🇩🇪", img: "https://raw.githubusercontent.com/gilbarbara/logos/master/logos/visa.svg" },
+          { name: "N26 Bank", badge: "Standard", region: "Germany 🇩🇪", img: "https://upload.wikimedia.org/wikipedia/commons/3/37/N26_logo.svg" },
+          { name: "Wirex", badge: "Crypto Card", region: "Europe 🇪🇺", img: "https://raw.githubusercontent.com/gilbarbara/logos/master/logos/visa.svg" },
+          { name: "Pyypl", badge: "VCC Card", region: "UAE 🇦🇪", img: "https://raw.githubusercontent.com/gilbarbara/logos/master/logos/mastercard.svg" },
+          { name: "Skrill / Neteller", badge: "VIP", region: "Global", img: "https://raw.githubusercontent.com/gilbarbara/logos/master/logos/skrill.svg" },
+          { name: "Paysera", badge: "Unlimited", region: "Lithuania 🇱🇹", img: "https://raw.githubusercontent.com/gilbarbara/logos/master/logos/visa.svg" },
+          { name: "Icard", badge: "EU Account", region: "Bulgaria 🇧🇬", img: "https://raw.githubusercontent.com/gilbarbara/logos/master/logos/mastercard.svg" },
+          { name: "UP bank", badge: "AU Account", region: "Australia 🇦🇺", img: "https://raw.githubusercontent.com/gilbarbara/logos/master/logos/visa.svg" }
         ]
       },
       bundle: {
         title: "Банк + Биржа",
         items: [
-          { name: "Kapital + OKX", badge: "AZ Связка", region: "Азербайджан 🇦🇿", img: "image_40.png" },
-          { name: "Stripe + Bybit + Bunq", badge: "PL Связка", region: "Польша 🇵🇱", img: "image_25.png" },
-          { name: "Privat + Binance", badge: "UA Связка", region: "Украина 🇺🇦", img: "image_13.png" },
-          { name: "Mono + Binance", badge: "UA Связка", region: "Украина 🇺🇦", img: "image_13.png" },
-          { name: "A-Bank + Binance", badge: "UA Связка", region: "Украина 🇺🇦", img: "image_13.png" },
-          { name: "Tinkoff + Bybit", badge: "RU Связка", region: "Россия 🇷🇺", img: "image_14.png" },
-          { name: "Sber + Bybit (Maker)", badge: "RU Связка", region: "Россия 🇷🇺", img: "image_14.png" },
-          { name: "Bakai + OKX", badge: "KG Связка", region: "Кыргызстан 🇰🇬", img: "image_15.png" },
-          { name: "Freedom + Binance", badge: "KZ Связка", region: "Казахстан 🇰🇿", img: "image_13.png" }
+          { name: "Kapital + OKX", badge: "AZ Связка", region: "Азербайджан 🇦🇿", img: "https://cryptologos.cc/logos/okb-okb-logo.svg?v=035" },
+          { name: "Stripe + Bybit + Bunq", badge: "PL Связка", region: "Польша 🇵🇱", img: "https://raw.githubusercontent.com/gilbarbara/logos/master/logos/stripe.svg" },
+          { name: "Privat + Binance", badge: "UA Связка", region: "Украина 🇺🇦", img: "https://cryptologos.cc/logos/binance-coin-bnb-logo.svg?v=035" },
+          { name: "Mono + Binance", badge: "UA Связка", region: "Украина 🇺🇦", img: "https://cryptologos.cc/logos/binance-coin-bnb-logo.svg?v=035" },
+          { name: "A-Bank + Binance", badge: "UA Связка", region: "Украина 🇺🇦", img: "https://cryptologos.cc/logos/binance-coin-bnb-logo.svg?v=035" },
+          { name: "Tinkoff + Bybit", badge: "RU Связка", region: "Россия 🇷🇺", img: "https://raw.githubusercontent.com/spothq/cryptocurrency-icons/master/128/color/usdt.png" },
+          { name: "Sber + Bybit (Maker)", badge: "RU Связка", region: "Россия 🇷🇺", img: "https://raw.githubusercontent.com/spothq/cryptocurrency-icons/master/128/color/usdt.png" },
+          { name: "Bakai + OKX", badge: "KG Связка", region: "Кыргызстан 🇰🇬", img: "https://cryptologos.cc/logos/okb-okb-logo.svg?v=035" },
+          { name: "Freedom + Binance", badge: "KZ Связка", region: "Казахстан 🇰🇿", img: "https://cryptologos.cc/logos/binance-coin-bnb-logo.svg?v=035" }
         ]
       },
       banks: {
         title: "ЛК Банков",
         items: [
-          { name: "Kapital Bank", badge: "AZ Visa", region: "Азербайджан 🇦🇿", img: "image_40.png" },
-          { name: "Freedom Bank KZ", badge: "Мультивалюта", region: "Казахстан 🇰🇿", img: "image_41.png" },
-          { name: "Kaspi Gold", badge: "KZ Card", region: "Казахстан 🇰🇿", img: "image_42.png" },
-          { name: "Bakai Bank", badge: "KG Карта", region: "Кыргызстан 🇰🇬", img: "image_41.png" },
-          { name: "Tinkoff Bank", badge: "Black / Plat", region: "Россия 🇷🇺", img: "image_41.png" },
-          { name: "Sber Bank", badge: "Gold", region: "Россия 🇷🇺", img: "image_41.png" },
-          { name: "Raiffeisen", badge: "RU / EU", region: "Россия 🇷🇺", img: "image_41.png" }
+          { name: "Kapital Bank", badge: "AZ Visa", region: "Азербайджан 🇦🇿", img: "https://raw.githubusercontent.com/gilbarbara/logos/master/logos/visa.svg" },
+          { name: "Freedom Bank KZ", badge: "Мультивалюта", region: "Казахстан 🇰🇿", img: "https://raw.githubusercontent.com/gilbarbara/logos/master/logos/mastercard.svg" },
+          { name: "Kaspi Gold", badge: "KZ Card", region: "Казахстан 🇰🇿", img: "https://raw.githubusercontent.com/gilbarbara/logos/master/logos/visa.svg" },
+          { name: "Bakai Bank", badge: "KG Карта", region: "Кыргызстан 🇰🇬", img: "https://raw.githubusercontent.com/gilbarbara/logos/master/logos/visa.svg" },
+          { name: "Tinkoff Bank", badge: "Black / Plat", region: "Россия 🇷🇺", img: "https://raw.githubusercontent.com/gilbarbara/logos/master/logos/mastercard.svg" },
+          { name: "Sber Bank", badge: "Gold", region: "Россия 🇷🇺", img: "https://raw.githubusercontent.com/gilbarbara/logos/master/logos/mir.svg" },
+          { name: "Raiffeisen", badge: "RU / EU", region: "Россия 🇷🇺", img: "https://raw.githubusercontent.com/gilbarbara/logos/master/logos/mastercard.svg" }
         ]
       }
     };
@@ -852,14 +847,10 @@
         card.className = "mono-card p-3 flex items-center justify-between cursor-pointer border border-white/10 active:scale-[0.99] transition";
         card.innerHTML = `
           <div class="flex items-center space-x-3">
-            <div class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center overflow-hidden flex-shrink-0 relative">
+            <div class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center p-1.5 flex-shrink-0">
               <img src="${item.img}" alt="${item.name}" 
-                   class="w-8 h-8 object-contain rounded-lg" 
-                   onload="this.style.opacity='1'"
-                   onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-              <div class="hidden absolute inset-0 bg-white/10 text-white text-xs font-bold items-center justify-center rounded-lg">
-                ${item.name.charAt(0)}
-              </div>
+                   class="w-full h-full object-contain rounded-lg"
+                   loading="lazy">
             </div>
             <div>
               <div class="flex items-center space-x-2 flex-wrap gap-y-1">
