@@ -104,6 +104,24 @@
       background: #15151A;
     }
 
+    .country-btn {
+      background: #101014;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .country-btn:active {
+      transform: scale(0.985);
+      border-color: rgba(255, 255, 255, 0.25);
+      background: #16161C;
+    }
+
     .status-dot-green {
       width: 6px;
       height: 6px;
@@ -354,7 +372,8 @@
 
       <!-- 2. КАТАЛОГ -->
       <section id="tab-catalog" class="tab-content hidden space-y-3">
-        <!-- Главные 4 категории (монохромный стиль) -->
+        
+        <!-- Уровень 1: 4 Главные категории -->
         <div id="catalog-categories" class="space-y-2.5">
           <div class="flex items-center justify-between px-1">
             <div class="text-[11px] font-bold text-zinc-400 uppercase tracking-widest">
@@ -364,8 +383,8 @@
           </div>
 
           <div class="space-y-2.5">
-            <!-- 1. Биржи -->
-            <div onclick="openCategory('crypto')" class="mono-card p-4 flex items-center justify-between cursor-pointer">
+            <!-- 1. Биржи (открывает список стран) -->
+            <div onclick="openCryptoCountries()" class="mono-card p-4 flex items-center justify-between cursor-pointer">
               <div class="flex items-center space-x-3.5">
                 <div class="mono-icon-box">
                   <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
@@ -381,7 +400,7 @@
             </div>
 
             <!-- 2. Банки -->
-            <div onclick="openCategory('banks')" class="mono-card p-4 flex items-center justify-between cursor-pointer">
+            <div onclick="openDirectCategory('banks')" class="mono-card p-4 flex items-center justify-between cursor-pointer">
               <div class="flex items-center space-x-3.5">
                 <div class="mono-icon-box">
                   <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
@@ -397,7 +416,7 @@
             </div>
 
             <!-- 3. Платежки -->
-            <div onclick="openCategory('payment')" class="mono-card p-4 flex items-center justify-between cursor-pointer">
+            <div onclick="openDirectCategory('payment')" class="mono-card p-4 flex items-center justify-between cursor-pointer">
               <div class="flex items-center space-x-3.5">
                 <div class="mono-icon-box">
                   <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
@@ -413,7 +432,7 @@
             </div>
 
             <!-- 4. Банк + Биржа -->
-            <div onclick="openCategory('bundle')" class="mono-card p-4 flex items-center justify-between cursor-pointer">
+            <div onclick="openDirectCategory('bundle')" class="mono-card p-4 flex items-center justify-between cursor-pointer">
               <div class="flex items-center space-x-3.5">
                 <div class="mono-icon-box">
                   <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
@@ -430,18 +449,38 @@
           </div>
         </div>
 
-        <!-- Витрина товаров -->
-        <div id="catalog-items" class="hidden space-y-3">
+        <!-- Уровень 2: Меню стран (СНГ в начале, затем Европа и остальные) -->
+        <div id="catalog-crypto-countries" class="hidden space-y-3">
           <div class="flex items-center justify-between pb-1">
-            <button onclick="closeCategory()" class="text-xs font-semibold text-white hover:text-zinc-300 flex items-center space-x-1.5 py-1">
+            <button onclick="backToMainCategories()" class="text-xs font-semibold text-white hover:text-zinc-300 flex items-center space-x-1.5 py-1">
               <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
               <span>Назад</span>
             </button>
-            <span id="current-category-title" class="text-xs font-bold text-zinc-300 uppercase tracking-wider"></span>
+            <span class="text-xs font-bold text-zinc-300 uppercase tracking-wider">КРИПТО-БИРЖИ / СТРАНЫ</span>
+          </div>
+
+          <!-- Список стран -->
+          <div class="space-y-2">
+            <div class="text-[10px] font-bold text-zinc-500 uppercase tracking-wider px-1 pt-1">СНГ и соседи</div>
+            <div id="countries-cis" class="space-y-1.5"></div>
+
+            <div class="text-[10px] font-bold text-zinc-500 uppercase tracking-wider px-1 pt-3">Европа и другие страны</div>
+            <div id="countries-world" class="space-y-1.5"></div>
+          </div>
+        </div>
+
+        <!-- Уровень 3: Витрина товаров (внутри выбранной страны или категории) -->
+        <div id="catalog-items" class="hidden space-y-3">
+          <div class="flex items-center justify-between pb-1">
+            <button onclick="backFromItems()" class="text-xs font-semibold text-white hover:text-zinc-300 flex items-center space-x-1.5 py-1">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+              <span>Назад</span>
+            </button>
+            <span id="current-items-title" class="text-xs font-bold text-zinc-300 uppercase tracking-wider"></span>
           </div>
 
           <div class="relative">
-            <input type="text" id="catalog-search" oninput="filterItems()" placeholder="Поиск по названию или стране..." class="w-full bg-[#111116] border border-white/10 rounded-xl px-9 py-2.5 text-xs text-white placeholder-zinc-500 outline-none focus:border-white/30 transition">
+            <input type="text" id="catalog-search" oninput="filterItems()" placeholder="Поиск по названию..." class="w-full bg-[#111116] border border-white/10 rounded-xl px-9 py-2.5 text-xs text-white placeholder-zinc-500 outline-none focus:border-white/30 transition">
             <svg class="w-3.5 h-3.5 text-zinc-500 absolute left-3 top-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
           </div>
 
@@ -538,7 +577,7 @@
               <div class="flex items-center space-x-3">
                 <div class="mono-icon-box">
                   <svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                    <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1 4-10z"/>
+                    <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
                   </svg>
                 </div>
                 <span class="text-xs font-semibold text-white">Язык</span>
@@ -593,7 +632,7 @@
 
         <button onclick="switchTab('home')" id="nav-home" class="tab-btn active">
           <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 22"/>
+            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
           </svg>
           <span class="tab-label">Главная</span>
         </button>
@@ -717,27 +756,54 @@
       if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred(style);
     }
 
-    // В поле "img" можно указать имя файла, загруженного в корень репозитория (например, "binance.png").
-    // Если поле пустое, отображается текстовая плашка с первой буквой.
-    const catalogData = {
-      crypto: {
-        title: "Крипто-биржи",
-        items: [
-          { name: "Binance", badge: "KYC Plus", region: "Global", img: "" },
-          { name: "Bybit", badge: "Level 1-2", region: "Global", img: "" },
-          { name: "Bybit (Maker)", badge: "P2P Maker", region: "Verified", img: "" },
-          { name: "OKX", badge: "KYC 2", region: "Global", img: "" },
-          { name: "MEXC", badge: "Full Verified", region: "No KYC", img: "" },
-          { name: "Bitget", badge: "Tier 1", region: "Global", img: "" },
-          { name: "KuCoin", badge: "Verified", region: "Global", img: "" },
-          { name: "Kraken", badge: "Intermediate", region: "USA / EU", img: "" },
-          { name: "Coinbase", badge: "EU / USA", region: "High limits", img: "" },
-          { name: "Gate.io", badge: "KYC 2", region: "Global", img: "" },
-          { name: "HTX (Huobi)", badge: "Verified", region: "Asia", img: "" },
-          { name: "BingX", badge: "Full Access", region: "Global", img: "" },
-          { name: "Crypto.com", badge: "EU Verified", region: "Card", img: "" }
-        ]
-      },
+    // СПИСОК СТРАН: СНГ ВПЕРЕДИ, ЗАТЕМ ЕВРОПА И ДРУГИЕ
+    const cryptoCountries = {
+      cis: [
+        { id: "ua", name: "Ukraine", flag: "🇺🇦" },
+        { id: "kz", name: "Kazakhstan", flag: "🇰🇿" },
+        { id: "by", name: "Belarus", flag: "🇧🇾" },
+        { id: "md", name: "Moldova", flag: "🇲🇩" },
+        { id: "az", name: "Azerbaijan", flag: "🇦🇿" },
+        { id: "kg", name: "Kyrgyzstan", flag: "🇰🇬" },
+        { id: "uz", name: "Uzbekistan", flag: "🇺🇿" },
+        { id: "ge", name: "Georgia", flag: "🇬🇪" }
+      ],
+      world: [
+        { id: "pl", name: "Poland", flag: "🇵🇱" },
+        { id: "de", name: "Germany", flag: "🇩🇪" },
+        { id: "es", name: "Spain", flag: "🇪🇸" },
+        { id: "ee", name: "Estonia", flag: "🇪🇪" },
+        { id: "lv", name: "Latvia", flag: "🇱🇻" },
+        { id: "lt", name: "Lithuania", flag: "🇱🇹" },
+        { id: "it", name: "Italy", flag: "🇮🇹" },
+        { id: "tr", name: "Turkey", flag: "🇹🇷" },
+        { id: "id", name: "Indonesia", flag: "🇮🇩" },
+        { id: "ke", name: "Kenya", flag: "🇰🇪" },
+        { id: "ng", name: "Nigeria", flag: "🇳🇬" },
+        { id: "us", name: "USA", flag: "🇺🇸" }
+      ]
+    };
+
+    // БАЗОВЫЙ ШАБЛОН БИРЖ ДЛЯ ВЫБРАННОЙ СТРАНЫ
+    function getExchangesForCountry(countryName, flag) {
+      return [
+        { name: "Binance", badge: "KYC Plus", region: `${countryName} ${flag}`, img: "" },
+        { name: "Bybit", badge: "Level 1-2", region: `${countryName} ${flag}`, img: "" },
+        { name: "Bybit (Maker)", badge: "P2P Maker", region: `${countryName} ${flag}`, img: "" },
+        { name: "OKX", badge: "KYC 2", region: `${countryName} ${flag}`, img: "" },
+        { name: "MEXC", badge: "Full Verified", region: `${countryName} ${flag}`, img: "" },
+        { name: "Bitget", badge: "Tier 1", region: `${countryName} ${flag}`, img: "" },
+        { name: "KuCoin", badge: "Verified", region: `${countryName} ${flag}`, img: "" },
+        { name: "Kraken", badge: "Intermediate", region: `${countryName} ${flag}`, img: "" },
+        { name: "Coinbase", badge: "Verified", region: `${countryName} ${flag}`, img: "" },
+        { name: "Gate.io", badge: "KYC 2", region: `${countryName} ${flag}`, img: "" },
+        { name: "HTX (Huobi)", badge: "Verified", region: `${countryName} ${flag}`, img: "" },
+        { name: "BingX", badge: "Full Access", region: `${countryName} ${flag}`, img: "" }
+      ];
+    }
+
+    // ОСТАЛЬНЫЕ КАТЕГОРИИ КАТАЛОГА
+    const directCategories = {
       payment: {
         title: "Платёжки / Необанки",
         items: [
@@ -789,14 +855,18 @@
       }
     };
 
-    let activeCategoryItems = [];
+    let activeItems = [];
+    let currentCatalogScreen = "categories"; // "categories", "crypto-countries", "items"
+    let currentItemsSource = ""; // "crypto-country" или "direct"
+
     const tabIndices = { 'home': 0, 'catalog': 1, 'cart': 2, 'cabinet': 3 };
 
     function switchTab(tabId) {
       haptic();
 
+      // Сброс каталога при уходе
       if (tabId !== 'catalog') {
-        closeCategory();
+        resetCatalog();
       }
 
       ['home', 'catalog', 'cart', 'cabinet', 'info'].forEach(t => {
@@ -822,6 +892,122 @@
       }
 
       window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+
+    // Инициализация списков стран
+    function initCountriesList() {
+      const cisBox = document.getElementById('countries-cis');
+      const worldBox = document.getElementById('countries-world');
+      cisBox.innerHTML = '';
+      worldBox.innerHTML = '';
+
+      cryptoCountries.cis.forEach(c => {
+        const btn = document.createElement('div');
+        btn.className = "country-btn";
+        btn.innerHTML = `
+          <div class="flex items-center space-x-2.5">
+            <span class="text-sm">${c.flag}</span>
+            <span class="text-xs font-semibold text-white">${c.name}</span>
+          </div>
+          <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg>
+        `;
+        btn.onclick = () => openCountryExchanges(c.name, c.flag);
+        cisBox.appendChild(btn);
+      });
+
+      cryptoCountries.world.forEach(c => {
+        const btn = document.createElement('div');
+        btn.className = "country-btn";
+        btn.innerHTML = `
+          <div class="flex items-center space-x-2.5">
+            <span class="text-sm">${c.flag}</span>
+            <span class="text-xs font-semibold text-white">${c.name}</span>
+          </div>
+          <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg>
+        `;
+        btn.onclick = () => openCountryExchanges(c.name, c.flag);
+        worldBox.appendChild(btn);
+      });
+    }
+
+    // Переход в список стран крипто-бирж
+    function openCryptoCountries() {
+      haptic('medium');
+      currentCatalogScreen = "crypto-countries";
+      document.getElementById('catalog-categories').classList.add('hidden');
+      document.getElementById('catalog-items').classList.add('hidden');
+      document.getElementById('catalog-crypto-countries').classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+
+    // Переход из списка стран к биржам конкретной страны
+    function openCountryExchanges(countryName, flag) {
+      haptic('medium');
+      currentCatalogScreen = "items";
+      currentItemsSource = "crypto-country";
+
+      activeItems = getExchangesForCountry(countryName, flag);
+      document.getElementById('catalog-crypto-countries').classList.add('hidden');
+      document.getElementById('catalog-items').classList.remove('hidden');
+      document.getElementById('current-items-title').innerText = `${countryName} ${flag}`;
+      document.getElementById('catalog-search').value = '';
+
+      renderItems(activeItems);
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+
+    // Прямой вход в другие разделы (ЛК банков, платёжки, связки)
+    function openDirectCategory(key) {
+      haptic('medium');
+      const cat = directCategories[key];
+      if (!cat) return;
+
+      currentCatalogScreen = "items";
+      currentItemsSource = "direct";
+
+      activeItems = cat.items;
+      document.getElementById('catalog-categories').classList.add('hidden');
+      document.getElementById('catalog-crypto-countries').classList.add('hidden');
+      document.getElementById('catalog-items').classList.remove('hidden');
+      document.getElementById('current-items-title').innerText = cat.title;
+      document.getElementById('catalog-search').value = '';
+
+      renderItems(activeItems);
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+
+    // Кнопка Назад из списка стран
+    function backToMainCategories() {
+      haptic();
+      currentCatalogScreen = "categories";
+      document.getElementById('catalog-crypto-countries').classList.add('hidden');
+      document.getElementById('catalog-items').classList.add('hidden');
+      document.getElementById('catalog-categories').classList.remove('hidden');
+    }
+
+    // Кнопка Назад из витрины товаров
+    function backFromItems() {
+      haptic();
+      if (currentItemsSource === "crypto-country") {
+        currentCatalogScreen = "crypto-countries";
+        document.getElementById('catalog-items').classList.add('hidden');
+        document.getElementById('catalog-crypto-countries').classList.remove('hidden');
+      } else {
+        currentCatalogScreen = "categories";
+        document.getElementById('catalog-items').classList.add('hidden');
+        document.getElementById('catalog-categories').classList.remove('hidden');
+      }
+    }
+
+    // Полный сброс каталога к корневому экрану
+    function resetCatalog() {
+      currentCatalogScreen = "categories";
+      const cat = document.getElementById('catalog-categories');
+      const countries = document.getElementById('catalog-crypto-countries');
+      const items = document.getElementById('catalog-items');
+      if (cat) cat.classList.remove('hidden');
+      if (countries) countries.classList.add('hidden');
+      if (items) items.classList.add('hidden');
     }
 
     function renderItems(items) {
@@ -870,36 +1056,14 @@
       });
     }
 
-    function openCategory(key) {
-      haptic('medium');
-      const category = catalogData[key];
-      if (!category) return;
-
-      activeCategoryItems = category.items;
-
-      document.getElementById('catalog-categories').classList.add('hidden');
-      document.getElementById('catalog-items').classList.remove('hidden');
-      document.getElementById('current-category-title').innerText = category.title;
-      document.getElementById('catalog-search').value = '';
-
-      renderItems(activeCategoryItems);
-    }
-
     function filterItems() {
       const q = document.getElementById('catalog-search').value.toLowerCase().trim();
-      const filtered = activeCategoryItems.filter(i => 
+      const filtered = activeItems.filter(i => 
         i.name.toLowerCase().includes(q) || 
         i.region.toLowerCase().includes(q) || 
         i.badge.toLowerCase().includes(q)
       );
       renderItems(filtered);
-    }
-
-    function closeCategory() {
-      const catalogItems = document.getElementById('catalog-items');
-      const catalogCategories = document.getElementById('catalog-categories');
-      if (catalogItems) catalogItems.classList.add('hidden');
-      if (catalogCategories) catalogCategories.classList.remove('hidden');
     }
 
     function selectItem(name) {
@@ -938,6 +1102,11 @@
       lang = lang === 'RU' ? 'EN' : 'RU';
       document.getElementById('lang-label').innerText = lang;
     }
+
+    // Старт
+    document.addEventListener("DOMContentLoaded", () => {
+      initCountriesList();
+    });
   </script>
 </body>
 </html>
