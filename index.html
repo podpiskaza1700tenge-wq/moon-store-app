@@ -143,11 +143,12 @@
       width: 38px;
       height: 38px;
       border-radius: 12px;
-      background: #18181D;
+      background: rgba(255, 255, 255, 0.06);
       border: 1px solid rgba(255, 255, 255, 0.1);
       display: flex;
       align-items: center;
       justify-content: center;
+      color: #FFFFFF;
       flex-shrink: 0;
       overflow: hidden;
     }
@@ -277,7 +278,7 @@
       </div>
     </header>
 
-    <!-- Основные разделы -->
+    <!-- Разделы -->
     <main class="p-4 flex-1 relative z-10">
       
       <!-- 1. ГЛАВНАЯ -->
@@ -353,6 +354,7 @@
 
       <!-- 2. КАТАЛОГ -->
       <section id="tab-catalog" class="tab-content hidden space-y-3">
+        <!-- Главные 4 категории (монохромный стиль) -->
         <div id="catalog-categories" class="space-y-2.5">
           <div class="flex items-center justify-between px-1">
             <div class="text-[11px] font-bold text-zinc-400 uppercase tracking-widest">
@@ -362,11 +364,12 @@
           </div>
 
           <div class="space-y-2.5">
+            <!-- 1. Биржи -->
             <div onclick="openCategory('crypto')" class="mono-card p-4 flex items-center justify-between cursor-pointer">
               <div class="flex items-center space-x-3.5">
                 <div class="mono-icon-box">
-                  <svg class="w-5 h-5 text-amber-400" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 2a10 10 0 1 0 10 10A10.011 10.011 0 0 0 12 2zm1 14.93V18h-2v-1.07A4.008 4.008 0 0 1 8 13h2a2 2 0 0 0 2 2 2 2 0 0 0 0-4h-2a4 4 0 0 1 0-8V2h2v1.07A4.008 4.008 0 0 1 16 7h-2a2 2 0 0 0-2-2 2 2 0 0 0 0 4h2a4 4 0 0 1-1 7.93z"/>
+                  <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <circle cx="12" cy="12" r="9"/><path d="M15 9.5a2.5 2.5 0 0 0-5 0v5a2.5 2.5 0 0 0 5 0"/><path d="M8 12h8"/>
                   </svg>
                 </div>
                 <div>
@@ -377,10 +380,11 @@
               <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg>
             </div>
 
+            <!-- 2. Банки -->
             <div onclick="openCategory('banks')" class="mono-card p-4 flex items-center justify-between cursor-pointer">
               <div class="flex items-center space-x-3.5">
                 <div class="mono-icon-box">
-                  <svg class="w-5 h-5 text-sky-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
                     <line x1="3" y1="21" x2="21" y2="21"/><line x1="3" y1="10" x2="21" y2="10"/><polyline points="5 6 12 3 19 6"/><line x1="6" y1="10" x2="6" y2="21"/><line x1="10" y1="10" x2="10" y2="21"/><line x1="14" y1="10" x2="14" y2="21"/><line x1="18" y1="10" x2="18" y2="21"/>
                   </svg>
                 </div>
@@ -392,10 +396,11 @@
               <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg>
             </div>
 
+            <!-- 3. Платежки -->
             <div onclick="openCategory('payment')" class="mono-card p-4 flex items-center justify-between cursor-pointer">
               <div class="flex items-center space-x-3.5">
                 <div class="mono-icon-box">
-                  <svg class="w-5 h-5 text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
                     <rect x="2" y="5" width="20" height="14" rx="2.5"/><line x1="2" y1="10" x2="22" y2="10"/><circle cx="7" cy="15" r="1"/>
                   </svg>
                 </div>
@@ -407,10 +412,11 @@
               <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg>
             </div>
 
+            <!-- 4. Банк + Биржа -->
             <div onclick="openCategory('bundle')" class="mono-card p-4 flex items-center justify-between cursor-pointer">
               <div class="flex items-center space-x-3.5">
                 <div class="mono-icon-box">
-                  <svg class="w-5 h-5 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
                     <path d="m16 16 4-4-4-4"/><path d="M20 12H10"/><path d="m8 8-4 4 4 4"/><path d="M4 12h10"/>
                   </svg>
                 </div>
@@ -532,7 +538,7 @@
               <div class="flex items-center space-x-3">
                 <div class="mono-icon-box">
                   <svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                    <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                    <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1 4-10z"/>
                   </svg>
                 </div>
                 <span class="text-xs font-semibold text-white">Язык</span>
@@ -587,7 +593,7 @@
 
         <button onclick="switchTab('home')" id="nav-home" class="tab-btn active">
           <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 22"/>
           </svg>
           <span class="tab-label">Главная</span>
         </button>
@@ -711,150 +717,74 @@
       if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred(style);
     }
 
-    // ОРИГИНАЛЬНЫЕ ФИРМЕННЫЕ ВЕКТОРНЫЕ ЛОГОТИПЫ (SVG) С ИХ ПОДЛИННЫМИ ЦВЕТАМИ И ФОРМАМИ
-    const realLogos = {
-      // Binance (Официальный золотой ромб)
-      binance: `<svg class="w-5 h-5" viewBox="0 0 126 126" fill="none"><path fill="#F3BA2F" d="M38.8 52.3L63 28.1l24.2 24.2 14.1-14.1L63 0 24.7 38.2l14.1 14.1zM0 63l14.1-14.1L28.2 63 14.1 77.1 0 63zm38.8 10.7L63 97.9l24.2-24.2 14.1 14.1L63 126 24.7 87.8l14.1-14.1zM126 63l-14.1-14.1L97.8 63l14.1 14.1L126 63zm-48.9 0L63 48.9 48.9 63 63 77.1 77.1 63z"/></svg>`,
-      
-      // Bybit (Официальная плашка)
-      bybit: `<svg class="w-6 h-6" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#17181E"/><path d="M7 8h4.5v16H7V8zm6 0h4.5v7.5H13V8zm0 8.5h4.5V24H13v-7.5zm6-8.5H23v16h-4V8z" fill="#F7A600"/></svg>`,
-      
-      // OKX (Фирменные 5 квадратов)
-      okx: `<svg class="w-5 h-5" viewBox="0 0 24 24" fill="#FFFFFF"><rect x="3" y="3" width="5.5" height="5.5" rx="1"/><rect x="15.5" y="3" width="5.5" height="5.5" rx="1"/><rect x="9.25" y="9.25" width="5.5" height="5.5" rx="1"/><rect x="3" y="15.5" width="5.5" height="5.5" rx="1"/><rect x="15.5" y="15.5" width="5.5" height="5.5" rx="1"/></svg>`,
-      
-      // MEXC (Официальный градиентный М)
-      mexc: `<svg class="w-6 h-6" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#1C2438"/><path d="M6 22l5-12 5 8 5-8 5 12h-3.5l-3.2-8-3.3 5.5-3.3-5.5L7.5 22H6z" fill="#2E69FF"/></svg>`,
-      
-      // Bitget (Официальный бирюзовый шеврон)
-      bitget: `<svg class="w-6 h-6" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#001524"/><path d="M16 6L6 16l10 10 3.5-3.5L13 16l6.5-6.5L16 6zm6.5 6.5L19 16l3.5 3.5 3.5-3.5-3.5-3.5z" fill="#00F0FF"/></svg>`,
-      
-      // KuCoin (Официальный бирюзовый щит/K)
-      kucoin: `<svg class="w-6 h-6" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#0E1A24"/><path d="M8 8h4.5v6.5L18.5 8H24l-7.5 8 8 8H18l-5.5-6V24H8V8z" fill="#24AE8F"/></svg>`,
-      
-      // Kraken (Официальный фиолетовый осьминог)
-      kraken: `<svg class="w-6 h-6" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#5741D9"/><path d="M16 7c-4.4 0-8 3.6-8 8v10h3v-7h2v7h3v-7h2v7h3V15c0-4.4-3.6-8-8-8zm-3 7a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm6 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3z" fill="#FFFFFF"/></svg>`,
-      
-      // Coinbase (Официальный круг синего цвета)
-      coinbase: `<svg class="w-6 h-6" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#0052FF"/><rect x="11.5" y="11.5" width="9" height="9" rx="2" fill="#FFFFFF"/></svg>`,
-      
-      // Gate.io (Официальный логотип)
-      gate: `<svg class="w-6 h-6" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#1E2329"/><path d="M16 6a10 10 0 00-7.07 17.07l2.12-2.12A7 7 0 1123 16h-7v3h10A10 10 0 0016 6z" fill="#00C087"/></svg>`,
-      
-      // HTX / Huobi
-      htx: `<svg class="w-6 h-6" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#0F172A"/><path d="M16 6c4 4.5 6 8.5 6 12a6 6 0 01-12 0c0-3.5 2-7.5 6-12z" fill="#1877F2"/><circle cx="16" cy="19" r="2.5" fill="#38BDF8"/></svg>`,
-      
-      // Stripe (Официальный фиолетовый S)
-      stripe: `<svg class="w-6 h-6" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#635BFF"/><path d="M18.8 13.6c-1.6-.6-2.5-1.1-2.5-1.8 0-.6.5-1 1.4-1 1.7 0 3.4.7 4.6 1.2l.7-3.3c-1.3-.6-3.1-.9-5.1-.9-4 0-6.7 2.1-6.7 5.4 0 3.2 2.8 4.2 5 5 1.7.6 2.3 1.1 2.3 1.9 0 .8-.7 1.2-1.7 1.2-1.8 0-3.9-.9-5.2-1.7l-.7 3.4c1.5.7 3.6 1.1 5.9 1.1 4.1 0 7-2 7-5.5 0-3.3-2.7-4.3-4.9-5z" fill="#FFFFFF"/></svg>`,
-      
-      // Wise (Официальный ярко-салатовый флаг Fast Flag)
-      wise: `<svg class="w-6 h-6" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#163300"/><path d="M8 8h11l-4.5 12H21L13 25l3-6H11L8 8z" fill="#9FE870"/></svg>`,
-      
-      // Revolut (Официальный монохромный R)
-      revolut: `<svg class="w-6 h-6" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#000000"/><path d="M9 8h8.5a4.5 4.5 0 013.8 6.9L24 24h-4.8l-2.4-8h-3.3v8H9V8zm4.5 3.5v3.2h3.8a1.6 1.6 0 100-3.2h-3.8z" fill="#FFFFFF"/></svg>`,
-      
-      // Bunq (Официальная радужная дуга)
-      bunq: `<svg class="w-6 h-6" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#1E232A"/><circle cx="16" cy="16" r="8" fill="none" stroke="#2563EB" stroke-width="3"/><path d="M16 8a8 8 0 018 8" fill="none" stroke="#10B981" stroke-width="3"/><path d="M8 16a8 8 0 018-8" fill="none" stroke="#F59E0B" stroke-width="3"/></svg>`,
-      
-      // PayPal (Официальные две P)
-      paypal: `<svg class="w-6 h-6" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#003087"/><path d="M12 9h6c2.5 0 4.5 1.5 4 4-.6 3-2.5 4.5-5 4.5h-1.8L13.8 24H10l2-15z" fill="#0079C1"/><path d="M14.5 12h5.5c2 0 3.5 1.2 3.2 3.2-.5 2.5-2 3.8-4.2 3.8h-1.5L16 25h-3.2l1.7-13z" fill="#00457C"/></svg>`,
-      
-      // Payoneer (Официальный оранжевый круг)
-      payoneer: `<svg class="w-6 h-6" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#1B1B1B"/><circle cx="16" cy="16" r="7" fill="none" stroke="#FF4800" stroke-width="3.5"/></svg>`,
-      
-      // Tinkoff (Официальный жёлтый щит с Т)
-      tinkoff: `<svg class="w-6 h-6" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#FFDD2D"/><path d="M10 12h12v3h-4.5v9h-3v-9H10v-3z" fill="#333333"/></svg>`,
-      
-      // Sber (Официальный зеленый круг с галочкой)
-      sber: `<svg class="w-6 h-6" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#21A038"/><path d="M14 19.5l-4-4 1.5-1.5 2.5 2.5 7.5-7.5L23 10.5z" fill="#FFFFFF"/></svg>`,
-      
-      // Kaspi (Официальный красный квадрат с логотипом)
-      kaspi: `<svg class="w-6 h-6" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#F14635"/><path d="M16 9l-6 7 6 7 6-7-6-7zm0 3.5l3 3.5-3 3.5-3-3.5 3-3.5z" fill="#FFFFFF"/></svg>`,
-      
-      // Freedom Bank KZ (Официальный зелёный брендинг)
-      freedom: `<svg class="w-6 h-6" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#00A859"/><path d="M11 10h10v2.5h-7.5v3h6.5V18h-6.5v4H11V10z" fill="#FFFFFF"/></svg>`,
-      
-      // Kapital Bank AZ (Официальный красный брендинг)
-      kapital: `<svg class="w-6 h-6" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#E31E24"/><path d="M11 9h3.5v5.5L19 9h4l-5.5 6.5L23 23h-4l-4.5-6v6H11V9z" fill="#FFFFFF"/></svg>`,
-      
-      // Bakai Bank KG (Официальный брендинг)
-      bakai: `<svg class="w-6 h-6" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#004A99"/><circle cx="16" cy="16" r="6" fill="none" stroke="#FFC20E" stroke-width="2.5"/><path d="M16 12v8M12 16h8" stroke="#FFC20E" stroke-width="2.5"/></svg>`,
-      
-      // Raiffeisen (Официальный желто-черный крест)
-      raiffeisen: `<svg class="w-6 h-6" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#FFEE00"/><path d="M11 11l10 10m0-10L11 21" stroke="#000000" stroke-width="3" stroke-linecap="round"/></svg>`,
-
-      // N26 (Официальный логотип банка)
-      n26: `<svg class="w-6 h-6" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#36A18B"/><path d="M10 10h3l6 8.5V10h3v12h-3l-6-8.5V22h-3V10z" fill="#FFFFFF"/></svg>`,
-
-      // Универсальная карточка / крипта
-      card: `<svg class="w-6 h-6" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#1C1C22"/><rect x="7" y="10" width="18" height="12" rx="2" fill="none" stroke="#A1A1AA" stroke-width="1.8"/><line x1="7" y1="14" x2="25" y2="14" stroke="#A1A1AA" stroke-width="1.8"/></svg>`
-    };
-
+    // В поле "img" можно указать имя файла, загруженного в корень репозитория (например, "binance.png").
+    // Если поле пустое, отображается текстовая плашка с первой буквой.
     const catalogData = {
       crypto: {
         title: "Крипто-биржи",
         items: [
-          { name: "Binance", badge: "KYC Plus", region: "Global", logoKey: "binance" },
-          { name: "Bybit", badge: "Level 1-2", region: "Global", logoKey: "bybit" },
-          { name: "Bybit (Maker)", badge: "P2P Maker", region: "Verified", logoKey: "bybit" },
-          { name: "OKX", badge: "KYC 2", region: "Global", logoKey: "okx" },
-          { name: "MEXC", badge: "Full Verified", region: "No KYC", logoKey: "mexc" },
-          { name: "Bitget", badge: "Tier 1", region: "Global", logoKey: "bitget" },
-          { name: "KuCoin", badge: "Verified", region: "Global", logoKey: "kucoin" },
-          { name: "Kraken", badge: "Intermediate", region: "USA / EU", logoKey: "kraken" },
-          { name: "Coinbase", badge: "EU / USA", region: "High limits", logoKey: "coinbase" },
-          { name: "Gate.io", badge: "KYC 2", region: "Global", logoKey: "gate" },
-          { name: "HTX (Huobi)", badge: "Verified", region: "Asia", logoKey: "htx" },
-          { name: "BingX", badge: "Full Access", region: "Global", logoKey: "binance" },
-          { name: "Crypto.com", badge: "EU Verified", region: "Card", logoKey: "coinbase" }
+          { name: "Binance", badge: "KYC Plus", region: "Global", img: "" },
+          { name: "Bybit", badge: "Level 1-2", region: "Global", img: "" },
+          { name: "Bybit (Maker)", badge: "P2P Maker", region: "Verified", img: "" },
+          { name: "OKX", badge: "KYC 2", region: "Global", img: "" },
+          { name: "MEXC", badge: "Full Verified", region: "No KYC", img: "" },
+          { name: "Bitget", badge: "Tier 1", region: "Global", img: "" },
+          { name: "KuCoin", badge: "Verified", region: "Global", img: "" },
+          { name: "Kraken", badge: "Intermediate", region: "USA / EU", img: "" },
+          { name: "Coinbase", badge: "EU / USA", region: "High limits", img: "" },
+          { name: "Gate.io", badge: "KYC 2", region: "Global", img: "" },
+          { name: "HTX (Huobi)", badge: "Verified", region: "Asia", img: "" },
+          { name: "BingX", badge: "Full Access", region: "Global", img: "" },
+          { name: "Crypto.com", badge: "EU Verified", region: "Card", img: "" }
         ]
       },
       payment: {
         title: "Платёжки / Необанки",
         items: [
-          { name: "Stripe Business", badge: "Merchant", region: "Польша 🇵🇱", logoKey: "stripe" },
-          { name: "Wise (Personal)", badge: "EU IBAN", region: "Europe 🇪🇺", logoKey: "wise" },
-          { name: "Wise (Business)", badge: "Company", region: "UK / EU 🇪🇺", logoKey: "wise" },
-          { name: "Revolut (Personal)", badge: "EU / LT", region: "Europe 🇪🇺", logoKey: "revolut" },
-          { name: "Revolut (Business)", badge: "Business", region: "Lithuania 🇱🇹", logoKey: "revolut" },
-          { name: "Bunq (Personal)", badge: "NL / DE", region: "Netherlands 🇳🇱", logoKey: "bunq" },
-          { name: "Bunq (Business)", badge: "Лимиты", region: "Europe 🇪🇺", logoKey: "bunq" },
-          { name: "PayPal (Personal)", badge: "Прогретый", region: "Global", logoKey: "paypal" },
-          { name: "Payoneer", badge: "Global", region: "USD / EUR", logoKey: "payoneer" },
-          { name: "N26 Bank", badge: "Standard", region: "Germany 🇩🇪", logoKey: "n26" },
-          { name: "Blackcatcard", badge: "EU Card", region: "Malta 🇲🇹", logoKey: "card" },
-          { name: "Vivid Money", badge: "DE IBAN", region: "Germany 🇩🇪", logoKey: "card" },
-          { name: "Wirex", badge: "Crypto Card", region: "Europe 🇪🇺", logoKey: "card" },
-          { name: "Pyypl", badge: "VCC Card", region: "UAE 🇦🇪", logoKey: "card" },
-          { name: "Skrill / Neteller", badge: "VIP", region: "Global", logoKey: "card" },
-          { name: "Paysera", badge: "Unlimited", region: "Lithuania 🇱🇹", logoKey: "card" },
-          { name: "Icard", badge: "EU Account", region: "Bulgaria 🇧🇬", logoKey: "card" },
-          { name: "UP bank", badge: "AU Account", region: "Australia 🇦🇺", logoKey: "card" }
+          { name: "Stripe Business", badge: "Merchant", region: "Польша 🇵🇱", img: "" },
+          { name: "Wise (Personal)", badge: "EU IBAN", region: "Europe 🇪🇺", img: "" },
+          { name: "Wise (Business)", badge: "Company", region: "UK / EU 🇪🇺", img: "" },
+          { name: "Revolut (Personal)", badge: "EU / LT", region: "Europe 🇪🇺", img: "" },
+          { name: "Revolut (Business)", badge: "Business", region: "Lithuania 🇱🇹", img: "" },
+          { name: "Bunq (Personal)", badge: "NL / DE", region: "Netherlands 🇳🇱", img: "" },
+          { name: "Bunq (Business)", badge: "Лимиты", region: "Europe 🇪🇺", img: "" },
+          { name: "PayPal (Personal)", badge: "Прогретый", region: "Global", img: "" },
+          { name: "Payoneer", badge: "Global", region: "USD / EUR", img: "" },
+          { name: "N26 Bank", badge: "Standard", region: "Germany 🇩🇪", img: "" },
+          { name: "Blackcatcard", badge: "EU Card", region: "Malta 🇲🇹", img: "" },
+          { name: "Vivid Money", badge: "DE IBAN", region: "Germany 🇩🇪", img: "" },
+          { name: "Wirex", badge: "Crypto Card", region: "Europe 🇪🇺", img: "" },
+          { name: "Pyypl", badge: "VCC Card", region: "UAE 🇦🇪", img: "" },
+          { name: "Skrill / Neteller", badge: "VIP", region: "Global", img: "" },
+          { name: "Paysera", badge: "Unlimited", region: "Lithuania 🇱🇹", img: "" },
+          { name: "Icard", badge: "EU Account", region: "Bulgaria 🇧🇬", img: "" },
+          { name: "UP bank", badge: "AU Account", region: "Australia 🇦🇺", img: "" }
         ]
       },
       bundle: {
         title: "Банк + Биржа",
         items: [
-          { name: "Kapital + OKX", badge: "AZ Связка", region: "Азербайджан 🇦🇿", logoKey: "kapital" },
-          { name: "Stripe + Bybit + Bunq", badge: "PL Связка", region: "Польша 🇵🇱", logoKey: "stripe" },
-          { name: "Privat + Binance", badge: "UA Связка", region: "Украина 🇺🇦", logoKey: "binance" },
-          { name: "Mono + Binance", badge: "UA Связка", region: "Украина 🇺🇦", logoKey: "binance" },
-          { name: "A-Bank + Binance", badge: "UA Связка", region: "Украина 🇺🇦", logoKey: "binance" },
-          { name: "Tinkoff + Bybit", badge: "RU Связка", region: "Россия 🇷🇺", logoKey: "tinkoff" },
-          { name: "Sber + Bybit (Maker)", badge: "RU Связка", region: "Россия 🇷🇺", logoKey: "sber" },
-          { name: "Bakai + OKX", badge: "KG Связка", region: "Кыргызстан 🇰🇬", logoKey: "bakai" },
-          { name: "Freedom + Binance", badge: "KZ Связка", region: "Казахстан 🇰🇿", logoKey: "freedom" }
+          { name: "Kapital + OKX", badge: "AZ Связка", region: "Азербайджан 🇦🇿", img: "" },
+          { name: "Stripe + Bybit + Bunq", badge: "PL Связка", region: "Польша 🇵🇱", img: "" },
+          { name: "Privat + Binance", badge: "UA Связка", region: "Украина 🇺🇦", img: "" },
+          { name: "Mono + Binance", badge: "UA Связка", region: "Украина 🇺🇦", img: "" },
+          { name: "A-Bank + Binance", badge: "UA Связка", region: "Украина 🇺🇦", img: "" },
+          { name: "Tinkoff + Bybit", badge: "RU Связка", region: "Россия 🇷🇺", img: "" },
+          { name: "Sber + Bybit (Maker)", badge: "RU Связка", region: "Россия 🇷🇺", img: "" },
+          { name: "Bakai + OKX", badge: "KG Связка", region: "Кыргызстан 🇰🇬", img: "" },
+          { name: "Freedom + Binance", badge: "KZ Связка", region: "Казахстан 🇰🇿", img: "" }
         ]
       },
       banks: {
         title: "ЛК Банков",
         items: [
-          { name: "Kapital Bank", badge: "AZ Visa", region: "Азербайджан 🇦🇿", logoKey: "kapital" },
-          { name: "Freedom Bank KZ", badge: "Мультивалюта", region: "Казахстан 🇰🇿", logoKey: "freedom" },
-          { name: "Kaspi Gold", badge: "KZ Card", region: "Казахстан 🇰🇿", logoKey: "kaspi" },
-          { name: "Bakai Bank", badge: "KG Карта", region: "Кыргызстан 🇰🇬", logoKey: "bakai" },
-          { name: "Tinkoff Bank", badge: "Black / Plat", region: "Россия 🇷🇺", logoKey: "tinkoff" },
-          { name: "Sber Bank", badge: "Gold", region: "Россия 🇷🇺", logoKey: "sber" },
-          { name: "Raiffeisen", badge: "RU / EU", region: "Россия 🇷🇺", logoKey: "raiffeisen" }
+          { name: "Kapital Bank", badge: "AZ Visa", region: "Азербайджан 🇦🇿", img: "" },
+          { name: "Freedom Bank KZ", badge: "Мультивалюта", region: "Казахстан 🇰🇿", img: "" },
+          { name: "Kaspi Gold", badge: "KZ Card", region: "Казахстан 🇰🇿", img: "" },
+          { name: "Bakai Bank", badge: "KG Карта", region: "Кыргызстан 🇰🇬", img: "" },
+          { name: "Tinkoff Bank", badge: "Black / Plat", region: "Россия 🇷🇺", img: "" },
+          { name: "Sber Bank", badge: "Gold", region: "Россия 🇷🇺", img: "" },
+          { name: "Raiffeisen", badge: "RU / EU", region: "Россия 🇷🇺", img: "" }
         ]
       }
     };
@@ -904,13 +834,17 @@
       }
 
       items.forEach(item => {
-        const logoSvg = realLogos[item.logoKey] || realLogos.card;
+        const letter = item.name.charAt(0).toUpperCase();
+        const iconHtml = item.img && item.img.trim() !== ''
+          ? `<img src="${item.img}" alt="${item.name}" class="w-full h-full object-contain rounded-lg">`
+          : `<span class="text-xs font-bold text-white tracking-wider">${letter}</span>`;
+
         const card = document.createElement('div');
         card.className = "mono-card p-3 flex items-center justify-between cursor-pointer border border-white/10 active:scale-[0.99] transition";
         card.innerHTML = `
           <div class="flex items-center space-x-3">
             <div class="mono-icon-box">
-              ${logoSvg}
+              ${iconHtml}
             </div>
             <div>
               <div class="flex items-center space-x-2 flex-wrap gap-y-1">
