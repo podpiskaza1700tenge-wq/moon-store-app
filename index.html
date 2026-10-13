@@ -40,19 +40,19 @@
       z-index: 0;
     }
 
-    /* Аккуратная мини-луна в углу */
+    /* Мини-луна */
     .mini-moon {
       position: fixed;
       top: 18px;
       right: calc(50% - 190px);
-      width: 76px;
-      height: 76px;
+      width: 74px;
+      height: 74px;
       border-radius: 50%;
       background: radial-gradient(circle at 32% 32%, #FFFFFF 0%, #D4D4D8 45%, #71717A 80%, #27272A 100%);
       box-shadow: 
-        0 0 35px 8px rgba(255, 255, 255, 0.12),
+        0 0 32px 8px rgba(255, 255, 255, 0.12),
         inset -4px -4px 10px rgba(0, 0, 0, 0.55);
-      opacity: 0.82;
+      opacity: 0.85;
       pointer-events: none;
       z-index: 1;
       animation: moonGlow 5s ease-in-out infinite alternate;
@@ -63,11 +63,11 @@
       position: absolute;
       top: 24%;
       left: 28%;
-      width: 16px;
-      height: 16px;
+      width: 15px;
+      height: 15px;
       border-radius: 50%;
       background: rgba(0, 0, 0, 0.15);
-      box-shadow: 18px 14px 0 -2px rgba(0, 0, 0, 0.12), 4px 26px 0 -4px rgba(0, 0, 0, 0.14);
+      box-shadow: 17px 13px 0 -2px rgba(0, 0, 0, 0.12), 4px 25px 0 -4px rgba(0, 0, 0, 0.14);
     }
 
     @keyframes moonGlow {
@@ -81,7 +81,7 @@
       }
     }
 
-    /* Мобильный контейнер */
+    /* Контейнер приложения */
     .app-viewport {
       width: 100%;
       max-width: 440px;
@@ -93,10 +93,10 @@
       z-index: 10;
     }
 
-    /* Четкие контрастные карточки */
+    /* Карточки */
     .mono-card {
-      background: #111114;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: #101014;
+      border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 20px;
       box-shadow: 0 10px 28px rgba(0, 0, 0, 0.7);
       transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -104,8 +104,27 @@
 
     .mono-card:active {
       transform: scale(0.985);
-      border-color: rgba(255, 255, 255, 0.3);
-      background: #16161A;
+      border-color: rgba(255, 255, 255, 0.25);
+      background: #15151A;
+    }
+
+    /* Зеленая неоновая точка статуса */
+    .status-dot-green {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: #10B981;
+      box-shadow: 0 0 8px 2px rgba(16, 185, 129, 0.7);
+      animation: greenPulse 2s infinite ease-in-out;
+    }
+
+    @keyframes greenPulse {
+      0%, 100% {
+        box-shadow: 0 0 6px 1.5px rgba(16, 185, 129, 0.65);
+      }
+      50% {
+        box-shadow: 0 0 12px 3.5px rgba(16, 185, 129, 0.95);
+      }
     }
 
     .mono-row {
@@ -138,7 +157,7 @@
       flex-shrink: 0;
     }
 
-    /* Капсульный таб-бар iOS со скользящим ползунком */
+    /* Капсульный таб-бар iOS */
     .tabbar-wrapper {
       position: fixed;
       bottom: calc(14px + env(safe-area-inset-bottom, 8px));
@@ -251,8 +270,8 @@
         </div>
         <div>
           <span class="font-extrabold text-sm tracking-wider text-white uppercase">MOON STORE</span>
-          <div class="text-[10px] text-zinc-400 font-semibold tracking-tight flex items-center gap-1">
-            <span class="w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_6px_#ffffff]"></span>
+          <div class="text-[10px] text-zinc-400 font-semibold tracking-tight flex items-center gap-1.5">
+            <span class="status-dot-green"></span>
             Online Marketplace
           </div>
         </div>
@@ -343,15 +362,18 @@
 
       <!-- 2. КАТАЛОГ -->
       <section id="tab-catalog" class="tab-content hidden space-y-3">
+        
+        <!-- Категории каталога -->
         <div id="catalog-categories" class="space-y-2.5">
           <div class="flex items-center justify-between px-1">
             <div class="text-[11px] font-bold text-zinc-400 uppercase tracking-widest">
-              Категории каталога
+              Категории витрины
             </div>
             <span class="text-[10px] font-bold text-white bg-white/10 px-2 py-0.5 rounded-full border border-white/20">4 раздела</span>
           </div>
 
           <div class="space-y-2.5">
+            <!-- Крипто-биржи -->
             <div onclick="openCategory('crypto')" class="mono-card p-4 flex items-center justify-between cursor-pointer">
               <div class="flex items-center space-x-3.5">
                 <div class="mono-icon-box">
@@ -367,6 +389,7 @@
               <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg>
             </div>
 
+            <!-- ЛК банков -->
             <div onclick="openCategory('banks')" class="mono-card p-4 flex items-center justify-between cursor-pointer">
               <div class="flex items-center space-x-3.5">
                 <div class="mono-icon-box">
@@ -376,12 +399,13 @@
                 </div>
                 <div>
                   <div class="text-sm font-bold text-white">ЛК банков</div>
-                  <div class="text-[11px] text-zinc-400">Tinkoff, Freedom, Bakai, Kaspi, Sber...</div>
+                  <div class="text-[11px] text-zinc-400">Tinkoff, Freedom, Bakai, Kaspi, Kapital...</div>
                 </div>
               </div>
               <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg>
             </div>
 
+            <!-- Платежки -->
             <div onclick="openCategory('payment')" class="mono-card p-4 flex items-center justify-between cursor-pointer">
               <div class="flex items-center space-x-3.5">
                 <div class="mono-icon-box">
@@ -397,6 +421,7 @@
               <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg>
             </div>
 
+            <!-- Банк + Биржа -->
             <div onclick="openCategory('bundle')" class="mono-card p-4 flex items-center justify-between cursor-pointer">
               <div class="flex items-center space-x-3.5">
                 <div class="mono-icon-box">
@@ -414,7 +439,9 @@
           </div>
         </div>
 
+        <!-- Переработанная витрина товаров -->
         <div id="catalog-items" class="hidden space-y-3">
+          
           <div class="flex items-center justify-between pb-1">
             <button onclick="closeCategory()" class="text-xs font-semibold text-white hover:text-zinc-300 flex items-center space-x-1.5 py-1">
               <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
@@ -423,7 +450,14 @@
             <span id="current-category-title" class="text-xs font-bold text-zinc-300 uppercase tracking-wider"></span>
           </div>
 
-          <div id="items-grid" class="grid grid-cols-2 gap-2.5"></div>
+          <!-- Строка поиска внутри категории -->
+          <div class="relative">
+            <input type="text" id="catalog-search" oninput="filterItems()" placeholder="Поиск по названию или стране..." class="w-full bg-[#111116] border border-white/10 rounded-xl px-9 py-2.5 text-xs text-white placeholder-zinc-500 outline-none focus:border-white/30 transition">
+            <svg class="w-3.5 h-3.5 text-zinc-500 absolute left-3 top-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </div>
+
+          <!-- Контейнер товаров в новом стиле -->
+          <div id="items-list" class="space-y-2"></div>
         </div>
       </section>
 
@@ -603,9 +637,8 @@
 
   </div>
 
-  <!-- Скрипт хаотичной звездной анимации и логики -->
   <script>
-    // Генерация звездного неба
+    // Анимация звездного неба
     const canvas = document.getElementById('stars-canvas');
     const ctx = canvas.getContext('2d');
     let stars = [];
@@ -635,7 +668,6 @@
     function drawStars() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Рисование мерцающих звезд
       for (let s of stars) {
         if (s.increasing) {
           s.alpha += s.speed;
@@ -651,7 +683,6 @@
         ctx.fill();
       }
 
-      // Падающая звезда (периодически)
       if (!shootingStar && Math.random() < 0.008) {
         shootingStar = {
           x: Math.random() * canvas.width,
@@ -674,9 +705,7 @@
         shootingStar.y += shootingStar.speed * 0.6;
         shootingStar.opacity -= 0.025;
 
-        if (shootingStar.opacity <= 0) {
-          shootingStar = null;
-        }
+        if (shootingStar.opacity <= 0) shootingStar = null;
       }
 
       requestAnimationFrame(drawStars);
@@ -703,75 +732,78 @@
       if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred(style);
     }
 
+    // База данных товаров с исправленной географией (AZ для Kapital, PL для Stripe)
     const catalogData = {
       crypto: {
         title: "Крипто-биржи",
         items: [
-          { name: "Binance", badge: "KYC Plus" },
-          { name: "Bybit", badge: "Level 1-2" },
-          { name: "Bybit (Maker)", badge: "P2P Maker" },
-          { name: "OKX", badge: "KYC 2" },
-          { name: "MEXC", badge: "Full Verified" },
-          { name: "Bitget", badge: "Tier 1" },
-          { name: "KuCoin", badge: "Verified" },
-          { name: "Kraken", badge: "Intermediate" },
-          { name: "Coinbase", badge: "EU / USA" },
-          { name: "Gate.io", badge: "KYC 2" },
-          { name: "HTX (Huobi)", badge: "Verified" },
-          { name: "BingX", badge: "Full Access" },
-          { name: "Crypto.com", badge: "EU Verified" }
+          { name: "Binance", badge: "KYC Plus", region: "Global", icon: "🪙" },
+          { name: "Bybit", badge: "Level 1-2", region: "Global", icon: "🪙" },
+          { name: "Bybit (Maker)", badge: "P2P Maker", region: "Verified", icon: "⚡" },
+          { name: "OKX", badge: "KYC 2", region: "Global", icon: "🪙" },
+          { name: "MEXC", badge: "Full Verified", region: "No KYC", icon: "🪙" },
+          { name: "Bitget", badge: "Tier 1", region: "Global", icon: "🪙" },
+          { name: "KuCoin", badge: "Verified", region: "Global", icon: "🪙" },
+          { name: "Kraken", badge: "Intermediate", region: "USA / EU", icon: "🪙" },
+          { name: "Coinbase", badge: "EU / USA", region: "High limits", icon: "🪙" },
+          { name: "Gate.io", badge: "KYC 2", region: "Global", icon: "🪙" },
+          { name: "HTX (Huobi)", badge: "Verified", region: "Asia", icon: "🪙" },
+          { name: "BingX", badge: "Full Access", region: "Global", icon: "🪙" },
+          { name: "Crypto.com", badge: "EU Verified", region: "Card", icon: "🪙" }
         ]
       },
       payment: {
         title: "Платёжки / Необанки",
         items: [
-          { name: "Wise (Personal)", badge: "EU IBAN" },
-          { name: "Wise (Business)", badge: "Company" },
-          { name: "Revolut (Personal)", badge: "EU / LT" },
-          { name: "Revolut (Business)", badge: "Business" },
-          { name: "Bunq (Personal)", badge: "NL / DE" },
-          { name: "Bunq (Business)", badge: "Лимиты" },
-          { name: "Stripe Business", badge: "Merchant" },
-          { name: "PayPal (Personal)", badge: "Прогретый" },
-          { name: "Payoneer", badge: "Global" },
-          { name: "Blackcatcard", badge: "EU Card" },
-          { name: "Vivid Money", badge: "DE IBAN" },
-          { name: "N26 Bank", badge: "Standard" },
-          { name: "Wirex", badge: "Crypto" },
-          { name: "Pyypl", badge: "VCC Card" },
-          { name: "Skrill / Neteller", badge: "VIP" },
-          { name: "Paysera", badge: "Unlimited" },
-          { name: "Icard", badge: "EU Account" },
-          { name: "UP bank", badge: "Australia" }
+          { name: "Stripe Business", badge: "Merchant", region: "Польша 🇵🇱", icon: "💳" },
+          { name: "Wise (Personal)", badge: "EU IBAN", region: "Europe 🇪🇺", icon: "💳" },
+          { name: "Wise (Business)", badge: "Company", region: "UK / EU 🇪🇺", icon: "🏢" },
+          { name: "Revolut (Personal)", badge: "EU / LT", region: "Europe 🇪🇺", icon: "💳" },
+          { name: "Revolut (Business)", badge: "Business", region: "Lithuania 🇱🇹", icon: "🏢" },
+          { name: "Bunq (Personal)", badge: "NL / DE", region: "Netherlands 🇳🇱", icon: "💳" },
+          { name: "Bunq (Business)", badge: "Лимиты", region: "Europe 🇪🇺", icon: "🏢" },
+          { name: "PayPal (Personal)", badge: "Прогретый", region: "Global", icon: "💳" },
+          { name: "Payoneer", badge: "Global", region: "USD / EUR", icon: "💳" },
+          { name: "Blackcatcard", badge: "EU Card", region: "Malta 🇲🇹", icon: "💳" },
+          { name: "Vivid Money", badge: "DE IBAN", region: "Germany 🇩🇪", icon: "💳" },
+          { name: "N26 Bank", badge: "Standard", region: "Germany 🇩🇪", icon: "💳" },
+          { name: "Wirex", badge: "Crypto Card", region: "Europe 🇪🇺", icon: "💳" },
+          { name: "Pyypl", badge: "VCC Card", region: "UAE 🇦🇪", icon: "💳" },
+          { name: "Skrill / Neteller", badge: "VIP", region: "Global", icon: "💳" },
+          { name: "Paysera", badge: "Unlimited", region: "Lithuania 🇱🇹", icon: "💳" },
+          { name: "Icard", badge: "EU Account", region: "Bulgaria 🇧🇬", icon: "💳" },
+          { name: "UP bank", badge: "AU Account", region: "Australia 🇦🇺", icon: "💳" }
         ]
       },
       bundle: {
         title: "Банк + Биржа",
         items: [
-          { name: "Privat + Binance", badge: "UA Связка" },
-          { name: "Mono + Binance", badge: "UA Связка" },
-          { name: "A-Bank + Binance", badge: "UA Связка" },
-          { name: "Tinkoff + Bybit", badge: "RU Связка" },
-          { name: "Sber + Bybit (Maker)", badge: "RU Связка" },
-          { name: "Kapital + OKX", badge: "UZ Связка" },
-          { name: "Bakai + OKX", badge: "KG Связка" },
-          { name: "Freedom + Binance", badge: "KZ Связка" },
-          { name: "Stripe + Bybit + Bunq", badge: "VIP Связка" }
+          { name: "Kapital + OKX", badge: "AZ Связка", region: "Азербайджан 🇦🇿", icon: "🔗" },
+          { name: "Stripe + Bybit + Bunq", badge: "PL Связка", region: "Польша 🇵🇱", icon: "🔗" },
+          { name: "Privat + Binance", badge: "UA Связка", region: "Украина 🇺🇦", icon: "🔗" },
+          { name: "Mono + Binance", badge: "UA Связка", region: "Украина 🇺🇦", icon: "🔗" },
+          { name: "A-Bank + Binance", badge: "UA Связка", region: "Украина 🇺🇦", icon: "🔗" },
+          { name: "Tinkoff + Bybit", badge: "RU Связка", region: "Россия 🇷🇺", icon: "🔗" },
+          { name: "Sber + Bybit (Maker)", badge: "RU Связка", region: "Россия 🇷🇺", icon: "🔗" },
+          { name: "Bakai + OKX", badge: "KG Связка", region: "Кыргызстан 🇰🇬", icon: "🔗" },
+          { name: "Freedom + Binance", badge: "KZ Связка", region: "Казахстан 🇰🇿", icon: "🔗" }
         ]
       },
       banks: {
         title: "ЛК Банков",
         items: [
-          { name: "Tinkoff Bank", badge: "Black / Plat" },
-          { name: "Sber Bank", badge: "Gold" },
-          { name: "Raiffeisen", badge: "RU / EU" },
-          { name: "Freedom Bank KZ", badge: "Мультивалюта" },
-          { name: "Kaspi Gold", badge: "KZ" },
-          { name: "Bakai Bank", badge: "KG Карта" },
-          { name: "Kapital Bank", badge: "UZ Visa" }
+          { name: "Kapital Bank", badge: "AZ Visa", region: "Азербайджан 🇦🇿", icon: "🏦" },
+          { name: "Freedom Bank KZ", badge: "Мультивалюта", region: "Казахстан 🇰🇿", icon: "🏦" },
+          { name: "Kaspi Gold", badge: "KZ Card", region: "Казахстан 🇰🇿", icon: "🏦" },
+          { name: "Bakai Bank", badge: "KG Карта", region: "Кыргызстан 🇰🇬", icon: "🏦" },
+          { name: "Tinkoff Bank", badge: "Black / Plat", region: "Россия 🇷🇺", icon: "🏦" },
+          { name: "Sber Bank", badge: "Gold", region: "Россия 🇷🇺", icon: "🏦" },
+          { name: "Raiffeisen", badge: "RU / EU", region: "Россия 🇷🇺", icon: "🏦" }
         ]
       }
     };
+
+    let activeCategoryItems = [];
 
     const tabIndices = { 'home': 0, 'catalog': 1, 'cart': 2, 'cabinet': 3 };
 
@@ -802,36 +834,70 @@
       window.scrollTo({ top: 0, behavior: 'instant' });
     }
 
+    function renderItems(items) {
+      const container = document.getElementById('items-list');
+      container.innerHTML = '';
+
+      if (items.length === 0) {
+        container.innerHTML = `<div class="p-6 text-center text-xs text-zinc-500">Позиций не найдено</div>`;
+        return;
+      }
+
+      items.forEach(item => {
+        const card = document.createElement('div');
+        card.className = "mono-card p-3.5 flex items-center justify-between cursor-pointer border border-white/10 active:scale-[0.99] transition";
+        card.innerHTML = `
+          <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-base">
+              ${item.icon}
+            </div>
+            <div>
+              <div class="flex items-center space-x-2">
+                <span class="text-xs font-bold text-white">${item.name}</span>
+                <span class="text-[9px] font-bold text-zinc-400 bg-white/10 px-1.5 py-0.2 rounded border border-white/10">${item.badge}</span>
+              </div>
+              <div class="text-[10px] text-zinc-400 mt-0.5">${item.region}</div>
+            </div>
+          </div>
+          
+          <div class="flex flex-col items-end space-y-1">
+            <div class="flex items-center space-x-1.5">
+              <span class="status-dot-green"></span>
+              <span class="text-[10px] text-emerald-400 font-semibold tracking-tight">В наличии</span>
+            </div>
+            <button class="px-2.5 py-1 bg-white hover:bg-zinc-200 text-black rounded-lg text-[10px] font-bold transition">
+              Купить
+            </button>
+          </div>
+        `;
+        card.onclick = () => selectItem(item.name);
+        container.appendChild(card);
+      });
+    }
+
     function openCategory(key) {
       haptic('medium');
       const category = catalogData[key];
       if (!category) return;
 
+      activeCategoryItems = category.items;
+
       document.getElementById('catalog-categories').classList.add('hidden');
       document.getElementById('catalog-items').classList.remove('hidden');
       document.getElementById('current-category-title').innerText = category.title;
+      document.getElementById('catalog-search').value = '';
 
-      const grid = document.getElementById('items-grid');
-      grid.innerHTML = '';
+      renderItems(activeCategoryItems);
+    }
 
-      category.items.forEach(item => {
-        const card = document.createElement('div');
-        card.className = "mono-card p-3.5 flex flex-col justify-between cursor-pointer border border-white/10 active:scale-95 transition";
-        card.innerHTML = `
-          <div>
-            <div class="text-[9px] font-bold text-zinc-300 bg-white/10 px-2 py-0.5 rounded-full inline-block uppercase tracking-wider mb-2 border border-white/15">${item.badge}</div>
-            <div class="text-xs font-bold text-white leading-snug">${item.name}</div>
-          </div>
-          <div class="mt-3 pt-2 border-t border-white/10 flex items-center justify-between">
-            <span class="text-[10px] text-zinc-400 font-semibold flex items-center gap-1">
-              <span class="w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_6px_#ffffff]"></span> В наличии
-            </span>
-            <span class="text-[10px] text-white font-bold">Купить →</span>
-          </div>
-        `;
-        card.onclick = () => selectItem(item.name);
-        grid.appendChild(card);
-      });
+    function filterItems() {
+      const q = document.getElementById('catalog-search').value.toLowerCase().trim();
+      const filtered = activeCategoryItems.filter(i => 
+        i.name.toLowerCase().includes(q) || 
+        i.region.toLowerCase().includes(q) || 
+        i.badge.toLowerCase().includes(q)
+      );
+      renderItems(filtered);
     }
 
     function closeCategory() {
