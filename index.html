@@ -80,7 +80,6 @@
       }
     }
 
-    /* Адаптивный мобильный фрейм */
     .app-viewport {
       width: 100%;
       max-width: 540px;
@@ -175,7 +174,6 @@
       overflow: hidden;
     }
 
-    /* Нижний док, ограниченный шириной контента */
     .tabbar-dock {
       position: fixed;
       bottom: 0;
@@ -391,6 +389,7 @@
           </div>
 
           <div class="space-y-2.5">
+            <!-- 1. Биржи -->
             <div onclick="openCryptoExchanges()" class="mono-card p-4 flex items-center justify-between cursor-pointer">
               <div class="flex items-center space-x-3.5">
                 <div class="mono-icon-box">
@@ -406,7 +405,8 @@
               <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg>
             </div>
 
-            <div onclick="openDirectCategory('banks')" class="mono-card p-4 flex items-center justify-between cursor-pointer">
+            <!-- 2. ЛК банков -> открывает список стран банков -->
+            <div onclick="openBankCountries()" class="mono-card p-4 flex items-center justify-between cursor-pointer">
               <div class="flex items-center space-x-3.5">
                 <div class="mono-icon-box">
                   <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
@@ -415,12 +415,13 @@
                 </div>
                 <div>
                   <div class="text-sm font-bold text-white">ЛК банков</div>
-                  <div class="text-[11px] text-zinc-400">Tinkoff, Freedom, Bakai, Kaspi, Kapital...</div>
+                  <div class="text-[11px] text-zinc-400">Tinkoff, Freedom, Bakai, Kaspi, Sber...</div>
                 </div>
               </div>
               <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg>
             </div>
 
+            <!-- 3. Платежки -->
             <div onclick="openDirectCategory('payment')" class="mono-card p-4 flex items-center justify-between cursor-pointer">
               <div class="flex items-center space-x-3.5">
                 <div class="mono-icon-box">
@@ -436,6 +437,7 @@
               <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg>
             </div>
 
+            <!-- 4. Банк + Биржа -->
             <div onclick="openDirectCategory('bundle')" class="mono-card p-4 flex items-center justify-between cursor-pointer">
               <div class="flex items-center space-x-3.5">
                 <div class="mono-icon-box">
@@ -466,7 +468,7 @@
           <div id="exchanges-list" class="space-y-2"></div>
         </div>
 
-        <!-- Уровень 3: Список стран -->
+        <!-- Уровень 3: Список стран для биржи -->
         <div id="catalog-countries" class="hidden space-y-3">
           <div class="flex items-center justify-between pb-1">
             <button onclick="backToExchanges()" class="text-xs font-semibold text-white hover:text-zinc-300 flex items-center space-x-1.5 py-1">
@@ -479,10 +481,23 @@
           <div id="countries-list" class="space-y-1.5"></div>
         </div>
 
-        <!-- Уровень 4: Прямые списки (Банки, Платёжки, Связки) -->
-        <div id="catalog-items" class="hidden space-y-3">
+        <!-- Меню выбора страны для «ЛК банков» -->
+        <div id="catalog-bank-countries" class="hidden space-y-3">
           <div class="flex items-center justify-between pb-1">
             <button onclick="backToMainCategories()" class="text-xs font-semibold text-white hover:text-zinc-300 flex items-center space-x-1.5 py-1">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+              <span>Назад</span>
+            </button>
+            <span class="text-xs font-bold text-zinc-300 uppercase tracking-wider">ВЫБЕРИТЕ СТРАНУ:</span>
+          </div>
+
+          <div id="bank-countries-list" class="space-y-1.5"></div>
+        </div>
+
+        <!-- Витрина конкретных позиций (Банки страны, Платёжки, Связки) -->
+        <div id="catalog-items" class="hidden space-y-3">
+          <div class="flex items-center justify-between pb-1">
+            <button onclick="backFromDirectItems()" class="text-xs font-semibold text-white hover:text-zinc-300 flex items-center space-x-1.5 py-1">
               <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
               <span>Назад</span>
             </button>
@@ -587,7 +602,7 @@
               <div class="flex items-center space-x-3">
                 <div class="mono-icon-box">
                   <svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                    <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1 4-10z"/>
+                    <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
                   </svg>
                 </div>
                 <span class="text-xs font-semibold text-white">Язык</span>
@@ -766,6 +781,7 @@
       if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred(style);
     }
 
+    // Список бирж
     const cryptoExchangesList = [
       { id: "binance", name: "Binance", badge: "KYC Plus", desc: "Самая популярная биржа", img: "" },
       { id: "bybit", name: "Bybit", badge: "Level 1-2", desc: "Лучший P2P рынок", img: "" },
@@ -782,7 +798,7 @@
       { id: "crypto_com", name: "Crypto.com", badge: "EU Verified", desc: "Европейские карты и стейкинг", img: "" }
     ];
 
-    // Страны с векторными графическими флагами (гарантия отображения на всех устройствах)
+    // Страны для бирж
     const orderedCountries = [
       { code: "ua", name: "Ukraine" },
       { code: "kz", name: "Kazakhstan" },
@@ -805,6 +821,121 @@
       { code: "ng", name: "Nigeria" },
       { code: "us", name: "USA" }
     ];
+
+    // СПИСОК СТРАН ДЛЯ «ЛК БАНКОВ» СТРОГО ПО СКРИНШОТУ
+    const bankCountries = [
+      { code: "ua", name: "Ukraine" },
+      { code: "ru", name: "Russia" },
+      { code: "kz", name: "Kazakhstan" },
+      { code: "kg", name: "Kyrgyzstan" },
+      { code: "uz", name: "Uzbekistan" },
+      { code: "az", name: "Azerbaijan" },
+      { code: "tj", name: "Tajikistan" },
+      { code: "ge", name: "Georgia" },
+      { code: "am", name: "Armenia" },
+      { code: "de", name: "Germany" },
+      { code: "pl", name: "Poland" },
+      { code: "by", name: "Belarus" },
+      { code: "md", name: "Moldova" },
+      { code: "cz", name: "Czech Republic" }
+    ];
+
+    // БАНКИ ВНУТРИ ВЫБРАННОЙ СТРАНЫ
+    const banksByCountry = {
+      ru: [
+        { name: "Tinkoff Bank", badge: "Black / Plat", region: "Russia 🇷🇺", img: "" },
+        { name: "Sber Bank", badge: "Gold / Classic", region: "Russia 🇷🇺", img: "" },
+        { name: "Raiffeisen Bank", badge: "Standard", region: "Russia 🇷🇺", img: "" },
+        { name: "Alfa Bank", badge: "Premium", region: "Russia 🇷🇺", img: "" },
+        { name: "VTB Bank", badge: "Mastercard", region: "Russia 🇷🇺", img: "" },
+        { name: "Ozon Bank", badge: "Расширенный", region: "Russia 🇷🇺", img: "" },
+        { name: "Yandex Bank", badge: "Максимальный", region: "Russia 🇷🇺", img: "" }
+      ],
+      kz: [
+        { name: "Kaspi Gold", badge: "Gold Card", region: "Kazakhstan 🇰🇿", img: "" },
+        { name: "Freedom Bank", badge: "Мультивалюта", region: "Kazakhstan 🇰🇿", img: "" },
+        { name: "Halyk Bank", badge: "Standard", region: "Kazakhstan 🇰🇿", img: "" },
+        { name: "BCC (ЦентрКредит)", badge: "Visa / MC", region: "Kazakhstan 🇰🇿", img: "" },
+        { name: "Forte Bank", badge: "Premium", region: "Kazakhstan 🇰🇿", img: "" },
+        { name: "Jusan Bank", badge: "Full Access", region: "Kazakhstan 🇰🇿", img: "" }
+      ],
+      ua: [
+        { name: "PrivatBank", badge: "Universal", region: "Ukraine 🇺🇦", img: "" },
+        { name: "monobank", badge: "Black Card", region: "Ukraine 🇺🇦", img: "" },
+        { name: "A-Bank", badge: "Зелена карта", region: "Ukraine 🇺🇦", img: "" },
+        { name: "PUMB", badge: "All Inclusive", region: "Ukraine 🇺🇦", img: "" },
+        { name: "Sense Bank", badge: "Full Access", region: "Ukraine 🇺🇦", img: "" },
+        { name: "Oschadbank", badge: "Verified", region: "Ukraine 🇺🇦", img: "" }
+      ],
+      kg: [
+        { name: "Bakai Bank", badge: "KG Visa", region: "Kyrgyzstan 🇰🇬", img: "" },
+        { name: "Demir Bank", badge: "Международная", region: "Kyrgyzstan 🇰🇬", img: "" },
+        { name: "Optima Bank", badge: "Gold", region: "Kyrgyzstan 🇰🇬", img: "" },
+        { name: "Mbank", badge: "Мобильный ЛК", region: "Kyrgyzstan 🇰🇬", img: "" },
+        { name: "KICB Bank", badge: "Standard", region: "Kyrgyzstan 🇰🇬", img: "" }
+      ],
+      uz: [
+        { name: "Kapitalbank UZ", badge: "Visa / Humo", region: "Uzbekistan 🇺🇿", img: "" },
+        { name: "Ipak Yoli Bank", badge: "Mastercard", region: "Uzbekistan 🇺🇿", img: "" },
+        { name: "Anorbank", badge: "Необанк", region: "Uzbekistan 🇺🇿", img: "" },
+        { name: "TBC Bank UZ", badge: "Full Verified", region: "Uzbekistan 🇺🇿", img: "" },
+        { name: "NBU Bank", badge: "Standard", region: "Uzbekistan 🇺🇿", img: "" }
+      ],
+      az: [
+        { name: "Kapital Bank AZ", badge: "BirBank / Visa", region: "Azerbaijan 🇦🇿", img: "" },
+        { name: "ABB (Международный)", badge: "TamKart", region: "Azerbaijan 🇦🇿", img: "" },
+        { name: "Pasha Bank", badge: "Premium", region: "Azerbaijan 🇦🇿", img: "" },
+        { name: "Bank Respublika", badge: "Standard", region: "Azerbaijan 🇦🇿", img: "" },
+        { name: "Unibank AZ", badge: "Albali", region: "Azerbaijan 🇦🇿", img: "" }
+      ],
+      tj: [
+        { name: "Alif Bank", badge: "Alif Mobi", region: "Tajikistan 🇹🇯", img: "" },
+        { name: "Dushanbe City", badge: "DC Bank", region: "Tajikistan 🇹🇯", img: "" },
+        { name: "Eskhata Bank", badge: "Visa", region: "Tajikistan 🇹🇯", img: "" },
+        { name: "Spitamen Bank", badge: "Standard", region: "Tajikistan 🇹🇯", img: "" }
+      ],
+      ge: [
+        { name: "Bank of Georgia (BOG)", badge: "Solo / Standard", region: "Georgia 🇬🇪", img: "" },
+        { name: "TBC Bank GE", badge: "Visa / MC", region: "Georgia 🇬🇪", img: "" },
+        { name: "Liberty Bank", badge: "Standard", region: "Georgia 🇬🇪", img: "" },
+        { name: "Credo Bank", badge: "Mastercard", region: "Georgia 🇬🇪", img: "" }
+      ],
+      am: [
+        { name: "Ameriabank", badge: "Visa Gold", region: "Armenia 🇦🇲", img: "" },
+        { name: "Ardshinbank", badge: "Mastercard", region: "Armenia 🇦🇲", img: "" },
+        { name: "Inecobank", badge: "Standard", region: "Armenia 🇦🇲", img: "" },
+        { name: "IDBank", badge: "Idram", region: "Armenia 🇦🇲", img: "" }
+      ],
+      de: [
+        { name: "N26 Bank", badge: "Standard DE", region: "Germany 🇩🇪", img: "" },
+        { name: "Deutsche Bank", badge: "Girokonto", region: "Germany 🇩🇪", img: "" },
+        { name: "Commerzbank", badge: "Full Access", region: "Germany 🇩🇪", img: "" },
+        { name: "DKB Bank", badge: "Visa Card", region: "Germany 🇩🇪", img: "" }
+      ],
+      pl: [
+        { name: "mBank", badge: "eKonto", region: "Poland 🇵🇱", img: "" },
+        { name: "Santander PL", badge: "Konto Jakie Chce", region: "Poland 🇵🇱", img: "" },
+        { name: "PKO Bank Polski", badge: "Konto za Zero", region: "Poland 🇵🇱", img: "" },
+        { name: "ING Bank Slaski", badge: "Direct", region: "Poland 🇵🇱", img: "" }
+      ],
+      by: [
+        { name: "Priorbank", badge: "Visa / MC", region: "Belarus 🇧🇾", img: "" },
+        { name: "BSB Bank", badge: "Standard", region: "Belarus 🇧🇾", img: "" },
+        { name: "Alfa Bank BY", badge: "Smart", region: "Belarus 🇧🇾", img: "" },
+        { name: "Belgazprombank", badge: "Gold", region: "Belarus 🇧🇾", img: "" }
+      ],
+      md: [
+        { name: "maib (Moldova Agroindbank)", badge: "Visa / MC", region: "Moldova 🇲🇩", img: "" },
+        { name: "Moldindconbank (MICB)", badge: "Standard", region: "Moldova 🇲🇩", img: "" },
+        { name: "Victoriabank", badge: "Full Access", region: "Moldova 🇲🇩", img: "" }
+      ],
+      cz: [
+        { name: "Ceska Sporitelna", badge: "Standard CZ", region: "Czech Republic 🇨🇿", img: "" },
+        { name: "Komercni Banka (KB)", badge: "Mojebanka", region: "Czech Republic 🇨🇿", img: "" },
+        { name: "CSOB", badge: "Plus Konto", region: "Czech Republic 🇨🇿", img: "" },
+        { name: "Air Bank", badge: "Neobank", region: "Czech Republic 🇨🇿", img: "" }
+      ]
+    };
 
     const directCategories = {
       payment: {
@@ -843,23 +974,12 @@
           { name: "Bakai + OKX", badge: "KG Связка", region: "Кыргызстан 🇰🇬", img: "" },
           { name: "Freedom + Binance", badge: "KZ Связка", region: "Казахстан 🇰🇿", img: "" }
         ]
-      },
-      banks: {
-        title: "ЛК Банков",
-        items: [
-          { name: "Kapital Bank", badge: "AZ Visa", region: "Азербайджан 🇦🇿", img: "" },
-          { name: "Freedom Bank KZ", badge: "Мультивалюта", region: "Казахстан 🇰🇿", img: "" },
-          { name: "Kaspi Gold", badge: "KZ Card", region: "Казахстан 🇰🇿", img: "" },
-          { name: "Bakai Bank", badge: "KG Карта", region: "Кыргызстан 🇰🇬", img: "" },
-          { name: "Tinkoff Bank", badge: "Black / Plat", region: "Россия 🇷🇺", img: "" },
-          { name: "Sber Bank", badge: "Gold", region: "Россия 🇷🇺", img: "" },
-          { name: "Raiffeisen", badge: "RU / EU", region: "Россия 🇷🇺", img: "" }
-        ]
       }
     };
 
     let selectedExchange = null;
     let directItemsList = [];
+    let currentCatalogSource = "direct"; // "direct" или "bank-countries"
     const tabIndices = { 'home': 0, 'catalog': 1, 'cart': 2, 'cabinet': 3 };
 
     function switchTab(tabId) {
@@ -894,10 +1014,12 @@
       window.scrollTo({ top: 0, behavior: 'instant' });
     }
 
+    // --- КРИПТО-БИРЖИ ---
     function openCryptoExchanges() {
       haptic('medium');
       document.getElementById('catalog-categories').classList.add('hidden');
       document.getElementById('catalog-countries').classList.add('hidden');
+      document.getElementById('catalog-bank-countries').classList.add('hidden');
       document.getElementById('catalog-items').classList.add('hidden');
       document.getElementById('catalog-exchanges').classList.remove('hidden');
 
@@ -982,19 +1104,78 @@
       selectItem(title);
     }
 
+    // --- ЛК БАНКОВ (МЕНЮ СТРАН ПО СКРИНШОТУ) ---
+    function openBankCountries() {
+      haptic('medium');
+      document.getElementById('catalog-categories').classList.add('hidden');
+      document.getElementById('catalog-exchanges').classList.add('hidden');
+      document.getElementById('catalog-countries').classList.add('hidden');
+      document.getElementById('catalog-items').classList.add('hidden');
+      document.getElementById('catalog-bank-countries').classList.remove('hidden');
+
+      renderBankCountriesList();
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+
+    function renderBankCountriesList() {
+      const container = document.getElementById('bank-countries-list');
+      container.innerHTML = '';
+
+      bankCountries.forEach(c => {
+        const btn = document.createElement('div');
+        btn.className = "country-btn";
+        btn.innerHTML = `
+          <div class="flex items-center space-x-3">
+            <img src="https://flagcdn.com/w40/${c.code}.png" 
+                 srcset="https://flagcdn.com/w80/${c.code}.png 2x" 
+                 width="22" 
+                 height="15" 
+                 alt="${c.name}"
+                 class="rounded-sm object-cover shadow-sm flex-shrink-0" />
+            <span class="text-xs font-semibold text-white tracking-wide">${c.name}</span>
+          </div>
+          <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg>
+        `;
+        btn.onclick = () => openBanksForCountry(c);
+        container.appendChild(btn);
+      });
+    }
+
+    function openBanksForCountry(country) {
+      haptic('medium');
+      const items = banksByCountry[country.code] || [
+        { name: `${country.name} Bank Account`, badge: "Verified", region: `${country.name}`, img: "" }
+      ];
+
+      currentCatalogSource = "bank-countries";
+      directItemsList = items;
+
+      document.getElementById('catalog-bank-countries').classList.add('hidden');
+      document.getElementById('catalog-items').classList.remove('hidden');
+      document.getElementById('current-items-title').innerText = `БАНКИ / ${country.name.toUpperCase()}`;
+      document.getElementById('catalog-search').value = '';
+
+      renderDirectItems(directItemsList);
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+
+    // --- ПРЯМЫЕ КАТЕГОРИИ (Платёжки, Связки) ---
     function openDirectCategory(key) {
       haptic('medium');
       const cat = directCategories[key];
       if (!cat) return;
 
+      currentCatalogSource = "direct";
+      directItemsList = cat.items;
+
       document.getElementById('catalog-categories').classList.add('hidden');
       document.getElementById('catalog-exchanges').classList.add('hidden');
       document.getElementById('catalog-countries').classList.add('hidden');
+      document.getElementById('catalog-bank-countries').classList.add('hidden');
       document.getElementById('catalog-items').classList.remove('hidden');
 
       document.getElementById('current-items-title').innerText = cat.title;
       document.getElementById('catalog-search').value = '';
-      directItemsList = cat.items;
 
       renderDirectItems(directItemsList);
       window.scrollTo({ top: 0, behavior: 'instant' });
@@ -1056,6 +1237,7 @@
       renderDirectItems(filtered);
     }
 
+    // --- НАВИГАЦИЯ НАЗАД ---
     function backToMainCategories() {
       haptic();
       resetCatalog();
@@ -1067,15 +1249,27 @@
       document.getElementById('catalog-exchanges').classList.remove('hidden');
     }
 
+    function backFromDirectItems() {
+      haptic();
+      if (currentCatalogSource === "bank-countries") {
+        document.getElementById('catalog-items').classList.add('hidden');
+        document.getElementById('catalog-bank-countries').classList.remove('hidden');
+      } else {
+        resetCatalog();
+      }
+    }
+
     function resetCatalog() {
       const cat = document.getElementById('catalog-categories');
       const ex = document.getElementById('catalog-exchanges');
       const countries = document.getElementById('catalog-countries');
+      const bankCountries = document.getElementById('catalog-bank-countries');
       const items = document.getElementById('catalog-items');
 
       if (cat) cat.classList.remove('hidden');
       if (ex) ex.classList.add('hidden');
       if (countries) countries.classList.add('hidden');
+      if (bankCountries) bankCountries.classList.add('hidden');
       if (items) items.classList.add('hidden');
     }
 
