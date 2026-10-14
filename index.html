@@ -110,7 +110,7 @@
       background: #101014;
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 14px;
-      padding: 12px 16px;
+      padding: 11px 15px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -172,6 +172,29 @@
       color: #FFFFFF;
       flex-shrink: 0;
       overflow: hidden;
+    }
+
+    /* Контейнер под реальные PNG логотипы брендов */
+    .brand-logo-box {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: #18181F;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .brand-logo-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 9px;
+      display: block;
     }
 
     /* Нижний полупрозрачный док во всю ширину как хедер */
@@ -308,7 +331,6 @@
       <!-- 1. ГЛАВНАЯ -->
       <section id="tab-home" class="tab-content space-y-4">
         
-        <!-- Плашка акции как в боте -->
         <div onclick="activateMoonPromoBanner()" class="mono-card mono-card-interactive p-3.5 border border-emerald-500/25 bg-gradient-to-r from-emerald-500/10 via-[#101014] to-[#101014] flex items-center justify-between cursor-pointer">
           <div class="flex items-center space-x-3">
             <div class="w-9 h-9 rounded-xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400 font-bold text-sm">
@@ -483,7 +505,7 @@
           <div id="step-list-container" class="space-y-1.5"></div>
         </div>
 
-        <!-- ЭКРАН 3: Детальная карточка товара (Точь-в-точь как в боте) -->
+        <!-- ЭКРАН 3: Детальная карточка товара -->
         <div id="view-product-detail" class="hidden space-y-3">
           <div class="flex items-center justify-between pb-1">
             <button onclick="backFromProductDetail()" class="text-xs font-semibold text-white hover:text-zinc-300 flex items-center space-x-1.5 py-1">
@@ -497,13 +519,13 @@
             <!-- Заголовок Товар: ... | Страна -->
             <div class="flex items-center justify-between border-b border-white/10 pb-3">
               <div class="flex items-center space-x-3">
-                <div id="detail-icon-box" class="mono-icon-box"></div>
+                <div id="detail-icon-box" class="flex items-center"></div>
                 <div>
                   <div class="text-[10px] text-zinc-400 uppercase font-semibold">Товар</div>
                   <div id="detail-title" class="text-sm font-black text-white flex items-center gap-1.5 flex-wrap"></div>
                 </div>
               </div>
-              <div class="flex items-center space-x-1.5 bg-emerald-500/10 border border-emerald-500/30 px-2.5 py-1 rounded-full">
+              <div class="flex items-center space-x-1.5 bg-emerald-500/10 border border-emerald-500/30 px-2.5 py-1 rounded-full flex-shrink-0">
                 <span class="status-dot-green"></span>
                 <span id="detail-stock-badge" class="text-[10px] font-bold text-emerald-400">В наличии</span>
               </div>
@@ -527,17 +549,14 @@
 
           <!-- Кнопки управления как в боте -->
           <div class="space-y-2 pt-1">
-            <!-- Зеленая кнопка Оформить покупку -->
             <button onclick="confirmPurchase()" class="w-full py-3.5 bg-[#22C55E] hover:bg-[#16A34A] active:scale-[0.98] text-black font-extrabold text-xs uppercase tracking-wider rounded-xl transition flex items-center justify-center space-x-2 shadow-[0_4px_20px_rgba(34,197,94,0.3)]">
               <span>💳 Оформить покупку</span>
             </button>
 
-            <!-- Кнопка Ввести промокод -->
             <button onclick="tgPromptPromo()" class="w-full py-3 bg-[#14141A] hover:bg-[#1C1C24] active:scale-[0.98] text-white border border-white/10 font-bold text-xs rounded-xl transition flex items-center justify-center space-x-2">
               <span>💎 Ввести промокод</span>
             </button>
 
-            <!-- Нижний ряд: Назад | FAQ | Меню -->
             <div class="grid grid-cols-3 gap-2">
               <button onclick="backFromProductDetail()" class="py-2.5 bg-[#101014] hover:bg-white/10 text-zinc-300 border border-white/10 rounded-xl text-xs font-semibold transition flex items-center justify-center space-x-1">
                 <span>↩️ Назад</span>
@@ -808,6 +827,36 @@
       if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred(style);
     }
 
+    // Функция получения оригинальной PNG-иконки с официального домена бренда через Google Favicon CDN
+    function getOfficialPngUrl(domain) {
+      return `https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://${domain}&size=128`;
+    }
+
+    // Рендер PNG-логотипа бренда (никаких нарисованных вручную SVG)
+    function renderBrandLogo(domain, name, domain2 = null) {
+      const firstLetter = (name || '?').charAt(0).toUpperCase();
+      if (domain2) {
+        // Двойная PNG иконка для связок Банк + Биржа
+        return `
+          <div class="flex items-center -space-x-2 flex-shrink-0">
+            <div class="brand-logo-box w-8 h-8 rounded-lg z-10 shadow-md">
+              <img src="${getOfficialPngUrl(domain)}" alt="${name}" class="brand-logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+              <span class="hidden w-full h-full items-center justify-center text-[10px] font-bold text-white">${firstLetter}</span>
+            </div>
+            <div class="brand-logo-box w-8 h-8 rounded-lg z-0 opacity-95">
+              <img src="${getOfficialPngUrl(domain2)}" alt="${name}" class="brand-logo-img" onerror="this.style.display='none';">
+            </div>
+          </div>
+        `;
+      }
+      return `
+        <div class="brand-logo-box">
+          <img src="${getOfficialPngUrl(domain)}" alt="${name}" class="brand-logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+          <span class="hidden w-full h-full items-center justify-center text-xs font-bold text-white">${firstLetter}</span>
+        </div>
+      `;
+    }
+
     // Справочник флагов и кодов стран
     const COUNTRIES = {
       ua: { code: "ua", name: "Ukraine" },
@@ -855,10 +904,10 @@
       return `<img src="https://flagcdn.com/w40/${code}.png" srcset="https://flagcdn.com/w80/${code}.png 2x" width="22" height="15" class="rounded-sm object-cover shadow-sm flex-shrink-0" alt="${code}">`;
     }
 
-    // 1. БАЗА КРИПТО-БИРЖ ИЗ ВИДЕО
+    // 1. БАЗА КРИПТО-БИРЖ С ОФИЦИАЛЬНЫМИ ДОМЕНАМИ ДЛЯ PNG ИКОНОК
     const cryptoExchanges = [
       {
-        id: "binance", name: "Binance", img: "",
+        id: "binance", name: "Binance", domain: "binance.com",
         countries: ["ua","kz","by","md","az","kg","uz","ge","pl","de","es","ee","lv","lt","it","tr","id","ke","ng","us"],
         desc: "Binance - криптобиржа для торговли, инвестиций и управления цифровыми активами.",
         features: [
@@ -879,7 +928,7 @@
         ]
       },
       {
-        id: "bybit", name: "Bybit", img: "",
+        id: "bybit", name: "Bybit", domain: "bybit.com",
         countries: ["ua","kz","by","md","az","kg","ge","pl","de","es","ee","lv","lt","it","tr","id","ke","ng","ru"],
         desc: "Bybit – популярная криптовалютная биржа для спотовой и деривативной торговли, P2P и стейкинга.",
         features: [
@@ -901,7 +950,7 @@
         ]
       },
       {
-        id: "mexc", name: "MEXC", img: "",
+        id: "mexc", name: "MEXC", domain: "mexc.com",
         countries: ["ua","kz","by","md","az","kg","ge","pl","de","es","ee","lv","lt","it","tr","id","ke","ng","ru"],
         desc: "MEXC – глобальная криптобиржа с самым широким выбором альткоинов и фьючерсных пар.",
         features: [
@@ -913,7 +962,7 @@
         commissions: ["Спот – от 0%", "Фьючерсы – от 0,01%"]
       },
       {
-        id: "okx", name: "OKX", img: "",
+        id: "okx", name: "OKX", domain: "okx.com",
         countries: ["ua","kz","by","md","az","kg","ge","pl","de","es","ee","lv","lt","it","tr","id","ke","ng","ru"],
         desc: "OKX – ведущая криптовалютная биржа и Web3-экосистема для профессиональной торговли и P2P.",
         features: [
@@ -925,7 +974,7 @@
         commissions: ["Торговля – от 0,08%", "P2P – 0% для тейкеров"]
       },
       {
-        id: "bitget", name: "Bitget", img: "",
+        id: "bitget", name: "Bitget", domain: "bitget.com",
         countries: ["ua","kz","by","md","az","kg","ge","pl","de","es","ee","lv","lt","it","tr","id","ke","ng","ru"],
         desc: "Bitget – крупная криптобиржа, лидер в сфере копи-трейдинга и деривативов.",
         features: ["Фьючерсная и спотовая торговля", "Флагманский копи-трейдинг", "P2P-рынок и Bitget Earn"],
@@ -933,7 +982,7 @@
         commissions: ["Торговля – от 0,1%", "Вывод – зависит от сети"]
       },
       {
-        id: "kucoin", name: "KuCoin", img: "",
+        id: "kucoin", name: "KuCoin", domain: "kucoin.com",
         countries: ["ua","kz","by","md","az","kg","ge","pl","de","es","ee","lv","lt","it","tr","id","ke","ng","ru"],
         desc: "KuCoin – популярная международная биржа для торговли криптовалютами и альткоинами.",
         features: ["Торговля сотнями криптопар", "Фьючерсы, торговые боты и стейкинг", "Быстрый P2P-маркет"],
@@ -941,7 +990,7 @@
         commissions: ["Торговля – от 0,1%", "P2P – 0%"]
       },
       {
-        id: "kraken", name: "Kraken", img: "",
+        id: "kraken", name: "Kraken", domain: "kraken.com",
         countries: ["ua","kz","by","md","az","kg","ge","pl","de","es","ee","lv","lt","it","tr","id","ke","ng","us"],
         desc: "Kraken – одна из старейших и самых надежных европейско-американских криптобирж.",
         features: ["Поддержка фиатных пар EUR, USD, GBP", "Маржинальная и фьючерсная торговля", "Высокая безопасность"],
@@ -949,7 +998,7 @@
         commissions: ["Спот – от 0,16%", "Быстрый вывод в крипто и SEPA"]
       },
       {
-        id: "htx", name: "HTX (Huobi)", img: "",
+        id: "htx", name: "HTX (Huobi)", domain: "htx.com",
         countries: ["ua","kz","by","md","az","kg","ge","pl","de","es","ee","lv","lt","it","tr","id","ke","ng","ru"],
         desc: "HTX (Huobi) – международная платформа для торговли цифровыми активами и P2P.",
         features: ["Спот, фьючерсы и маржа до 125x", "Активный P2P-рынок", "Депозиты и стейкинг"],
@@ -957,7 +1006,7 @@
         commissions: ["Торговля – от 0,2%", "P2P – 0%"]
       },
       {
-        id: "coinbase", name: "Coinbase", img: "",
+        id: "coinbase", name: "Coinbase", domain: "coinbase.com",
         countries: ["pl","de","es","ee","lv","lt","it","gb","us"],
         desc: "Coinbase – крупнейшая регулируемая криптобиржа США и Европы.",
         features: ["Прямые операции с крипто и фиатом", "Институциональная надежность", "Высокие лимиты"],
@@ -965,7 +1014,7 @@
         commissions: ["Стандартные комиссии сети"]
       },
       {
-        id: "bingx", name: "BingX", img: "",
+        id: "bingx", name: "BingX", domain: "bingx.com",
         countries: ["ua","kz","by","md","az","kg","ge","pl","de","es","ee","lv","lt","it","tr","id","ke","ng","ru"],
         desc: "BingX – современная криптобиржа с социальным трейдингом и фьючерсами.",
         features: ["Стандартные и бессрочные фьючерсы", "Копи-трейдинг и сеточные боты", "P2P-торговля"],
@@ -973,7 +1022,7 @@
         commissions: ["Торговля – от 0,05%"]
       },
       {
-        id: "crypto_com", name: "Crypto.com", img: "",
+        id: "crypto_com", name: "Crypto.com", domain: "crypto.com",
         countries: ["pl","de","es","ee","lv","lt","it","gb","us"],
         desc: "Crypto.com – глобальная криптоплатформа с поддержкой карт и европейских счетов.",
         features: ["Обмен криптовалют и стейкинг", "Выпуск виртуальных карт", "Поддержка переводов"],
@@ -981,7 +1030,7 @@
         commissions: ["Торговля – от 0,075%"]
       },
       {
-        id: "gate", name: "Gate.io", img: "",
+        id: "gate", name: "Gate.io", domain: "gate.io",
         countries: ["ua","kz","by","md","az","kg","ge","pl","ee","lv","lt","it","tr","id","ke","ng","ru"],
         desc: "Gate.io – популярная криптовалютная биржа для торговли, инвестиций и управления цифровыми активами.",
         features: [
@@ -995,7 +1044,7 @@
         commissions: ["Торговля – от 0,2%", "Вывод – зависит от сети и актива", "P2P – зависит от способа оплаты и валюты"]
       },
       {
-        id: "bybit_maker", name: "Bybit (Maker)", img: "",
+        id: "bybit_maker", name: "Bybit (Maker)", domain: "bybit.com",
         countries: ["ke","cr","ug","ye","dm","ua","kz","ru","pl"],
         isMaker: true,
         desc: "Сделан приватным методом. 90+ дней с момента регистрации, 2 lvl верифа (подтвержден адрес проживания), более 60 ордеров p2p, 2k$ + торговый объем за 30 дней, 98% минимум исполненных ордеров, можно выставлять объявления p2p на продажу и покупку как мейкер, залоговый депозит не требуется! Любые блокировки, аппиляции, на вывод, отсутствуют.",
@@ -1005,124 +1054,122 @@
       }
     ];
 
-    // 2. БАЗА ПЛАТЁЖЕК / НЕОБАНКОВ ИЗ ВИДЕО (С ТОЧНЫМИ СТРАНАМИ)
+    // 2. БАЗА ПЛАТЁЖЕК / НЕОБАНКОВ С ОФИЦИАЛЬНЫМИ ДОМЕНАМИ ДЛЯ PNG ИКОНОК
     const paymentServices = [
-      { id: "wise_p", name: "Wise (Personal)", price: 50, stock: 4, countries: ["de","fr","it","pl","es","gb","ca","us"], cardInfo: "Выпущено 3 виртуальных и 1 физическая карта (отправка в ваш город по запросу)." },
-      { id: "wise_b", name: "Wise (Business)", price: 120, stock: 3, countries: ["de","fr","it","pl","es","gb","ca","us"], cardInfo: "Корпоративный счет + бизнес-карты Visa/Mastercard." },
-      { id: "revolut_p", name: "Revolut (Personal)", price: 90, stock: 3, countries: ["fr","it","pl","es","de","no"], cardInfo: "Виртуальные карты + физическая карта (отправка по запросу)." },
-      { id: "revolut_b", name: "Revolut (Business)", price: 220, stock: 2, countries: ["fr","it","pl","es","de","no"], cardInfo: "Мультивалютный бизнес-счет + корпоративные карты." },
-      { id: "bunq_p", name: "Bunq (Personal)", price: 85, stock: 3, countries: ["fr","it","pl","es","gb","de","no"], cardInfo: "Выпущены европейские IBAN (NL/DE/ES/FR) и виртуальные карты." },
-      { id: "bunq_b", name: "Bunq (Business)", price: 200, stock: 2, countries: ["fr","it","pl","es","gb","de","no"], cardInfo: "Европейский бизнес-аккаунт с высокими лимитами." },
-      { id: "blackcat", name: "Blackcatcard", price: 65, stock: 4, countries: ["es","ee","lv","lt","it","tr"], cardInfo: "Европейский IBAN + криптокошелек и карта Mastercard." },
-      { id: "vivid", name: "Vivid", price: 95, stock: 3, countries: ["fr","de","it","es"], cardInfo: "Немецкий IBAN DE, виртуальная и физическая карты." },
-      { id: "paypal_p", name: "PayPal (Personal)", price: 55, stock: 4, countries: ["de","gb","fr","pl","nl"], cardInfo: "Прогретый верифицированный аккаунт с полным комплектом." },
-      { id: "wirex", name: "Wirex", price: 65, stock: 3, countries: ["de","gb","fr","pl","nl"], cardInfo: "Мультивалютная крипто-карта и счета EUR/GBP/USD." },
-      { id: "payoneer", name: "Payoneer", price: 60, stock: 4, countries: ["kz","ua","de","gb","es","fr"], cardInfo: "Реквизиты для приёма USD/EUR/GBP + выпуск карт." },
-      { id: "pyypl", name: "Pyypl", price: 45, stock: 4, countries: ["us","gb","fr"], cardInfo: "Виртуальные карты Mastercard и переводы." },
-      { id: "icard", name: "Icard", price: 75, stock: 3, countries: ["de","gb","us","es","nl","fr","it","pl"], cardInfo: "Европейский счет IBAN + виртуальные и пластиковые карты." },
-      { id: "skrill", name: "Skrill", price: 55, stock: 4, countries: ["de","gb","us","es","it","pl","nl","fr","lv"], cardInfo: "Полностью верифицированный кошелек без лимитов." },
-      { id: "n26", name: "N26", price: 190, stock: 2, countries: ["de"], cardInfo: "Немецкий личный банковский счет DE IBAN + виртуальная карта." },
-      { id: "paysera", name: "Paysera (unlimited)", price: 85, stock: 3, countries: ["es","ee","lv","lt","it","tr"], cardInfo: "Европейский счет LT IBAN с повышенными лимитами." },
-      { id: "stripe", name: "Stripe Business", price: 150, stock: 2, countries: ["fi","es","it","pl","gb","us"], cardInfo: "Верифицированный мерчант-аккаунт для приёма платежей." },
-      { id: "upbank", name: "UP bank", price: 95, stock: 2, countries: ["au"], cardInfo: "Австралийский необанк с поддержкой карт и переводов." }
+      { id: "wise_p", name: "Wise (Personal)", domain: "wise.com", price: 50, stock: 4, countries: ["de","fr","it","pl","es","gb","ca","us"], cardInfo: "Выпущено 3 виртуальных и 1 физическая карта (отправка в ваш город по запросу)." },
+      { id: "wise_b", name: "Wise (Business)", domain: "wise.com", price: 120, stock: 3, countries: ["de","fr","it","pl","es","gb","ca","us"], cardInfo: "Корпоративный счет + бизнес-карты Visa/Mastercard." },
+      { id: "revolut_p", name: "Revolut (Personal)", domain: "revolut.com", price: 90, stock: 3, countries: ["fr","it","pl","es","de","no"], cardInfo: "Виртуальные карты + физическая карта (отправка по запросу)." },
+      { id: "revolut_b", name: "Revolut (Business)", domain: "revolut.com", price: 220, stock: 2, countries: ["fr","it","pl","es","de","no"], cardInfo: "Мультивалютный бизнес-счет + корпоративные карты." },
+      { id: "bunq_p", name: "Bunq (Personal)", domain: "bunq.com", price: 85, stock: 3, countries: ["fr","it","pl","es","gb","de","no"], cardInfo: "Выпущены европейские IBAN (NL/DE/ES/FR) и виртуальные карты." },
+      { id: "bunq_b", name: "Bunq (Business)", domain: "bunq.com", price: 200, stock: 2, countries: ["fr","it","pl","es","gb","de","no"], cardInfo: "Европейский бизнес-аккаунт с высокими лимитами." },
+      { id: "blackcat", name: "Blackcatcard", domain: "blackcatcard.com", price: 65, stock: 4, countries: ["es","ee","lv","lt","it","tr"], cardInfo: "Европейский IBAN + криптокошелек и карта Mastercard." },
+      { id: "vivid", name: "Vivid", domain: "vivid.money", price: 95, stock: 3, countries: ["fr","de","it","es"], cardInfo: "Немецкий IBAN DE, виртуальная и физическая карты." },
+      { id: "paypal_p", name: "PayPal (Personal)", domain: "paypal.com", price: 55, stock: 4, countries: ["de","gb","fr","pl","nl"], cardInfo: "Прогретый верифицированный аккаунт с полным комплектом." },
+      { id: "wirex", name: "Wirex", domain: "wirexapp.com", price: 65, stock: 3, countries: ["de","gb","fr","pl","nl"], cardInfo: "Мультивалютная крипто-карта и счета EUR/GBP/USD." },
+      { id: "payoneer", name: "Payoneer", domain: "payoneer.com", price: 60, stock: 4, countries: ["kz","ua","de","gb","es","fr"], cardInfo: "Реквизиты для приёма USD/EUR/GBP + выпуск карт." },
+      { id: "pyypl", name: "Pyypl", domain: "pyypl.com", price: 45, stock: 4, countries: ["us","gb","fr"], cardInfo: "Виртуальные карты Mastercard и переводы." },
+      { id: "icard", name: "Icard", domain: "icard.com", price: 75, stock: 3, countries: ["de","gb","us","es","nl","fr","it","pl"], cardInfo: "Европейский счет IBAN + виртуальные и пластиковые карты." },
+      { id: "skrill", name: "Skrill", domain: "skrill.com", price: 55, stock: 4, countries: ["de","gb","us","es","it","pl","nl","fr","lv"], cardInfo: "Полностью верифицированный кошелек без лимитов." },
+      { id: "n26", name: "N26", domain: "n26.com", price: 190, stock: 2, countries: ["de"], cardInfo: "Немецкий личный банковский счет DE IBAN + виртуальная карта." },
+      { id: "paysera", name: "Paysera (unlimited)", domain: "paysera.com", price: 85, stock: 3, countries: ["es","ee","lv","lt","it","tr"], cardInfo: "Европейский счет LT IBAN с повышенными лимитами." },
+      { id: "stripe", name: "Stripe Business", domain: "stripe.com", price: 150, stock: 2, countries: ["fi","es","it","pl","gb","us"], cardInfo: "Верифицированный мерчант-аккаунт для приёма платежей." },
+      { id: "upbank", name: "UP bank", domain: "up.com.au", price: 95, stock: 2, countries: ["au"], cardInfo: "Австралийский необанк с поддержкой карт и переводов." }
     ];
 
-    // 3. БАЗА СВЯЗОК «БАНК + БИРЖА» ИЗ ВИДЕО
+    // 3. БАЗА СВЯЗОК «БАНК + БИРЖА» С ДВОЙНЫМИ PNG-ИКОНКАМИ БРЕНДОВ
     const bundleServices = [
-      { id: "privat_bin", name: "Privat Bank + Binance", country: "ua", price: 85, stock: 3 },
-      { id: "tinkoff_byb", name: "Tinkoff Bank + Bybit", country: "ru", price: 90, stock: 3 },
-      { id: "sber_bybm", name: "Sber Bank + Bybit(maker)", country: "ru", price: 165, stock: 2 },
-      { id: "mono_bin", name: "Mono Bank + Binance", country: "ua", price: 85, stock: 4 },
-      { id: "abank_bin", name: "A-Bank + Binance", country: "ua", price: 85, stock: 2 },
-      { id: "bakai_okx", name: "Bakai Bank + OKX", country: "kg", price: 85, stock: 2 },
-      { id: "kapital_okx", name: "Kapital Bank + OKX", country: "az", price: 85, stock: 2 },
-      { id: "stripe_byb_bunq", name: "Stripe Business + Bybit + Bunq", country: "pl", price: 240, stock: 1 },
-      { id: "freedom_bin", name: "Freedom bank + Binance", country: "kz", price: 85, stock: 3 }
+      { id: "privat_bin", name: "Privat Bank + Binance", domain: "privatbank.ua", domain2: "binance.com", country: "ua", price: 85, stock: 3 },
+      { id: "tinkoff_byb", name: "Tinkoff Bank + Bybit", domain: "tbank.ru", domain2: "bybit.com", country: "ru", price: 90, stock: 3 },
+      { id: "sber_bybm", name: "Sber Bank + Bybit(maker)", domain: "sberbank.ru", domain2: "bybit.com", country: "ru", price: 165, stock: 2 },
+      { id: "mono_bin", name: "Mono Bank + Binance", domain: "monobank.ua", domain2: "binance.com", country: "ua", price: 85, stock: 4 },
+      { id: "abank_bin", name: "A-Bank + Binance", domain: "a-bank.com.ua", domain2: "binance.com", country: "ua", price: 85, stock: 2 },
+      { id: "bakai_okx", name: "Bakai Bank + OKX", domain: "bakai.kg", domain2: "okx.com", country: "kg", price: 85, stock: 2 },
+      { id: "kapital_okx", name: "Kapital Bank + OKX", domain: "kapitalbank.az", domain2: "okx.com", country: "az", price: 85, stock: 2 },
+      { id: "stripe_byb_bunq", name: "Stripe Business + Bybit + Bunq", domain: "stripe.com", domain2: "bybit.com", country: "pl", price: 240, stock: 1 },
+      { id: "freedom_bin", name: "Freedom bank + Binance", domain: "bankffin.kz", domain2: "binance.com", country: "kz", price: 85, stock: 3 }
     ];
 
-    // 4. БАЗА «ЛК БАНКОВ» ИЗ ВИДЕО (СТРАНЫ И ТОЧНЫЕ БАНКИ)
+    // 4. БАЗА «ЛК БАНКОВ» С ОФИЦИАЛЬНЫМИ ДОМЕНАМИ БАНКОВ ДЛЯ PNG ИКОНОК
     const bankCountriesOrder = ["ua","ru","kz","kg","uz","az","tj","ge","am","de","pl","by","md","cz"];
 
     const banksCatalog = {
       ua: [
-        { name: "Mono bank", price: 65, stock: 5, desc: "Монобанк — украинский мобильный банк без отделений.", currency: "гривна (UAH)", limitInfo: "Пополнение: до 400 000 ₴ в месяц. Снятие в банкоматах: до 100 000 ₴ в день." },
-        { name: "Privat bank", price: 65, stock: 2, desc: "ПриватБанк — крупнейший банк Украины с удобным банкингом.", currency: "Гривна (UAH), доллары (USD), евро (EUR)", limitInfo: "Пополнение: до 400 000 ₴ в месяц. Переводы между счетами ПриватБанка: безлимит." },
-        { name: "PUMB bank", price: 65, stock: 3, desc: "ПУМБ — универсальный украинский банк с выгодными тарифами.", currency: "Гривна (UAH), USD, EUR", limitInfo: "Пополнение: безлимитно. Переводы внутри банка без комиссий." },
-        { name: "Ощад bank", price: 65, stock: 2, desc: "Ощадбанк — один из крупнейших государственных банков Украины.", currency: "гривна (UAH), доллары (USD) и евро (EUR)", limitInfo: "Снятие наличных: до 150 000 UAH в день. Переводы между счетами Ощадбанка: безлимитно." },
-        { name: "A-bank", price: 65, stock: 2, desc: "А-Банк — современный украинский банк с мгновенными переводами.", currency: "Гривна (UAH), USD, EUR", limitInfo: "Между счетами А-Банка: безлимитно. На карты других банков: до 500 000 UAH в день." },
-        { name: "izi bank", price: 65, stock: 3, desc: "izibank — мобильный необанк в Украине.", currency: "Гривна (UAH), USD, EUR", limitInfo: "Бесплатные переводы между пользователями IZI Bank и на карты других банков Украины." }
+        { name: "Mono bank", domain: "monobank.ua", price: 65, stock: 5, desc: "Монобанк — украинский мобильный банк без отделений.", currency: "гривна (UAH)", limitInfo: "Пополнение: до 400 000 ₴ в месяц. Снятие в банкоматах: до 100 000 ₴ в день." },
+        { name: "Privat bank", domain: "privatbank.ua", price: 65, stock: 2, desc: "ПриватБанк — крупнейший банк Украины с удобным банкингом.", currency: "Гривна (UAH), доллары (USD), евро (EUR)", limitInfo: "Пополнение: до 400 000 ₴ в месяц. Переводы между счетами ПриватБанка: безлимит." },
+        { name: "PUMB bank", domain: "pumb.ua", price: 65, stock: 3, desc: "ПУМБ — универсальный украинский банк с выгодными тарифами.", currency: "Гривна (UAH), USD, EUR", limitInfo: "Пополнение: безлимитно. Переводы внутри банка без комиссий." },
+        { name: "Ощад bank", domain: "oschadbank.ua", price: 65, stock: 2, desc: "Ощадбанк — один из крупнейших государственных банков Украины.", currency: "гривна (UAH), доллары (USD) и евро (EUR)", limitInfo: "Снятие наличных: до 150 000 UAH в день. Переводы между счетами Ощадбанка: безлимитно." },
+        { name: "A-bank", domain: "a-bank.com.ua", price: 65, stock: 2, desc: "А-Банк — современный украинский банк с мгновенными переводами.", currency: "Гривна (UAH), USD, EUR", limitInfo: "Между счетами А-Банка: безлимитно. На карты других банков: до 500 000 UAH в день." },
+        { name: "izi bank", domain: "izibank.com.ua", price: 65, stock: 3, desc: "izibank — мобильный необанк в Украине.", currency: "Гривна (UAH), USD, EUR", limitInfo: "Бесплатные переводы между пользователями IZI Bank и на карты других банков Украины." }
       ],
       ru: [
-        { name: "Tinkoff bank", price: 70, stock: 3, desc: "Tinkoff Bank — российский банк, предоставляющий инновационные финансовые услуги.", currency: "рубли (RUB) и другие валюты (MIR)", limitInfo: "Пополнение: безлимитно. Снятие: до 500 000 ₽ в день. На карты других банков: до 1 500 000 ₽ в месяц." },
-        { name: "Sberbank", price: 70, stock: 2, desc: "SberBank — крупнейший российский банк, предлагающий широкий спектр финансовых услуг.", currency: "рубли (RUB), карты MIR", limitInfo: "Пополнение: без ограничений. Переводы внутри Сбербанка бесплатны." },
-        { name: "Alfa-bank", price: 70, stock: 3, desc: "Альфа-Банк — ведущий частный банк России.", currency: "рубли (RUB), карты MIR", limitInfo: "Пополнение: без ограничений. СБП и переводы по номеру карты." },
-        { name: "VTB bank", price: 70, stock: 2, desc: "ВТБ — крупный российский универсальный банк.", currency: "рубли (RUB), карты MIR", limitInfo: "Пополнение: без ограничений. Высокие суточные лимиты." },
-        { name: "Raiffeisen bank", price: 70, stock: 2, desc: "Райффайзен Банк — надежный банк с европейскими стандартами обслуживания.", currency: "рубли (RUB), карты MIR", limitInfo: "Пополнение: без ограничений. Бесплатные переводы по СБП." },
-        { name: "OZON bank", price: 70, stock: 4, desc: "Ozon Банк — удобный финтех-банк с расширенными лимитами.", currency: "рубли (RUB), карты MIR", limitInfo: "Пополнение и переводы по СБП без комиссии." },
-        { name: "Gazprom bank", price: 70, stock: 2, desc: "Газпромбанк — один из крупнейших универсальных банков РФ.", currency: "рубли (RUB), карты MIR", limitInfo: "Пополнение: без ограничений. Высокие лимиты на переводы." },
-        { name: "MTC Bank", price: 70, stock: 2, desc: "МТС Банк — цифровой банк для быстрых переводов и платежей.", currency: "рубли (RUB), карты MIR", limitInfo: "Пополнение: без ограничений." },
-        { name: "Rosbank", price: 70, stock: 2, desc: "Росбанк — универсальный российский банк.", currency: "рубли (RUB), карты MIR", limitInfo: "Пополнение: без ограничений." }
+        { name: "Tinkoff bank", domain: "tbank.ru", price: 70, stock: 3, desc: "Tinkoff Bank — российский банк, предоставляющий инновационные финансовые услуги.", currency: "рубли (RUB) и другие валюты (MIR)", limitInfo: "Пополнение: безлимитно. Снятие: до 500 000 ₽ в день. На карты других банков: до 1 500 000 ₽ в месяц." },
+        { name: "Sberbank", domain: "sberbank.ru", price: 70, stock: 2, desc: "SberBank — крупнейший российский банк, предлагающий широкий спектр финансовых услуг.", currency: "рубли (RUB), карты MIR", limitInfo: "Пополнение: без ограничений. Переводы внутри Сбербанка бесплатны." },
+        { name: "Alfa-bank", domain: "alfabank.ru", price: 70, stock: 3, desc: "Альфа-Банк — ведущий частный банк России.", currency: "рубли (RUB), карты MIR", limitInfo: "Пополнение: без ограничений. СБП и переводы по номеру карты." },
+        { name: "VTB bank", domain: "vtb.ru", price: 70, stock: 2, desc: "ВТБ — крупный российский универсальный банк.", currency: "рубли (RUB), карты MIR", limitInfo: "Пополнение: без ограничений. Высокие суточные лимиты." },
+        { name: "Raiffeisen bank", domain: "raiffeisen.ru", price: 70, stock: 2, desc: "Райффайзен Банк — надежный банк с европейскими стандартами обслуживания.", currency: "рубли (RUB), карты MIR", limitInfo: "Пополнение: без ограничений. Бесплатные переводы по СБП." },
+        { name: "OZON bank", domain: "ozon.ru", price: 70, stock: 4, desc: "Ozon Банк — удобный финтех-банк с расширенными лимитами.", currency: "рубли (RUB), карты MIR", limitInfo: "Пополнение и переводы по СБП без комиссии." },
+        { name: "Gazprom bank", domain: "gazprombank.ru", price: 70, stock: 2, desc: "Газпромбанк — один из крупнейших универсальных банков РФ.", currency: "рубли (RUB), карты MIR", limitInfo: "Пополнение: без ограничений. Высокие лимиты на переводы." },
+        { name: "MTC Bank", domain: "mtsbank.ru", price: 70, stock: 2, desc: "МТС Банк — цифровой банк для быстрых переводов и платежей.", currency: "рубли (RUB), карты MIR", limitInfo: "Пополнение: без ограничений." },
+        { name: "Rosbank", domain: "rosbank.ru", price: 70, stock: 2, desc: "Росбанк — универсальный российский банк.", currency: "рубли (RUB), карты MIR", limitInfo: "Пополнение: без ограничений." }
       ],
       kz: [
-        { name: "Altyn bank", price: 65, stock: 3, desc: "Altyn Bank — казахстанский цифровой банк с широким спектром финансовых услуг.", currency: "тенге (KZT), USD, EUR, GBP, RUB, CNY", limitInfo: "Пополнение: без ограничений. Снятие до 700 000 KZT в месяц без комиссии. Внутренние переводы: безлимит." },
-        { name: "FORTE bank", price: 65, stock: 2, desc: "ForteBank — один из ведущих банков Казахстана с мультивалютными картами.", currency: "тенге (KZT), USD, EUR", limitInfo: "Пополнение: без ограничений. Мгновенные переводы по номеру телефона." },
-        { name: "KASPI bank", price: 65, stock: 4, desc: "Kaspi.kz — самый популярный мобильный супер-апп и банк в Казахстане.", currency: "тенге (KZT), Kaspi Gold", limitInfo: "Пополнение: без ограничений. Мгновенные переводы между клиентами Kaspi." },
-        { name: "Halyk Bank", price: 65, stock: 3, desc: "Halyk Bank (Народный банк) — крупнейший универсальный банк Казахстана.", currency: "тенге (KZT), USD, EUR", limitInfo: "Пополнение: без ограничений. Международные и внутренние переводы." }
+        { name: "Altyn bank", domain: "altynbank.kz", price: 65, stock: 3, desc: "Altyn Bank — казахстанский цифровой банк с широким спектром финансовых услуг.", currency: "тенге (KZT), USD, EUR, GBP, RUB, CNY", limitInfo: "Пополнение: без ограничений. Снятие до 700 000 KZT в месяц без комиссии. Внутренние переводы: безлимит." },
+        { name: "FORTE bank", domain: "forte.kz", price: 65, stock: 2, desc: "ForteBank — один из ведущих банков Казахстана с мультивалютными картами.", currency: "тенге (KZT), USD, EUR", limitInfo: "Пополнение: без ограничений. Мгновенные переводы по номеру телефона." },
+        { name: "KASPI bank", domain: "kaspi.kz", price: 65, stock: 4, desc: "Kaspi.kz — самый популярный мобильный супер-апп и банк в Казахстане.", currency: "тенге (KZT), Kaspi Gold", limitInfo: "Пополнение: без ограничений. Мгновенные переводы между клиентами Kaspi." },
+        { name: "Halyk Bank", domain: "halykbank.kz", price: 65, stock: 3, desc: "Halyk Bank (Народный банк) — крупнейший универсальный банк Казахстана.", currency: "тенге (KZT), USD, EUR", limitInfo: "Пополнение: без ограничений. Международные и внутренние переводы." }
       ],
       kg: [
-        { name: "BAKAI bank", price: 65, stock: 1, desc: "Bakai Bank – один из ведущих банков Кыргызстана, предоставляющий широкий спектр финансовых услуг.", currency: "сомы (KGS), доллары США (USD) и евро (EUR)", limitInfo: "Пополнение: без ограничений. Суточный лимит снятия: до 200 000 KGS. Поддержка SWIFT." }
+        { name: "BAKAI bank", domain: "bakai.kg", price: 65, stock: 1, desc: "Bakai Bank – один из ведущих банков Кыргызстана, предоставляющий широкий спектр финансовых услуг.", currency: "сомы (KGS), доллары США (USD) и евро (EUR)", limitInfo: "Пополнение: без ограничений. Суточный лимит снятия: до 200 000 KGS. Поддержка SWIFT." }
       ],
       uz: [
-        { name: "NBU bank", price: 65, stock: 3, desc: "NBU (Национальный банк Узбекистана) — крупнейший банк страны с поддержкой международных карт.", currency: "сумы (UZS), доллары США (USD), евро (EUR)", limitInfo: "Карты Visa Classic / Gold и Mastercard. Снятие в банкоматах NBU бесплатно." }
+        { name: "NBU bank", domain: "nbu.uz", price: 65, stock: 3, desc: "NBU (Национальный банк Узбекистана) — крупнейший банк страны с поддержкой международных карт.", currency: "сумы (UZS), доллары США (USD), евро (EUR)", limitInfo: "Карты Visa Classic / Gold и Mastercard. Снятие в банкоматах NBU бесплатно." }
       ],
       az: [
-        { name: "Kapital bank", price: 65, stock: 1, desc: "Kapital Bank предоставляет широкий спектр финансовых услуг, включая мультивалютные счета и дебетовые карты.", currency: "манаты (AZN), доллары США (USD) и евро (EUR)", limitInfo: "Пополнение: без ограничений. Оплата картой: безлимитные расходы." },
-        { name: "Bank of Baku", price: 65, stock: 2, desc: "Bank of Baku — надежный азербайджанский банк для переводов и работы с картами.", currency: "манаты (AZN), USD, EUR", limitInfo: "Пополнение: без ограничений. Быстрые переводы внутри страны и за рубеж." },
-        { name: "Dostbank", price: 65, stock: 2, desc: "Dostbank — удобный цифровой банкинг в Азербайджане.", currency: "манаты (AZN), USD, EUR", limitInfo: "Пополнение: без ограничений." }
+        { name: "Kapital bank", domain: "kapitalbank.az", price: 65, stock: 1, desc: "Kapital Bank предоставляет широкий спектр финансовых услуг, включая мультивалютные счета и дебетовые карты.", currency: "манаты (AZN), доллары США (USD) и евро (EUR)", limitInfo: "Пополнение: без ограничений. Оплата картой: безлимитные расходы." },
+        { name: "Bank of Baku", domain: "bankofbaku.com", price: 65, stock: 2, desc: "Bank of Baku — надежный азербайджанский банк для переводов и работы с картами.", currency: "манаты (AZN), USD, EUR", limitInfo: "Пополнение: без ограничений. Быстрые переводы внутри страны и за рубеж." },
+        { name: "Dostbank", domain: "rabitabank.com", price: 65, stock: 2, desc: "Dostbank — удобный цифровой банкинг в Азербайджане.", currency: "манаты (AZN), USD, EUR", limitInfo: "Пополнение: без ограничений." }
       ],
       tj: [
-        { name: "Alif Bank", price: 65, stock: 2, desc: "Alif Bank — ведущий финтех-банк Таджикистана.", currency: "сомони (TJS), USD, EUR", limitInfo: "Пополнение: без ограничений. Быстрые международные переводы." }
+        { name: "Alif Bank", domain: "alif.tj", price: 65, stock: 2, desc: "Alif Bank — ведущий финтех-банк Таджикистана.", currency: "сомони (TJS), USD, EUR", limitInfo: "Пополнение: без ограничений. Быстрые международные переводы." }
       ],
       ge: [
-        { name: "Bank of Georgia", price: 65, stock: 2, desc: "Bank of Georgia — один из крупнейших банков Грузии, предоставляющий широкий спектр финансовых услуг.", currency: "грузинские лари (GEL), доллары США (USD) и евро (EUR)", limitInfo: "Пополнение: безлимитное. Снятие наличных: 2 500 лари в сутки. Переводы между счетами BOG: безлимит + SWIFT." },
-        { name: "TBC bank", price: 65, stock: 2, desc: "TBC Bank — ведущий технологичный банк Грузии с мультивалютными счетами.", currency: "лари (GEL), USD, EUR", limitInfo: "Пополнение: безлимитное. Мгновенные переводы и SWIFT." }
+        { name: "Bank of Georgia", domain: "bankofgeorgia.ge", price: 65, stock: 2, desc: "Bank of Georgia — один из крупнейших банков Грузии, предоставляющий широкий спектр финансовых услуг.", currency: "грузинские лари (GEL), доллары США (USD) и евро (EUR)", limitInfo: "Пополнение: безлимитное. Снятие наличных: 2 500 лари в сутки. Переводы между счетами BOG: безлимит + SWIFT." },
+        { name: "TBC bank", domain: "tbcbank.ge", price: 65, stock: 2, desc: "TBC Bank — ведущий технологичный банк Грузии с мультивалютными счетами.", currency: "лари (GEL), USD, EUR", limitInfo: "Пополнение: безлимитное. Мгновенные переводы и SWIFT." }
       ],
       am: [
-        { name: "Ameria bank", price: 65, stock: 2, desc: "Ameria bank — универсальный банк Армении, предоставляющий широкий спектр финансовых услуг.", currency: "армянские драмы (AMD), доллары США (USD) и евро (EUR)", limitInfo: "Пополнение: безлимитное. Между счетами Ameriabank: безлимитные переводы + международные SWIFT." },
-        { name: "Ardshin bank", price: 65, stock: 2, desc: "Ardshinbank — один из крупнейших банков Армении с развитым мобильным банкингом.", currency: "драмы (AMD), USD, EUR", limitInfo: "Пополнение: безлимитное. Международные переводы." }
+        { name: "Ameria bank", domain: "ameriabank.am", price: 65, stock: 2, desc: "Ameria bank — универсальный банк Армении, предоставляющий широкий спектр финансовых услуг.", currency: "армянские драмы (AMD), доллары США (USD) и евро (EUR)", limitInfo: "Пополнение: безлимитное. Между счетами Ameriabank: безлимитные переводы + международные SWIFT." },
+        { name: "Ardshin bank", domain: "ardshinbank.am", price: 65, stock: 2, desc: "Ardshinbank — один из крупнейших банков Армении с развитым мобильным банкингом.", currency: "драмы (AMD), USD, EUR", limitInfo: "Пополнение: безлимитное. Международные переводы." }
       ],
       de: [
-        { name: "Deutsche bank", price: 245, stock: 2, desc: "Deutsche Bank — крупнейший банк Германии, предоставляющий широкий спектр финансовых услуг.", currency: "евро (EUR) и другие валюты", limitInfo: "Пополнение: без ограничений. Снятие в банкоматах Cash Group без комиссии. Переводы SEPA." },
-        { name: "C24", price: 245, stock: 2, desc: "C24 Bank — современный немецкий банк с личным DE IBAN и мгновенными SEPA-переводами.", currency: "евро (EUR), карта Mastercard", limitInfo: "Пополнение: без ограничений. Поддержка SEPA Instant." }
+        { name: "Deutsche bank", domain: "deutsche-bank.de", price: 245, stock: 2, desc: "Deutsche Bank — крупнейший банк Германии, предоставляющий широкий спектр финансовых услуг.", currency: "евро (EUR) и другие валюты", limitInfo: "Пополнение: без ограничений. Снятие в банкоматах Cash Group без комиссии. Переводы SEPA." },
+        { name: "C24", domain: "c24.de", price: 245, stock: 2, desc: "C24 Bank — современный немецкий банк с личным DE IBAN и мгновенными SEPA-переводами.", currency: "евро (EUR), карта Mastercard", limitInfo: "Пополнение: без ограничений. Поддержка SEPA Instant." }
       ],
       pl: [
-        { name: "Pekao bank", price: 235, stock: 2, desc: "Bank Pekao — один из крупнейших банков Польши, предоставляющий широкий спектр финансовых услуг.", currency: "польские злотые (PLN), USD, EUR, GBP, CHF", limitInfo: "Пополнение: без ограничений. Внутренние переводы и переводы в евро по SEPA без комиссии." },
-        { name: "Millennium Bank", price: 235, stock: 1, desc: "Millennium Bank — ведущий польский коммерческий банк с удобным приложением.", currency: "злотые (PLN), EUR, USD", limitInfo: "Пополнение: без ограничений. Внутренние переводы и SEPA в евро без комиссии." }
+        { name: "Pekao bank", domain: "pekao.com.pl", price: 235, stock: 2, desc: "Bank Pekao — один из крупнейших банков Польши, предоставляющий широкий спектр финансовых услуг.", currency: "польские злотые (PLN), USD, EUR, GBP, CHF", limitInfo: "Пополнение: без ограничений. Внутренние переводы и переводы в евро по SEPA без комиссии." },
+        { name: "Millennium Bank", domain: "bankmillennium.pl", price: 235, stock: 1, desc: "Millennium Bank — ведущий польский коммерческий банк с удобным приложением.", currency: "злотые (PLN), EUR, USD", limitInfo: "Пополнение: без ограничений. Внутренние переводы и SEPA в евро без комиссии." }
       ],
       by: [
-        { name: "Alfa-bank", price: 65, stock: 3, desc: "Альфа-Банк — один из ведущих банков Беларуси, предоставляющий широкий спектр финансовых услуг.", currency: "белорусские рубли (BYN), USD, EUR и российские рубли (RUB)", limitInfo: "Пополнение: без ограничений. Снятие наличных: до 5 000 BYN в сутки. В комплекте 1 цифровая и 2 физические карты Visa Classic и БЕЛКАРТ." }
+        { name: "Alfa-bank", domain: "alfabank.by", price: 65, stock: 3, desc: "Альфа-Банк — один из ведущих банков Беларуси, предоставляющий широкий спектр финансовых услуг.", currency: "белорусские рубли (BYN), USD, EUR и российские рубли (RUB)", limitInfo: "Пополнение: без ограничений. Снятие наличных: до 5 000 BYN в сутки. В комплекте 1 цифровая и 2 физические карты Visa Classic и БЕЛКАРТ." }
       ],
       md: [
-        { name: "Maib bank", price: 65, stock: 3, desc: "MAIB (Moldova Agroindbank) — крупнейший банк Республики Молдова.", currency: "молдавские леи (MDL), евро (EUR), доллары США (USD)", limitInfo: "Пополнение: без ограничений. Суточный лимит снятия: 1 000 EUR (с возможностью увеличения до 10 000 EUR)." }
+        { name: "Maib bank", domain: "maib.md", price: 65, stock: 3, desc: "MAIB (Moldova Agroindbank) — крупнейший банк Республики Молдова.", currency: "молдавские леи (MDL), евро (EUR), доллары США (USD)", limitInfo: "Пополнение: без ограничений. Суточный лимит снятия: 1 000 EUR (с возможностью увеличения до 10 000 EUR)." }
       ],
       cz: [
-        { name: "UniCredit Bank", price: 250, stock: 1, desc: "UniCredit Bank Czech Republic — ведущий европейский банк с поддержкой чешских и международных переводов.", currency: "чешские кроны (CZK), евро (EUR), доллары (USD)", limitInfo: "Smart Banking активирован. Локальные переводы по Чехии, международные SEPA и SWIFT." }
+        { name: "UniCredit Bank", domain: "unicreditbank.cz", price: 250, stock: 1, desc: "UniCredit Bank Czech Republic — ведущий европейский банк с поддержкой чешских и международных переводов.", currency: "чешские кроны (CZK), евро (EUR), доллары (USD)", limitInfo: "Smart Banking активирован. Локальные переводы по Чехии, международные SEPA и SWIFT." }
       ]
     };
 
     // СОСТОЯНИЕ НАВИГАЦИИ И ПРОМОКОДА
-    let currentCategory = "";     // "crypto", "payment", "bundle", "banks"
-    let currentStep = 1;          // 1 = первый список внутри категории, 2 = второй список
-    let selectedService = null;   // Выбранная биржа / платёжка / связка / страна банка
-    let activeProduct = null;     // Текущий открытый товар на детальном экране
-    let promoDiscount = 0;        // 0 или 0.10 (промокод moon)
+    let currentCategory = "";
+    let currentStep = 1;
+    let selectedService = null;
+    let activeProduct = null;
+    let promoDiscount = 0;
 
     const tabIndices = { 'home': 0, 'catalog': 1, 'cart': 2, 'cabinet': 3 };
 
     function switchTab(tabId) {
       haptic();
-
-      // Если уходим из каталога или нажимаем на Каталог — сбрасываем к 4 главным категориям
       resetCatalogToRoot();
 
       ['home', 'catalog', 'cart', 'cabinet', 'info'].forEach(t => {
@@ -1166,7 +1213,6 @@
       showCatalogView('view-categories');
     }
 
-    // ОТКРЫТИЕ ОДНОЙ ИЗ 4 КАТЕГОРИЙ
     function openCategory(catKey) {
       haptic('medium');
       currentCategory = catKey;
@@ -1184,21 +1230,19 @@
       showCatalogView('view-step-list');
     }
 
-    // --- ШАГ 1 ДЛЯ КАЖДОЙ КАТЕГОРИИ ---
+    // --- ШАГ 1 С РЕАЛЬНЫМИ PNG ЛОГОТИПАМИ ---
 
-    // 1. Крипто-биржи: список бирж
     function renderCryptoExchangesStep() {
       document.getElementById('step-title').innerText = "Выберите товар:";
       const box = document.getElementById('step-list-container');
       box.innerHTML = '';
 
       cryptoExchanges.forEach(ex => {
-        const letter = ex.name.charAt(0).toUpperCase();
         const row = document.createElement('div');
         row.className = "country-btn";
         row.innerHTML = `
           <div class="flex items-center space-x-3">
-            <div class="mono-icon-box w-8 h-8 rounded-lg text-xs font-bold">${letter}</div>
+            ${renderBrandLogo(ex.domain, ex.name)}
             <span class="text-xs font-bold text-white">${ex.name}</span>
           </div>
           <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg>
@@ -1213,19 +1257,17 @@
       });
     }
 
-    // 2. Платёжки: список 18 платёжек
     function renderPaymentServicesStep() {
       document.getElementById('step-title').innerText = "Выберите товар:";
       const box = document.getElementById('step-list-container');
       box.innerHTML = '';
 
       paymentServices.forEach(p => {
-        const letter = p.name.charAt(0).toUpperCase();
         const row = document.createElement('div');
         row.className = "country-btn";
         row.innerHTML = `
           <div class="flex items-center space-x-3">
-            <div class="mono-icon-box w-8 h-8 rounded-lg text-xs font-bold">${letter}</div>
+            ${renderBrandLogo(p.domain, p.name)}
             <span class="text-xs font-bold text-white">${p.name}</span>
           </div>
           <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg>
@@ -1240,19 +1282,17 @@
       });
     }
 
-    // 3. Связки Банк + Биржа: список 9 связок
     function renderBundlesStep() {
       document.getElementById('step-title').innerText = "Выберите товар:";
       const box = document.getElementById('step-list-container');
       box.innerHTML = '';
 
       bundleServices.forEach(b => {
-        const letter = b.name.charAt(0).toUpperCase();
         const row = document.createElement('div');
         row.className = "country-btn";
         row.innerHTML = `
           <div class="flex items-center space-x-3">
-            <div class="mono-icon-box w-8 h-8 rounded-lg text-xs font-bold">${letter}</div>
+            ${renderBrandLogo(b.domain, b.name, b.domain2)}
             <span class="text-xs font-bold text-white">${b.name}</span>
           </div>
           <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg>
@@ -1267,7 +1307,6 @@
       });
     }
 
-    // 4. ЛК банков: список 14 стран
     function renderBankCountriesStep() {
       document.getElementById('step-title').innerText = "Выберите страну:";
       const box = document.getElementById('step-list-container');
@@ -1294,7 +1333,7 @@
       });
     }
 
-    // --- ШАГ 2 ДЛЯ КАЖДОЙ КАТЕГОРИИ ---
+    // --- ШАГ 2 ---
 
     function renderCountriesForCrypto(ex) {
       document.getElementById('step-title').innerText = `${ex.name} — Выберите страну:`;
@@ -1375,12 +1414,11 @@
 
       const banks = banksCatalog[country.code] || [];
       banks.forEach(bank => {
-        const letter = bank.name.charAt(0).toUpperCase();
         const row = document.createElement('div');
         row.className = "country-btn";
         row.innerHTML = `
           <div class="flex items-center space-x-3">
-            <div class="mono-icon-box w-8 h-8 rounded-lg text-xs font-bold">${letter}</div>
+            ${renderBrandLogo(bank.domain, bank.name)}
             <span class="text-xs font-bold text-white">${bank.name}</span>
           </div>
           <div class="flex items-center space-x-2">
@@ -1393,7 +1431,7 @@
       });
     }
 
-    // --- ГЕНЕРАЦИЯ ДЕТАЛЬНЫХ КАРТОЧЕК ТОВАРОВ (ТОЧЬ-В-ТОЧЬ КАК В БОТЕ) ---
+    // --- ДЕТАЛЬНЫЕ КАРТОЧКИ ТОВАРОВ ---
 
     function openCryptoProductCard(ex, country) {
       haptic('medium');
@@ -1459,6 +1497,8 @@
 
       showProductDetailModal({
         name: ex.name,
+        domain: ex.domain,
+        domain2: null,
         country: country,
         price: price,
         stock: stock,
@@ -1503,6 +1543,8 @@
 
       showProductDetailModal({
         name: service.name,
+        domain: service.domain,
+        domain2: null,
         country: country,
         price: service.price,
         stock: service.stock,
@@ -1538,6 +1580,8 @@
 
       showProductDetailModal({
         name: bundle.name,
+        domain: bundle.domain,
+        domain2: bundle.domain2,
         country: country,
         price: bundle.price,
         stock: bundle.stock,
@@ -1577,6 +1621,8 @@
 
       showProductDetailModal({
         name: bank.name,
+        domain: bank.domain,
+        domain2: null,
         country: country,
         price: bank.price,
         stock: bank.stock,
@@ -1586,8 +1632,7 @@
 
     function showProductDetailModal(product) {
       activeProduct = product;
-      const letter = product.name.charAt(0).toUpperCase();
-      document.getElementById('detail-icon-box').innerHTML = `<span class="text-sm font-bold text-white">${letter}</span>`;
+      document.getElementById('detail-icon-box').innerHTML = renderBrandLogo(product.domain, product.name, product.domain2);
       document.getElementById('detail-title').innerHTML = `<span>${product.name} | ${product.country.name}</span> ${flagImg(product.country.code)}`;
       document.getElementById('detail-body').innerHTML = product.bodyHtml;
       document.getElementById('detail-stock-count').innerText = product.stock;
@@ -1607,8 +1652,6 @@
       }
     }
 
-    // --- КНОПКИ НАЗАД В КАТАЛОГЕ ---
-
     function handleStepBack() {
       haptic();
       if (currentStep === 2) {
@@ -1623,8 +1666,6 @@
       haptic();
       showCatalogView('view-step-list');
     }
-
-    // --- ПОКУПКА И ПРОМОКОД ---
 
     function confirmPurchase() {
       haptic('heavy');
