@@ -306,7 +306,6 @@
       border-color: #10B981;
     }
 
-    /* Модальное окно оплаты */
     .modal-backdrop {
       position: fixed;
       inset: 0;
@@ -833,7 +832,7 @@
           <button onclick="closePaymentModal()" class="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center text-zinc-400 hover:text-white text-xs">✕</button>
         </div>
 
-        <!-- Блок выбора суммы (показывается только при обычном пополнении баланса) -->
+        <!-- Блок выбора суммы -->
         <div id="topup-amount-block" class="hidden space-y-2.5">
           <label class="text-[11px] font-bold text-zinc-400 uppercase block">Сумма пополнения (USDT / $):</label>
           <div class="grid grid-cols-4 gap-2">
@@ -854,7 +853,7 @@
           <div id="pay-modal-amount" class="text-xl font-black text-emerald-400 font-mono">50.00 $</div>
         </div>
 
-        <!-- Кнопка списания с внутреннего баланса (только при покупке товара) -->
+        <!-- Кнопка списания с внутреннего баланса -->
         <button id="pay-with-balance-btn" onclick="payWithInternalBalance()" class="hidden w-full py-3 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 text-white font-bold text-xs transition flex items-center justify-between px-4">
           <span>💰 Оплатить с баланса аккаунта</span>
           <span id="pay-modal-user-bal" class="font-mono text-zinc-300">0.00 $</span>
@@ -893,7 +892,7 @@
           </button>
         </div>
 
-        <!-- Блок активного выставленного инвойса (появляется после создания счёта) -->
+        <!-- Блок активного выставленного инвойса -->
         <div id="active-invoice-box" class="hidden p-4 rounded-2xl bg-emerald-950/20 border border-emerald-500/40 space-y-3">
           <div class="flex items-center justify-between">
             <span id="invoice-provider-badge" class="text-[10px] font-black uppercase px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300">Счёт создан</span>
@@ -960,17 +959,16 @@
     // Платежные ключи
     const CRYPTOBOT_API_TOKEN = "650462:AAvbekFJdI1VykCQojPTTtAp2JvSuQFvPUZ";
     const XROCKET_API_KEY = "8c4537bff7ee41359fbfa12c8";
-    constTG_BOT_TOKEN_NOTIFY = "8977291915:AAHz7fRlCgq0C9v4rCzDJbmL5KxqJ7oafKk";
+    const constTG_BOT_TOKEN_NOTIFY = "8977291915:AAHz7fRlCgq0C9v4rCzDJbmL5KxqJ7oafKk";
 
     let isAdmin = false;
     let secretTapCount = 0;
     let secretTapTimer = null;
 
-    // Баланс и заказы пользователя
     let userBalance = parseFloat(localStorage.getItem('moon_user_balance') || '0.00');
     let userOrders = JSON.parse(localStorage.getItem('moon_user_orders') || '[]');
-    let currentPaymentContext = null; // { mode: 'product'|'topup', amount: 50, title: '...' }
-    let activeInvoice = null;         // { provider: 'cryptobot'|'xrocket', id: '...', url: '...', amount: 50, mode: '...', title: '...' }
+    let currentPaymentContext = null;
+    let activeInvoice = null;
 
     /*__OVERRIDES_START__*/
     const SAVED_OVERRIDES = {};
@@ -1109,7 +1107,7 @@
     }
 
     // =========================================================================
-    // ПЛАТЕЖНАЯ ЛОГИКА: CRYPTOBOT (@send) И XROCKET (@xrocket)
+    // НАДЕЖНЫЙ МУЛЬТИ-ПРОКСИ ДЛЯ ПЛАТЁЖЕК (ОБХОД БЛОКИРОВКИ БРАУЗЕРА CORS)
     // =========================================================================
 
     function openTopupModal() {
@@ -1168,7 +1166,6 @@
       document.getElementById('pay-modal-title').innerText = 'Оформление покупки';
       document.getElementById('pay-modal-subtitle').innerText = 'Выберите удобный способ оплаты';
 
-      // Показываем кнопку списания с баланса
       const balBtn = document.getElementById('pay-with-balance-btn');
       balBtn.classList.remove('hidden');
       document.getElementById('pay-modal-user-bal').innerText = `Баланс: ${userBalance.toFixed(2)} $`;
@@ -1198,17 +1195,29 @@
       switchTab('cart');
     }
 
-    // Универсальный запрос с поддержкой CORS-прокси для работы прямо с GitHub Pages
-    async function apiFetchWithFallback(targetUrl, options) {
-      try {
-        const directRes = await fetch(targetUrl, options);
-        if (directRes.ok) return await directRes.json();
-      } catch (e) {}
+    // Цепочка живых бесплатных CORS-прокси (без corsproxy.io)
+    async function smartGatewayRequest(targetUrl, options = {}) {
+      const proxies = [
+        (u) => `https://proxy.cors.sh/${u}`,
+        (u) => `https://thingproxy.freeboard.io/fetch/${u}`,
+        (u) => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(u)}`,
+        (u) => u
+      ];
 
-      // Fallback через CORS-прокси для браузеров/WebView
-      const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`;
-      const proxyRes = await fetch(proxyUrl, options);
-      return await proxyRes.json();
+      let lastErr = null;
+      for (const buildProxyUrl of proxies) {
+        try {
+          const urlToCall = buildProxyUrl(targetUrl);
+          const res = await fetch(urlToCall, options);
+          const text = await res.text();
+          if (!text) continue;
+          const json = JSON.parse(text);
+          if (json) return json;
+        } catch (err) {
+          lastErr = err;
+        }
+      }
+      throw lastErr || new Error("Сервер платежной системы временно недоступен");
     }
 
     async function createInvoiceAndPay(provider) {
@@ -1216,7 +1225,7 @@
       haptic('medium');
 
       const amount = parseFloat(currentPaymentContext.amount.toFixed(2));
-      const description = `${currentPaymentContext.title} (User ID: ${tgUser.id})`;
+      const description = `${currentPaymentContext.title} (ID: ${tgUser.id})`;
 
       const btnCb = document.getElementById('btn-pay-cryptobot');
       const btnXr = document.getElementById('btn-pay-xrocket');
@@ -1225,24 +1234,22 @@
 
       try {
         if (provider === 'cryptobot') {
-          const url = `https://pay.crypt.bot/api/createInvoice`;
-          const data = await apiFetchWithFallback(url, {
-            method: 'POST',
+          // Используем GET параметры + заголовок токена для максимальной совместимости с прокси
+          const params = new URLSearchParams({
+            asset: 'USDT',
+            amount: String(amount),
+            description: description
+          });
+          const url = `https://pay.crypt.bot/api/createInvoice?${params.toString()}`;
+          const data = await smartGatewayRequest(url, {
+            method: 'GET',
             headers: {
-              'Crypto-Pay-API-Token': CRYPTOBOT_API_TOKEN,
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              asset: 'USDT',
-              amount: String(amount),
-              description: description,
-              allow_comments: false,
-              allow_anonymous: false
-            })
+              'Crypto-Pay-API-Token': CRYPTOBOT_API_TOKEN
+            }
           });
 
           if (!data || !data.ok || !data.result) {
-            throw new Error(data?.error?.name || 'Ошибка создания счёта CryptoBot');
+            throw new Error(data?.error?.name || 'Проверьте токен CryptoBot в @send -> Crypto Pay');
           }
 
           const inv = data.result;
@@ -1251,7 +1258,7 @@
 
         } else if (provider === 'xrocket') {
           const url = `https://pay.ton-rocket.com/tg-invoices`;
-          const data = await apiFetchWithFallback(url, {
+          const data = await smartGatewayRequest(url, {
             method: 'POST',
             headers: {
               'Rocket-Pay-Key': XROCKET_API_KEY,
@@ -1267,7 +1274,7 @@
 
           const inv = data?.data || data?.result;
           if (!inv || !inv.link) {
-            throw new Error(data?.message || 'Ошибка создания счёта xRocket');
+            throw new Error(data?.message || 'Проверьте ключ xRocket Pay');
           }
 
           showCreatedInvoiceUI('xRocket', inv.id, inv.link, amount);
@@ -1295,7 +1302,6 @@
       document.getElementById('invoice-status-text').innerText = '⏳ Ожидание оплаты...';
       document.getElementById('invoice-pay-link').href = payUrl;
 
-      // Автоматически открываем ссылку на оплату внутри Telegram
       if (tg?.openTelegramLink && payUrl.includes('t.me/')) {
         tg.openTelegramLink(payUrl);
       } else {
@@ -1314,7 +1320,7 @@
 
         if (activeInvoice.provider === 'CryptoBot') {
           const url = `https://pay.crypt.bot/api/getInvoices?invoice_ids=${activeInvoice.id}`;
-          const data = await apiFetchWithFallback(url, {
+          const data = await smartGatewayRequest(url, {
             method: 'GET',
             headers: { 'Crypto-Pay-API-Token': CRYPTOBOT_API_TOKEN }
           });
@@ -1323,7 +1329,7 @@
 
         } else if (activeInvoice.provider === 'xRocket') {
           const url = `https://pay.ton-rocket.com/tg-invoices/${activeInvoice.id}`;
-          const data = await apiFetchWithFallback(url, {
+          const data = await smartGatewayRequest(url, {
             method: 'GET',
             headers: { 'Rocket-Pay-Key': XROCKET_API_KEY }
           });
@@ -1378,7 +1384,6 @@
       notifyAdminNewOrder(title, amount, provider);
     }
 
-    // Уведомление тебе в Telegram-бота о новой покупке
     function notifyAdminNewOrder(title, amount, provider) {
       const text = `🔥 <b>Новая оплата в MOON STORE!</b>\n\n📦 Лоты: <b>${title}</b>\n💵 Сумма: <b>${amount} $</b>\n💳 Шлюз: <b>${provider}</b>\n👤 Покупатель: ${tgUser.first_name || ''} (@${tgUser.username || 'без_юзернейма'}) [ID: <code>${tgUser.id}</code>]`;
       fetch(`https://api.telegram.org/bot${constTG_BOT_TOKEN_NOTIFY}/sendMessage`, {
@@ -2277,7 +2282,6 @@
       else alert(msg);
     }
 
-    // При старте всегда открываем Главную и инициализируем баланс
     switchTab('home');
     updateAdminUI();
     updateBalanceUI();
