@@ -88,9 +88,8 @@
       display: flex;
       flex-direction: column;
       position: relative;
-      padding-bottom: calc(90px + env(safe-area-inset-bottom, 16px));
+      padding-bottom: calc(96px + env(safe-area-inset-bottom, 16px));
       z-index: 10;
-      box-shadow: 0 0 50px rgba(0, 0, 0, 0.7);
     }
 
     .mono-card {
@@ -101,8 +100,8 @@
       transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    .mono-card:active {
-      transform: scale(0.99);
+    .mono-card-interactive:active {
+      transform: scale(0.985);
       border-color: rgba(255, 255, 255, 0.25);
       background: #15151A;
     }
@@ -120,7 +119,7 @@
     }
 
     .country-btn:active {
-      transform: scale(0.99);
+      transform: scale(0.985);
       border-color: rgba(255, 255, 255, 0.25);
       background: #16161C;
     }
@@ -132,6 +131,7 @@
       background-color: #10B981;
       box-shadow: 0 0 8px 2px rgba(16, 185, 129, 0.7);
       animation: greenPulse 2s infinite ease-in-out;
+      flex-shrink: 0;
     }
 
     @keyframes greenPulse {
@@ -174,13 +174,13 @@
       overflow: hidden;
     }
 
+    /* Нижний полупрозрачный док во всю ширину как хедер */
     .tabbar-dock {
       position: fixed;
       bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
+      left: 0;
+      right: 0;
       width: 100%;
-      max-width: 540px;
       background: rgba(5, 5, 7, 0.85);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
@@ -193,7 +193,7 @@
 
     .tabbar {
       width: 100%;
-      max-width: 440px;
+      max-width: 420px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -262,11 +262,11 @@
     }
 
     .tab-content {
-      animation: tabFadeIn 0.22s ease-out;
+      animation: tabFadeIn 0.2s ease-out;
     }
 
     @keyframes tabFadeIn {
-      from { opacity: 0; transform: translateY(6px); }
+      from { opacity: 0; transform: translateY(4px); }
       to { opacity: 1; transform: translateY(0); }
     }
   </style>
@@ -307,6 +307,21 @@
       
       <!-- 1. ГЛАВНАЯ -->
       <section id="tab-home" class="tab-content space-y-4">
+        
+        <!-- Плашка акции как в боте -->
+        <div onclick="activateMoonPromoBanner()" class="mono-card mono-card-interactive p-3.5 border border-emerald-500/25 bg-gradient-to-r from-emerald-500/10 via-[#101014] to-[#101014] flex items-center justify-between cursor-pointer">
+          <div class="flex items-center space-x-3">
+            <div class="w-9 h-9 rounded-xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400 font-bold text-sm">
+              💎
+            </div>
+            <div>
+              <div class="text-xs font-bold text-white">Скидка 10% на любую первую покупку</div>
+              <div class="text-[11px] text-zinc-400">Промокод: <span class="text-emerald-400 font-mono font-bold">moon</span> <span id="promo-status-badge" class="ml-1 text-[10px] text-zinc-500">(нажми для активации)</span></div>
+            </div>
+          </div>
+          <svg class="w-4 h-4 text-zinc-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+
         <div class="mono-card p-5 relative overflow-hidden">
           <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-[11px] font-bold text-white mb-3">
             <svg class="w-3.5 h-3.5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
@@ -319,7 +334,7 @@
             Криптобиржи, ЛК банков и необанки
           </h1>
           <p class="text-xs text-zinc-400 leading-relaxed mb-4">
-            Полный доступ, родная почта в комплекте, европейские и СНГ реквизиты, готовые связки под P2P арбитраж.
+            Полный доступ, родная почта, прокси, эмулятор Duoplus с виртуальным номером 24/7 и комплекты документов с селфи.
           </p>
 
           <div class="grid grid-cols-2 gap-2 text-xs">
@@ -347,14 +362,14 @@
                 </svg>
               </div>
               <div>
-                <div class="text-xs font-bold text-white">Регламент и гарантии</div>
-                <div class="text-[10px] text-zinc-400">Гарантия 24ч на первичный вход</div>
+                <div class="text-xs font-bold text-white">FAQ и Регламент</div>
+                <div class="text-[10px] text-zinc-400">Инструкции по Duoplus, прокси и гарантии</div>
               </div>
             </div>
             <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg>
           </div>
 
-          <div onclick="tgAlert('Пополнение доступно через USDT (TRC-20, TON) и CryptoBot')" class="mono-row">
+          <div onclick="tgAlert('Пополнение доступно через USDT (TRC-20, TON, BEP-20) и CryptoBot')" class="mono-row">
             <div class="flex items-center space-x-3">
               <div class="mono-icon-box">
                 <svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
@@ -363,7 +378,7 @@
               </div>
               <div>
                 <div class="text-xs font-bold text-white">Способы пополнения</div>
-                <div class="text-[10px] text-zinc-400">USDT (TRC-20, TON, BEP-20)</div>
+                <div class="text-[10px] text-zinc-400">USDT (TRC-20, TON, BEP-20), CryptoBot</div>
               </div>
             </div>
             <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg>
@@ -371,7 +386,7 @@
         </div>
 
         <button onclick="switchTab('catalog')" class="w-full py-4 bg-white hover:bg-zinc-200 active:scale-[0.98] text-black rounded-2xl font-bold text-xs tracking-wider uppercase transition flex items-center justify-center space-x-2 shadow-[0_4px_24px_rgba(255,255,255,0.2)]">
-          <span>Открыть витрину товаров</span>
+          <span>Открыть каталог товаров</span>
           <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </button>
       </section>
@@ -379,18 +394,18 @@
       <!-- 2. КАТАЛОГ -->
       <section id="tab-catalog" class="tab-content hidden space-y-3">
         
-        <!-- Уровень 1: Главные 4 категории -->
-        <div id="catalog-categories" class="space-y-2.5">
+        <!-- ЭКРАН 1: 4 Главные категории -->
+        <div id="view-categories" class="space-y-2.5">
           <div class="flex items-center justify-between px-1">
             <div class="text-[11px] font-bold text-zinc-400 uppercase tracking-widest">
-              Категории витрины
+              Пожалуйста, выберите категорию
             </div>
             <span class="text-[10px] font-bold text-white bg-white/10 px-2 py-0.5 rounded-full border border-white/20">4 раздела</span>
           </div>
 
           <div class="space-y-2.5">
-            <!-- 1. Биржи -->
-            <div onclick="openCryptoExchanges()" class="mono-card p-4 flex items-center justify-between cursor-pointer">
+            <!-- 1. Крипто-биржи -->
+            <div onclick="openCategory('crypto')" class="mono-card mono-card-interactive p-4 flex items-center justify-between cursor-pointer">
               <div class="flex items-center space-x-3.5">
                 <div class="mono-icon-box">
                   <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
@@ -399,14 +414,14 @@
                 </div>
                 <div>
                   <div class="text-sm font-bold text-white">Крипто-биржи</div>
-                  <div class="text-[11px] text-zinc-400">Binance, Bybit, OKX, MEXC, KuCoin...</div>
+                  <div class="text-[11px] text-zinc-400">Binance, Bybit, MEXC, OKX, Bitget, KuCoin...</div>
                 </div>
               </div>
               <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg>
             </div>
 
-            <!-- 2. ЛК банков -> открывает список стран банков -->
-            <div onclick="openBankCountries()" class="mono-card p-4 flex items-center justify-between cursor-pointer">
+            <!-- 2. ЛК банков -->
+            <div onclick="openCategory('banks')" class="mono-card mono-card-interactive p-4 flex items-center justify-between cursor-pointer">
               <div class="flex items-center space-x-3.5">
                 <div class="mono-icon-box">
                   <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
@@ -415,14 +430,14 @@
                 </div>
                 <div>
                   <div class="text-sm font-bold text-white">ЛК банков</div>
-                  <div class="text-[11px] text-zinc-400">Tinkoff, Freedom, Bakai, Kaspi, Sber...</div>
+                  <div class="text-[11px] text-zinc-400">Украина, Россия, Казахстан, ЕС, СНГ...</div>
                 </div>
               </div>
               <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg>
             </div>
 
-            <!-- 3. Платежки -->
-            <div onclick="openDirectCategory('payment')" class="mono-card p-4 flex items-center justify-between cursor-pointer">
+            <!-- 3. Платёжки / Необанки -->
+            <div onclick="openCategory('payment')" class="mono-card mono-card-interactive p-4 flex items-center justify-between cursor-pointer">
               <div class="flex items-center space-x-3.5">
                 <div class="mono-icon-box">
                   <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
@@ -431,14 +446,14 @@
                 </div>
                 <div>
                   <div class="text-sm font-bold text-white">Платёжки / Необанки</div>
-                  <div class="text-[11px] text-zinc-400">Wise, Revolut, Bunq, Stripe, Payoneer...</div>
+                  <div class="text-[11px] text-zinc-400">Wise, Revolut, Bunq, Stripe, Payoneer, N26...</div>
                 </div>
               </div>
               <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg>
             </div>
 
             <!-- 4. Банк + Биржа -->
-            <div onclick="openDirectCategory('bundle')" class="mono-card p-4 flex items-center justify-between cursor-pointer">
+            <div onclick="openCategory('bundle')" class="mono-card mono-card-interactive p-4 flex items-center justify-between cursor-pointer">
               <div class="flex items-center space-x-3.5">
                 <div class="mono-icon-box">
                   <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
@@ -447,7 +462,7 @@
                 </div>
                 <div>
                   <div class="text-sm font-bold text-white">Банк + Биржа</div>
-                  <div class="text-[11px] text-zinc-400">Готовые связки под P2P арбитраж</div>
+                  <div class="text-[11px] text-zinc-400">Privat, Tinkoff, Sber, Mono, Bakai, Kapital...</div>
                 </div>
               </div>
               <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg>
@@ -455,67 +470,93 @@
           </div>
         </div>
 
-        <!-- Уровень 2: Список бирж -->
-        <div id="catalog-exchanges" class="hidden space-y-3">
+        <!-- ЭКРАН 2: Универсальный список шага (товары или страны) -->
+        <div id="view-step-list" class="hidden space-y-3">
           <div class="flex items-center justify-between pb-1">
-            <button onclick="backToMainCategories()" class="text-xs font-semibold text-white hover:text-zinc-300 flex items-center space-x-1.5 py-1">
+            <button onclick="handleStepBack()" class="text-xs font-semibold text-white hover:text-zinc-300 flex items-center space-x-1.5 py-1">
               <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
               <span>Назад</span>
             </button>
-            <span class="text-xs font-bold text-zinc-300 uppercase tracking-wider">КРИПТО-БИРЖИ</span>
+            <span id="step-title" class="text-xs font-bold text-zinc-300 uppercase tracking-wider"></span>
           </div>
 
-          <div id="exchanges-list" class="space-y-2"></div>
+          <div id="step-list-container" class="space-y-1.5"></div>
         </div>
 
-        <!-- Уровень 3: Список стран для биржи -->
-        <div id="catalog-countries" class="hidden space-y-3">
+        <!-- ЭКРАН 3: Детальная карточка товара (Точь-в-точь как в боте) -->
+        <div id="view-product-detail" class="hidden space-y-3">
           <div class="flex items-center justify-between pb-1">
-            <button onclick="backToExchanges()" class="text-xs font-semibold text-white hover:text-zinc-300 flex items-center space-x-1.5 py-1">
+            <button onclick="backFromProductDetail()" class="text-xs font-semibold text-white hover:text-zinc-300 flex items-center space-x-1.5 py-1">
               <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
               <span>Назад</span>
             </button>
-            <span id="selected-exchange-title" class="text-xs font-bold text-zinc-300 uppercase tracking-wider"></span>
+            <span class="text-xs font-bold text-zinc-400 uppercase tracking-wider">Карточка товара</span>
           </div>
 
-          <div id="countries-list" class="space-y-1.5"></div>
-        </div>
+          <div class="mono-card p-4 space-y-3.5 border border-white/12">
+            <!-- Заголовок Товар: ... | Страна -->
+            <div class="flex items-center justify-between border-b border-white/10 pb-3">
+              <div class="flex items-center space-x-3">
+                <div id="detail-icon-box" class="mono-icon-box"></div>
+                <div>
+                  <div class="text-[10px] text-zinc-400 uppercase font-semibold">Товар</div>
+                  <div id="detail-title" class="text-sm font-black text-white flex items-center gap-1.5 flex-wrap"></div>
+                </div>
+              </div>
+              <div class="flex items-center space-x-1.5 bg-emerald-500/10 border border-emerald-500/30 px-2.5 py-1 rounded-full">
+                <span class="status-dot-green"></span>
+                <span id="detail-stock-badge" class="text-[10px] font-bold text-emerald-400">В наличии</span>
+              </div>
+            </div>
 
-        <!-- Меню выбора страны для «ЛК банков» -->
-        <div id="catalog-bank-countries" class="hidden space-y-3">
-          <div class="flex items-center justify-between pb-1">
-            <button onclick="backToMainCategories()" class="text-xs font-semibold text-white hover:text-zinc-300 flex items-center space-x-1.5 py-1">
-              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
-              <span>Назад</span>
+            <!-- Полный текст описания, функций, лимитов, комиссий и комплекта -->
+            <div id="detail-body" class="text-xs text-zinc-300 space-y-3 leading-relaxed"></div>
+
+            <!-- Блок цены и наличия -->
+            <div class="pt-3 border-t border-white/10 flex items-center justify-between">
+              <div class="space-y-0.5 text-xs">
+                <div class="text-zinc-400">В наличии: <span id="detail-stock-count" class="text-white font-bold"></span> шт.</div>
+                <div class="text-zinc-400">Минимальное количество: <span class="text-white font-bold">1</span></div>
+              </div>
+              <div class="text-right">
+                <div class="text-[10px] text-zinc-400 uppercase font-semibold">Цена</div>
+                <div id="detail-price" class="text-xl font-black text-white font-mono"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Кнопки управления как в боте -->
+          <div class="space-y-2 pt-1">
+            <!-- Зеленая кнопка Оформить покупку -->
+            <button onclick="confirmPurchase()" class="w-full py-3.5 bg-[#22C55E] hover:bg-[#16A34A] active:scale-[0.98] text-black font-extrabold text-xs uppercase tracking-wider rounded-xl transition flex items-center justify-center space-x-2 shadow-[0_4px_20px_rgba(34,197,94,0.3)]">
+              <span>💳 Оформить покупку</span>
             </button>
-            <span class="text-xs font-bold text-zinc-300 uppercase tracking-wider">ВЫБЕРИТЕ СТРАНУ:</span>
-          </div>
 
-          <div id="bank-countries-list" class="space-y-1.5"></div>
-        </div>
-
-        <!-- Витрина конкретных позиций (Банки страны, Платёжки, Связки) -->
-        <div id="catalog-items" class="hidden space-y-3">
-          <div class="flex items-center justify-between pb-1">
-            <button onclick="backFromDirectItems()" class="text-xs font-semibold text-white hover:text-zinc-300 flex items-center space-x-1.5 py-1">
-              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
-              <span>Назад</span>
+            <!-- Кнопка Ввести промокод -->
+            <button onclick="tgPromptPromo()" class="w-full py-3 bg-[#14141A] hover:bg-[#1C1C24] active:scale-[0.98] text-white border border-white/10 font-bold text-xs rounded-xl transition flex items-center justify-center space-x-2">
+              <span>💎 Ввести промокод</span>
             </button>
-            <span id="current-items-title" class="text-xs font-bold text-zinc-300 uppercase tracking-wider"></span>
-          </div>
 
-          <div class="relative">
-            <input type="text" id="catalog-search" oninput="filterDirectItems()" placeholder="Поиск по названию..." class="w-full bg-[#111116] border border-white/10 rounded-xl px-9 py-2.5 text-xs text-white placeholder-zinc-500 outline-none focus:border-white/30 transition">
-            <svg class="w-3.5 h-3.5 text-zinc-500 absolute left-3 top-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <!-- Нижний ряд: Назад | FAQ | Меню -->
+            <div class="grid grid-cols-3 gap-2">
+              <button onclick="backFromProductDetail()" class="py-2.5 bg-[#101014] hover:bg-white/10 text-zinc-300 border border-white/10 rounded-xl text-xs font-semibold transition flex items-center justify-center space-x-1">
+                <span>↩️ Назад</span>
+              </button>
+              <button onclick="switchTab('info')" class="py-2.5 bg-[#101014] hover:bg-white/10 text-zinc-300 border border-white/10 rounded-xl text-xs font-semibold transition flex items-center justify-center space-x-1">
+                <span>ℹ️ FAQ</span>
+              </button>
+              <button onclick="switchTab('home')" class="py-2.5 bg-[#101014] hover:bg-white/10 text-zinc-300 border border-white/10 rounded-xl text-xs font-semibold transition flex items-center justify-center space-x-1">
+                <span>📲 Меню</span>
+              </button>
+            </div>
           </div>
-
-          <div id="items-list" class="space-y-2"></div>
         </div>
+
       </section>
 
       <!-- 3. КОРЗИНА -->
       <section id="tab-cart" class="tab-content hidden space-y-4">
-        <div class="mono-card p-8 flex flex-col items-center justify-center text-center">
+        <div id="cart-empty" class="mono-card p-8 flex flex-col items-center justify-center text-center">
           <div class="mono-icon-box w-14 h-14 rounded-2xl mb-3 shadow-[0_0_20px_rgba(255,255,255,0.08)]">
             <svg class="w-7 h-7 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
               <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>
@@ -523,7 +564,7 @@
           </div>
           <div class="text-base font-bold text-white mb-1">Корзина пуста</div>
           <p class="text-xs text-zinc-400 max-w-xs mb-5 leading-relaxed">
-            Выберите аккаунты криптобирж или банков в каталоге для мгновенного оформления.
+            Выберите аккаунты криптобирж, банков или платёжных систем в каталоге для оформления.
           </p>
           <button onclick="switchTab('catalog')" class="px-6 py-2.5 rounded-xl bg-white text-black text-xs font-bold active:scale-95 transition">
             Перейти в каталог
@@ -549,27 +590,30 @@
             </div>
             <div class="w-[1px] bg-white/10"></div>
             <div>
-              <div class="text-[10px] text-zinc-400 uppercase font-semibold">Заказов</div>
-              <div class="text-xl font-black text-white font-mono">0</div>
+              <div class="text-[10px] text-zinc-400 uppercase font-semibold">Скидка</div>
+              <div id="cabinet-discount" class="text-xl font-black text-emerald-400 font-mono">0%</div>
             </div>
           </div>
         </div>
 
         <div class="space-y-2">
-          <button onclick="tgAlert('Пополнение счета через USDT (TRC-20, TON) или CryptoBot')" class="w-full py-3.5 rounded-xl font-bold text-xs uppercase tracking-wider bg-white text-black hover:bg-zinc-200 active:scale-98 transition flex items-center justify-center gap-2 shadow-[0_4px_16px_rgba(255,255,255,0.15)]">
+          <button onclick="tgAlert('Пополнение счета через USDT (TRC-20, TON, BEP-20) или CryptoBot')" class="w-full py-3.5 rounded-xl font-bold text-xs uppercase tracking-wider bg-white text-black hover:bg-zinc-200 active:scale-98 transition flex items-center justify-center gap-2 shadow-[0_4px_16px_rgba(255,255,255,0.15)]">
             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
             <span>Пополнить баланс</span>
           </button>
 
           <div class="mono-card overflow-hidden">
-            <div onclick="tgAlert('У вас еще нет совершенных заказов')" class="mono-row">
+            <div onclick="tgAlert('У вас еще нет активных заказов')" class="mono-row">
               <div class="flex items-center space-x-3">
                 <div class="mono-icon-box">
                   <svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
                     <rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
                   </svg>
                 </div>
-                <span class="text-xs font-semibold text-white">Мои заказы</span>
+                <div>
+                  <div class="text-xs font-semibold text-white">Заказы и SMS-сервис 24/7</div>
+                  <div class="text-[10px] text-zinc-400">Управление номерами и кодами</div>
+                </div>
               </div>
               <span class="text-xs text-zinc-400 font-mono">0 шт.</span>
             </div>
@@ -581,12 +625,12 @@
                     <path d="M20.59 13.41 13.42 20.58a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82Z"/><circle cx="7" cy="7" r="1"/>
                   </svg>
                 </div>
-                <span class="text-xs font-semibold text-white">Промокод</span>
+                <span class="text-xs font-semibold text-white">Активировать промокод</span>
               </div>
               <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg>
             </div>
 
-            <div onclick="tgAlert('Реферальная ссылка: https://t.me/moonstore_shop_bot?start=ref')" class="mono-row">
+            <div onclick="tgAlert('Реферальная ссылка: https://t.me/MoonStoreTopBot?start=ref')" class="mono-row">
               <div class="flex items-center space-x-3">
                 <div class="mono-icon-box">
                   <svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
@@ -596,18 +640,6 @@
                 <span class="text-xs font-semibold text-white">Реферальная система</span>
               </div>
               <span class="text-[11px] font-bold text-white bg-white/10 px-2 py-0.5 rounded-md border border-white/20">5%</span>
-            </div>
-
-            <div onclick="toggleLang()" class="mono-row">
-              <div class="flex items-center space-x-3">
-                <div class="mono-icon-box">
-                  <svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                    <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-                  </svg>
-                </div>
-                <span class="text-xs font-semibold text-white">Язык</span>
-              </div>
-              <span id="lang-label" class="text-xs font-bold text-white font-mono">RU</span>
             </div>
           </div>
         </div>
@@ -620,29 +652,28 @@
             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
               <circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/>
             </svg>
-            <span>О сервисе MOON STORE</span>
+            <span>Комплектация и Duoplus</span>
           </div>
           <p class="text-xs text-zinc-300 leading-relaxed">
-            Все аккаунты регистрируются на реальных дропов с полным пакетом документов. Предоставляем логин, пароль, почту, 2FA и селфи при запросе верификации.
+            Все банковские аккаунты и необанки авторизованы в облачном антидетект-эмуляторе <b>Duoplus</b> (также можно войти со своего устройства). Виртуальный номер для приёма SMS работает 24/7 в разделе «Заказы» (срок 10 дней с возможностью продления или смены на свой).
           </p>
         </div>
 
         <div class="mono-card p-4 space-y-2">
-          <div class="font-bold text-xs text-white">Регламент и гарантии</div>
+          <div class="font-bold text-xs text-white">Физические карты и Документы</div>
           <div class="text-xs text-zinc-400 space-y-1.5 leading-relaxed">
-            <p>• Гарантия на первичный вход в аккаунт — 24 часа с момента выдачи данных.</p>
-            <p>• Используйте чистые резидентские прокси страны выпуска аккаунта.</p>
-            <p>• Смените пароли и сохраните резервные коды после проверки.</p>
+            <p>• По всем банкам и платёжкам в комплекте идут фото документа, селфи дропа и селфи дропа с документом в руках.</p>
+            <p>• Выпущенные физические карты Visa / Mastercard отправляются в ваш город по запросу.</p>
+            <p>• В комплекте также идут родная почта, пароли, резервные коды 2FA и резидентские прокси.</p>
           </div>
         </div>
 
         <div class="mono-card p-4 flex items-center justify-between">
           <div>
-            <div class="text-xs font-bold text-white">Поддержка</div>
-            <div class="text-[10px] text-zinc-400">Ответ до 15 минут</div>
+            <div class="text-xs font-bold text-white">Поддержка MOON STORE</div>
+            <div class="text-[10px] text-zinc-400">Помощь с входом и отправкой карт</div>
           </div>
           <a href="https://t.me/Moon_store_news" target="_blank" class="px-3.5 py-1.5 rounded-xl bg-white text-black text-xs font-bold transition active:scale-95 flex items-center gap-1.5 shadow-[0_2px_12px_rgba(255,255,255,0.15)]">
-            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
             <span>Написать</span>
           </a>
         </div>
@@ -650,7 +681,7 @@
 
     </main>
 
-    <!-- Нижняя панель-док -->
+    <!-- Нижняя панель-док во всю ширину -->
     <div class="tabbar-dock">
       <div class="tabbar">
         <div id="tab-slider" class="tab-slider"></div>
@@ -689,6 +720,7 @@
   </div>
 
   <script>
+    // Анимация звездного фона
     const canvas = document.getElementById('stars-canvas');
     const ctx = canvas.getContext('2d');
     let stars = [];
@@ -717,7 +749,6 @@
 
     function drawStars() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-
       for (let s of stars) {
         if (s.increasing) {
           s.alpha += s.speed;
@@ -726,7 +757,6 @@
           s.alpha -= s.speed;
           if (s.alpha <= 0.15) s.increasing = true;
         }
-
         ctx.beginPath();
         ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(255, 255, 255, ${s.alpha})`;
@@ -750,14 +780,11 @@
         ctx.strokeStyle = `rgba(255, 255, 255, ${shootingStar.opacity})`;
         ctx.lineWidth = 1.2;
         ctx.stroke();
-
         shootingStar.x += shootingStar.speed;
         shootingStar.y += shootingStar.speed * 0.6;
         shootingStar.opacity -= 0.025;
-
         if (shootingStar.opacity <= 0) shootingStar = null;
       }
-
       requestAnimationFrame(drawStars);
     }
 
@@ -781,213 +808,322 @@
       if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred(style);
     }
 
-    // Список бирж
-    const cryptoExchangesList = [
-      { id: "binance", name: "Binance", badge: "KYC Plus", desc: "Самая популярная биржа", img: "" },
-      { id: "bybit", name: "Bybit", badge: "Level 1-2", desc: "Лучший P2P рынок", img: "" },
-      { id: "bybit_maker", name: "Bybit (Maker)", badge: "Maker Status", desc: "Аккаунт со статусом мейкера", img: "" },
-      { id: "okx", name: "OKX", badge: "KYC 2", desc: "Надежная биржа и Web3", img: "" },
-      { id: "mexc", name: "MEXC", badge: "Full Verified", desc: "Без обязательного KYC на спот", img: "" },
-      { id: "bitget", name: "Bitget", badge: "Tier 1", desc: "Копитрейдинг и фьючерсы", img: "" },
-      { id: "kucoin", name: "KuCoin", badge: "Verified", desc: "Топ альткоины", img: "" },
-      { id: "kraken", name: "Kraken", badge: "Intermediate", desc: "Строгие лимиты безопасности", img: "" },
-      { id: "coinbase", name: "Coinbase", badge: "Verified", desc: "Американский гигант", img: "" },
-      { id: "gate", name: "Gate.io", badge: "KYC 2", desc: "Множество редких пар", img: "" },
-      { id: "htx", name: "HTX (Huobi)", badge: "Verified", desc: "Классическая азиатская биржа", img: "" },
-      { id: "bingx", name: "BingX", badge: "Full Access", desc: "Социальный трейдинг", img: "" },
-      { id: "crypto_com", name: "Crypto.com", badge: "EU Verified", desc: "Европейские карты и стейкинг", img: "" }
+    // Справочник флагов и кодов стран
+    const COUNTRIES = {
+      ua: { code: "ua", name: "Ukraine" },
+      kz: { code: "kz", name: "Kazakhstan" },
+      by: { code: "by", name: "Belarus" },
+      md: { code: "md", name: "Moldova" },
+      az: { code: "az", name: "Azerbaijan" },
+      kg: { code: "kg", name: "Kyrgyzstan" },
+      uz: { code: "uz", name: "Uzbekistan" },
+      ge: { code: "ge", name: "Georgia" },
+      pl: { code: "pl", name: "Poland" },
+      de: { code: "de", name: "Germany" },
+      es: { code: "es", name: "Spain" },
+      ee: { code: "ee", name: "Estonia" },
+      lv: { code: "lv", name: "Latvia" },
+      lt: { code: "lt", name: "Lithuania" },
+      it: { code: "it", name: "Italy" },
+      tr: { code: "tr", name: "Turkey" },
+      id: { code: "id", name: "Indonesia" },
+      ke: { code: "ke", name: "Kenya" },
+      ng: { code: "ng", name: "Nigeria" },
+      us: { code: "us", name: "USA" },
+      ru: { code: "ru", name: "Russia" },
+      cr: { code: "cr", name: "Costa-Rica" },
+      ug: { code: "ug", name: "Uganda" },
+      ye: { code: "ye", name: "Yemen" },
+      dm: { code: "dm", name: "Dominica" },
+      fr: { code: "fr", name: "France" },
+      gb: { code: "gb", name: "United Kingdom" },
+      ca: { code: "ca", name: "Canada" },
+      no: { code: "no", name: "Norway" },
+      au: { code: "au", name: "Australia" },
+      fi: { code: "fi", name: "Finland" },
+      at: { code: "at", name: "Austria" },
+      be: { code: "be", name: "Belgium" },
+      bg: { code: "bg", name: "Bulgaria" },
+      cy: { code: "cy", name: "Cyprus" },
+      nl: { code: "nl", name: "Netherlands" },
+      tj: { code: "tj", name: "Tajikistan" },
+      am: { code: "am", name: "Armenia" },
+      cz: { code: "cz", name: "Czech Republic" }
+    };
+
+    function flagImg(code) {
+      return `<img src="https://flagcdn.com/w40/${code}.png" srcset="https://flagcdn.com/w80/${code}.png 2x" width="22" height="15" class="rounded-sm object-cover shadow-sm flex-shrink-0" alt="${code}">`;
+    }
+
+    // 1. БАЗА КРИПТО-БИРЖ ИЗ ВИДЕО
+    const cryptoExchanges = [
+      {
+        id: "binance", name: "Binance", img: "",
+        countries: ["ua","kz","by","md","az","kg","uz","ge","pl","de","es","ee","lv","lt","it","tr","id","ke","ng","us"],
+        desc: "Binance - криптобиржа для торговли, инвестиций и управления цифровыми активами.",
+        features: [
+          "Торговля криптовалютами – тысячи пар (BTC, ETH, USDT и др.)",
+          "Фьючерсы и маржа – плечо до 125x",
+          "Earn и стейкинг – пассивный доход",
+          "P2P – сделки напрямую между пользователями"
+        ],
+        limits: [
+          "Пополнение – без ограничений",
+          "Вывод – до 100 BTC в сутки",
+          "Торговля – без лимитов"
+        ],
+        commissions: [
+          "Торговля – от 0,1%",
+          "Вывод – зависит от сети и актива",
+          "P2P – зависит от способа оплаты и валюты"
+        ]
+      },
+      {
+        id: "bybit", name: "Bybit", img: "",
+        countries: ["ua","kz","by","md","az","kg","ge","pl","de","es","ee","lv","lt","it","tr","id","ke","ng","ru"],
+        desc: "Bybit – популярная криптовалютная биржа для спотовой и деривативной торговли, P2P и стейкинга.",
+        features: [
+          "Торговля криптовалютой: Доступ к сотням торговых пар, включая BTC, ETH, USDT и другие популярные активы.",
+          "Фьючерсы и маржинальная торговля: Возможность торговли с кредитным плечом до 100x.",
+          "Стейкинг и Earn-продукты: Возможность заработка на стейкинге и депозитах.",
+          "P2P-платформа: Покупка и продажа криптовалюты напрямую между пользователями.",
+          "Копи-трейдинг: Возможность копировать сделки успешных трейдеров."
+        ],
+        limits: [
+          "Пополнение: Безлимитное пополнение в криптовалюте.",
+          "Вывод: До 2 BTC в день.",
+          "Торговля: Безлимитная торговля на спотовом и фьючерсном рынках."
+        ],
+        commissions: [
+          "Торговля: Комиссия от 0,1% за сделку.",
+          "Вывод: Комиссия зависит от типа криптовалюты и сети.",
+          "P2P: Комиссия зависит от выбранного метода оплаты и валюты."
+        ]
+      },
+      {
+        id: "mexc", name: "MEXC", img: "",
+        countries: ["ua","kz","by","md","az","kg","ge","pl","de","es","ee","lv","lt","it","tr","id","ke","ng","ru"],
+        desc: "MEXC – глобальная криптобиржа с самым широким выбором альткоинов и фьючерсных пар.",
+        features: [
+          "Спотовая и фьючерсная торговля с плечом до 200x",
+          "Тысячи новых листингов и редких токенов",
+          "P2P-торговля без комиссий"
+        ],
+        limits: ["Пополнение – без ограничений", "Вывод – до 80 BTC в сутки", "Торговля – без лимитов"],
+        commissions: ["Спот – от 0%", "Фьючерсы – от 0,01%"]
+      },
+      {
+        id: "okx", name: "OKX", img: "",
+        countries: ["ua","kz","by","md","az","kg","ge","pl","de","es","ee","lv","lt","it","tr","id","ke","ng","ru"],
+        desc: "OKX – ведущая криптовалютная биржа и Web3-экосистема для профессиональной торговли и P2P.",
+        features: [
+          "Спотовая, маржинальная и фьючерсная торговля",
+          "Ликвидный P2P-рынок со множеством методов оплаты",
+          "Встроенный Web3-кошелек и Earn-продукты"
+        ],
+        limits: ["Пополнение – без ограничений", "Вывод – до 10 000 000 USD в сутки", "Торговля – без лимитов"],
+        commissions: ["Торговля – от 0,08%", "P2P – 0% для тейкеров"]
+      },
+      {
+        id: "bitget", name: "Bitget", img: "",
+        countries: ["ua","kz","by","md","az","kg","ge","pl","de","es","ee","lv","lt","it","tr","id","ke","ng","ru"],
+        desc: "Bitget – крупная криптобиржа, лидер в сфере копи-трейдинга и деривативов.",
+        features: ["Фьючерсная и спотовая торговля", "Флагманский копи-трейдинг", "P2P-рынок и Bitget Earn"],
+        limits: ["Пополнение – без ограничений", "Вывод – до 3 000 000 USDT в сутки"],
+        commissions: ["Торговля – от 0,1%", "Вывод – зависит от сети"]
+      },
+      {
+        id: "kucoin", name: "KuCoin", img: "",
+        countries: ["ua","kz","by","md","az","kg","ge","pl","de","es","ee","lv","lt","it","tr","id","ke","ng","ru"],
+        desc: "KuCoin – популярная международная биржа для торговли криптовалютами и альткоинами.",
+        features: ["Торговля сотнями криптопар", "Фьючерсы, торговые боты и стейкинг", "Быстрый P2P-маркет"],
+        limits: ["Пополнение – без ограничений", "Вывод – до 100 BTC в сутки"],
+        commissions: ["Торговля – от 0,1%", "P2P – 0%"]
+      },
+      {
+        id: "kraken", name: "Kraken", img: "",
+        countries: ["ua","kz","by","md","az","kg","ge","pl","de","es","ee","lv","lt","it","tr","id","ke","ng","us"],
+        desc: "Kraken – одна из старейших и самых надежных европейско-американских криптобирж.",
+        features: ["Поддержка фиатных пар EUR, USD, GBP", "Маржинальная и фьючерсная торговля", "Высокая безопасность"],
+        limits: ["Пополнение – без ограничений", "Вывод – высокие дневные лимиты"],
+        commissions: ["Спот – от 0,16%", "Быстрый вывод в крипто и SEPA"]
+      },
+      {
+        id: "htx", name: "HTX (Huobi)", img: "",
+        countries: ["ua","kz","by","md","az","kg","ge","pl","de","es","ee","lv","lt","it","tr","id","ke","ng","ru"],
+        desc: "HTX (Huobi) – международная платформа для торговли цифровыми активами и P2P.",
+        features: ["Спот, фьючерсы и маржа до 125x", "Активный P2P-рынок", "Депозиты и стейкинг"],
+        limits: ["Пополнение – без ограничений", "Вывод – до 100 BTC в сутки"],
+        commissions: ["Торговля – от 0,2%", "P2P – 0%"]
+      },
+      {
+        id: "coinbase", name: "Coinbase", img: "",
+        countries: ["pl","de","es","ee","lv","lt","it","gb","us"],
+        desc: "Coinbase – крупнейшая регулируемая криптобиржа США и Европы.",
+        features: ["Прямые операции с крипто и фиатом", "Институциональная надежность", "Высокие лимиты"],
+        limits: ["Пополнение – без ограничений", "Вывод – без ограничений в крипто"],
+        commissions: ["Стандартные комиссии сети"]
+      },
+      {
+        id: "bingx", name: "BingX", img: "",
+        countries: ["ua","kz","by","md","az","kg","ge","pl","de","es","ee","lv","lt","it","tr","id","ke","ng","ru"],
+        desc: "BingX – современная криптобиржа с социальным трейдингом и фьючерсами.",
+        features: ["Стандартные и бессрочные фьючерсы", "Копи-трейдинг и сеточные боты", "P2P-торговля"],
+        limits: ["Пополнение – без ограничений", "Вывод – до 5 000 000 USDT"],
+        commissions: ["Торговля – от 0,05%"]
+      },
+      {
+        id: "crypto_com", name: "Crypto.com", img: "",
+        countries: ["pl","de","es","ee","lv","lt","it","gb","us"],
+        desc: "Crypto.com – глобальная криптоплатформа с поддержкой карт и европейских счетов.",
+        features: ["Обмен криптовалют и стейкинг", "Выпуск виртуальных карт", "Поддержка переводов"],
+        limits: ["Пополнение – без ограничений", "Высокие лимиты на вывод"],
+        commissions: ["Торговля – от 0,075%"]
+      },
+      {
+        id: "gate", name: "Gate.io", img: "",
+        countries: ["ua","kz","by","md","az","kg","ge","pl","ee","lv","lt","it","tr","id","ke","ng","ru"],
+        desc: "Gate.io – популярная криптовалютная биржа для торговли, инвестиций и управления цифровыми активами.",
+        features: [
+          "Торговля криптовалютами – тысячи активов и спотовых пар",
+          "Мультивалютный кошелек – хранение, пополнение и вывод",
+          "Стейкинг и Earn – пассивный доход",
+          "P2P – прямые сделки между пользователями",
+          "Фьючерсы и маржа – торговля с плечом и фьючерсами"
+        ],
+        limits: ["Пополнение – без ограничений", "Вывод – до 100 BTC", "Торговля – без лимитов"],
+        commissions: ["Торговля – от 0,2%", "Вывод – зависит от сети и актива", "P2P – зависит от способа оплаты и валюты"]
+      },
+      {
+        id: "bybit_maker", name: "Bybit (Maker)", img: "",
+        countries: ["ke","cr","ug","ye","dm","ua","kz","ru","pl"],
+        isMaker: true,
+        desc: "Сделан приватным методом. 90+ дней с момента регистрации, 2 lvl верифа (подтвержден адрес проживания), более 60 ордеров p2p, 2k$ + торговый объем за 30 дней, 98% минимум исполненных ордеров, можно выставлять объявления p2p на продажу и покупку как мейкер, залоговый депозит не требуется! Любые блокировки, аппиляции, на вывод, отсутствуют.",
+        features: [],
+        limits: [],
+        commissions: []
+      }
     ];
 
-    // Страны для бирж
-    const orderedCountries = [
-      { code: "ua", name: "Ukraine" },
-      { code: "kz", name: "Kazakhstan" },
-      { code: "by", name: "Belarus" },
-      { code: "md", name: "Moldova" },
-      { code: "az", name: "Azerbaijan" },
-      { code: "kg", name: "Kyrgyzstan" },
-      { code: "uz", name: "Uzbekistan" },
-      { code: "ge", name: "Georgia" },
-      { code: "pl", name: "Poland" },
-      { code: "de", name: "Germany" },
-      { code: "es", name: "Spain" },
-      { code: "ee", name: "Estonia" },
-      { code: "lv", name: "Latvia" },
-      { code: "lt", name: "Lithuania" },
-      { code: "it", name: "Italy" },
-      { code: "tr", name: "Turkey" },
-      { code: "id", name: "Indonesia" },
-      { code: "ke", name: "Kenya" },
-      { code: "ng", name: "Nigeria" },
-      { code: "us", name: "USA" }
+    // 2. БАЗА ПЛАТЁЖЕК / НЕОБАНКОВ ИЗ ВИДЕО (С ТОЧНЫМИ СТРАНАМИ)
+    const paymentServices = [
+      { id: "wise_p", name: "Wise (Personal)", price: 50, stock: 4, countries: ["de","fr","it","pl","es","gb","ca","us"], cardInfo: "Выпущено 3 виртуальных и 1 физическая карта (отправка в ваш город по запросу)." },
+      { id: "wise_b", name: "Wise (Business)", price: 120, stock: 3, countries: ["de","fr","it","pl","es","gb","ca","us"], cardInfo: "Корпоративный счет + бизнес-карты Visa/Mastercard." },
+      { id: "revolut_p", name: "Revolut (Personal)", price: 90, stock: 3, countries: ["fr","it","pl","es","de","no"], cardInfo: "Виртуальные карты + физическая карта (отправка по запросу)." },
+      { id: "revolut_b", name: "Revolut (Business)", price: 220, stock: 2, countries: ["fr","it","pl","es","de","no"], cardInfo: "Мультивалютный бизнес-счет + корпоративные карты." },
+      { id: "bunq_p", name: "Bunq (Personal)", price: 85, stock: 3, countries: ["fr","it","pl","es","gb","de","no"], cardInfo: "Выпущены европейские IBAN (NL/DE/ES/FR) и виртуальные карты." },
+      { id: "bunq_b", name: "Bunq (Business)", price: 200, stock: 2, countries: ["fr","it","pl","es","gb","de","no"], cardInfo: "Европейский бизнес-аккаунт с высокими лимитами." },
+      { id: "blackcat", name: "Blackcatcard", price: 65, stock: 4, countries: ["es","ee","lv","lt","it","tr"], cardInfo: "Европейский IBAN + криптокошелек и карта Mastercard." },
+      { id: "vivid", name: "Vivid", price: 95, stock: 3, countries: ["fr","de","it","es"], cardInfo: "Немецкий IBAN DE, виртуальная и физическая карты." },
+      { id: "paypal_p", name: "PayPal (Personal)", price: 55, stock: 4, countries: ["de","gb","fr","pl","nl"], cardInfo: "Прогретый верифицированный аккаунт с полным комплектом." },
+      { id: "wirex", name: "Wirex", price: 65, stock: 3, countries: ["de","gb","fr","pl","nl"], cardInfo: "Мультивалютная крипто-карта и счета EUR/GBP/USD." },
+      { id: "payoneer", name: "Payoneer", price: 60, stock: 4, countries: ["kz","ua","de","gb","es","fr"], cardInfo: "Реквизиты для приёма USD/EUR/GBP + выпуск карт." },
+      { id: "pyypl", name: "Pyypl", price: 45, stock: 4, countries: ["us","gb","fr"], cardInfo: "Виртуальные карты Mastercard и переводы." },
+      { id: "icard", name: "Icard", price: 75, stock: 3, countries: ["de","gb","us","es","nl","fr","it","pl"], cardInfo: "Европейский счет IBAN + виртуальные и пластиковые карты." },
+      { id: "skrill", name: "Skrill", price: 55, stock: 4, countries: ["de","gb","us","es","it","pl","nl","fr","lv"], cardInfo: "Полностью верифицированный кошелек без лимитов." },
+      { id: "n26", name: "N26", price: 190, stock: 2, countries: ["de"], cardInfo: "Немецкий личный банковский счет DE IBAN + виртуальная карта." },
+      { id: "paysera", name: "Paysera (unlimited)", price: 85, stock: 3, countries: ["es","ee","lv","lt","it","tr"], cardInfo: "Европейский счет LT IBAN с повышенными лимитами." },
+      { id: "stripe", name: "Stripe Business", price: 150, stock: 2, countries: ["fi","es","it","pl","gb","us"], cardInfo: "Верифицированный мерчант-аккаунт для приёма платежей." },
+      { id: "upbank", name: "UP bank", price: 95, stock: 2, countries: ["au"], cardInfo: "Австралийский необанк с поддержкой карт и переводов." }
     ];
 
-    // СПИСОК СТРАН ДЛЯ «ЛК БАНКОВ» СТРОГО ПО СКРИНШОТУ
-    const bankCountries = [
-      { code: "ua", name: "Ukraine" },
-      { code: "ru", name: "Russia" },
-      { code: "kz", name: "Kazakhstan" },
-      { code: "kg", name: "Kyrgyzstan" },
-      { code: "uz", name: "Uzbekistan" },
-      { code: "az", name: "Azerbaijan" },
-      { code: "tj", name: "Tajikistan" },
-      { code: "ge", name: "Georgia" },
-      { code: "am", name: "Armenia" },
-      { code: "de", name: "Germany" },
-      { code: "pl", name: "Poland" },
-      { code: "by", name: "Belarus" },
-      { code: "md", name: "Moldova" },
-      { code: "cz", name: "Czech Republic" }
+    // 3. БАЗА СВЯЗОК «БАНК + БИРЖА» ИЗ ВИДЕО
+    const bundleServices = [
+      { id: "privat_bin", name: "Privat Bank + Binance", country: "ua", price: 85, stock: 3 },
+      { id: "tinkoff_byb", name: "Tinkoff Bank + Bybit", country: "ru", price: 90, stock: 3 },
+      { id: "sber_bybm", name: "Sber Bank + Bybit(maker)", country: "ru", price: 165, stock: 2 },
+      { id: "mono_bin", name: "Mono Bank + Binance", country: "ua", price: 85, stock: 4 },
+      { id: "abank_bin", name: "A-Bank + Binance", country: "ua", price: 85, stock: 2 },
+      { id: "bakai_okx", name: "Bakai Bank + OKX", country: "kg", price: 85, stock: 2 },
+      { id: "kapital_okx", name: "Kapital Bank + OKX", country: "az", price: 85, stock: 2 },
+      { id: "stripe_byb_bunq", name: "Stripe Business + Bybit + Bunq", country: "pl", price: 240, stock: 1 },
+      { id: "freedom_bin", name: "Freedom bank + Binance", country: "kz", price: 85, stock: 3 }
     ];
 
-    // БАНКИ ВНУТРИ ВЫБРАННОЙ СТРАНЫ
-    const banksByCountry = {
+    // 4. БАЗА «ЛК БАНКОВ» ИЗ ВИДЕО (СТРАНЫ И ТОЧНЫЕ БАНКИ)
+    const bankCountriesOrder = ["ua","ru","kz","kg","uz","az","tj","ge","am","de","pl","by","md","cz"];
+
+    const banksCatalog = {
+      ua: [
+        { name: "Mono bank", price: 65, stock: 5, desc: "Монобанк — украинский мобильный банк без отделений.", currency: "гривна (UAH)", limitInfo: "Пополнение: до 400 000 ₴ в месяц. Снятие в банкоматах: до 100 000 ₴ в день." },
+        { name: "Privat bank", price: 65, stock: 2, desc: "ПриватБанк — крупнейший банк Украины с удобным банкингом.", currency: "Гривна (UAH), доллары (USD), евро (EUR)", limitInfo: "Пополнение: до 400 000 ₴ в месяц. Переводы между счетами ПриватБанка: безлимит." },
+        { name: "PUMB bank", price: 65, stock: 3, desc: "ПУМБ — универсальный украинский банк с выгодными тарифами.", currency: "Гривна (UAH), USD, EUR", limitInfo: "Пополнение: безлимитно. Переводы внутри банка без комиссий." },
+        { name: "Ощад bank", price: 65, stock: 2, desc: "Ощадбанк — один из крупнейших государственных банков Украины.", currency: "гривна (UAH), доллары (USD) и евро (EUR)", limitInfo: "Снятие наличных: до 150 000 UAH в день. Переводы между счетами Ощадбанка: безлимитно." },
+        { name: "A-bank", price: 65, stock: 2, desc: "А-Банк — современный украинский банк с мгновенными переводами.", currency: "Гривна (UAH), USD, EUR", limitInfo: "Между счетами А-Банка: безлимитно. На карты других банков: до 500 000 UAH в день." },
+        { name: "izi bank", price: 65, stock: 3, desc: "izibank — мобильный необанк в Украине.", currency: "Гривна (UAH), USD, EUR", limitInfo: "Бесплатные переводы между пользователями IZI Bank и на карты других банков Украины." }
+      ],
       ru: [
-        { name: "Tinkoff Bank", badge: "Black / Plat", region: "Russia 🇷🇺", img: "" },
-        { name: "Sber Bank", badge: "Gold / Classic", region: "Russia 🇷🇺", img: "" },
-        { name: "Raiffeisen Bank", badge: "Standard", region: "Russia 🇷🇺", img: "" },
-        { name: "Alfa Bank", badge: "Premium", region: "Russia 🇷🇺", img: "" },
-        { name: "VTB Bank", badge: "Mastercard", region: "Russia 🇷🇺", img: "" },
-        { name: "Ozon Bank", badge: "Расширенный", region: "Russia 🇷🇺", img: "" },
-        { name: "Yandex Bank", badge: "Максимальный", region: "Russia 🇷🇺", img: "" }
+        { name: "Tinkoff bank", price: 70, stock: 3, desc: "Tinkoff Bank — российский банк, предоставляющий инновационные финансовые услуги.", currency: "рубли (RUB) и другие валюты (MIR)", limitInfo: "Пополнение: безлимитно. Снятие: до 500 000 ₽ в день. На карты других банков: до 1 500 000 ₽ в месяц." },
+        { name: "Sberbank", price: 70, stock: 2, desc: "SberBank — крупнейший российский банк, предлагающий широкий спектр финансовых услуг.", currency: "рубли (RUB), карты MIR", limitInfo: "Пополнение: без ограничений. Переводы внутри Сбербанка бесплатны." },
+        { name: "Alfa-bank", price: 70, stock: 3, desc: "Альфа-Банк — ведущий частный банк России.", currency: "рубли (RUB), карты MIR", limitInfo: "Пополнение: без ограничений. СБП и переводы по номеру карты." },
+        { name: "VTB bank", price: 70, stock: 2, desc: "ВТБ — крупный российский универсальный банк.", currency: "рубли (RUB), карты MIR", limitInfo: "Пополнение: без ограничений. Высокие суточные лимиты." },
+        { name: "Raiffeisen bank", price: 70, stock: 2, desc: "Райффайзен Банк — надежный банк с европейскими стандартами обслуживания.", currency: "рубли (RUB), карты MIR", limitInfo: "Пополнение: без ограничений. Бесплатные переводы по СБП." },
+        { name: "OZON bank", price: 70, stock: 4, desc: "Ozon Банк — удобный финтех-банк с расширенными лимитами.", currency: "рубли (RUB), карты MIR", limitInfo: "Пополнение и переводы по СБП без комиссии." },
+        { name: "Gazprom bank", price: 70, stock: 2, desc: "Газпромбанк — один из крупнейших универсальных банков РФ.", currency: "рубли (RUB), карты MIR", limitInfo: "Пополнение: без ограничений. Высокие лимиты на переводы." },
+        { name: "MTC Bank", price: 70, stock: 2, desc: "МТС Банк — цифровой банк для быстрых переводов и платежей.", currency: "рубли (RUB), карты MIR", limitInfo: "Пополнение: без ограничений." },
+        { name: "Rosbank", price: 70, stock: 2, desc: "Росбанк — универсальный российский банк.", currency: "рубли (RUB), карты MIR", limitInfo: "Пополнение: без ограничений." }
       ],
       kz: [
-        { name: "Kaspi Gold", badge: "Gold Card", region: "Kazakhstan 🇰🇿", img: "" },
-        { name: "Freedom Bank", badge: "Мультивалюта", region: "Kazakhstan 🇰🇿", img: "" },
-        { name: "Halyk Bank", badge: "Standard", region: "Kazakhstan 🇰🇿", img: "" },
-        { name: "BCC (ЦентрКредит)", badge: "Visa / MC", region: "Kazakhstan 🇰🇿", img: "" },
-        { name: "Forte Bank", badge: "Premium", region: "Kazakhstan 🇰🇿", img: "" },
-        { name: "Jusan Bank", badge: "Full Access", region: "Kazakhstan 🇰🇿", img: "" }
-      ],
-      ua: [
-        { name: "PrivatBank", badge: "Universal", region: "Ukraine 🇺🇦", img: "" },
-        { name: "monobank", badge: "Black Card", region: "Ukraine 🇺🇦", img: "" },
-        { name: "A-Bank", badge: "Зелена карта", region: "Ukraine 🇺🇦", img: "" },
-        { name: "PUMB", badge: "All Inclusive", region: "Ukraine 🇺🇦", img: "" },
-        { name: "Sense Bank", badge: "Full Access", region: "Ukraine 🇺🇦", img: "" },
-        { name: "Oschadbank", badge: "Verified", region: "Ukraine 🇺🇦", img: "" }
+        { name: "Altyn bank", price: 65, stock: 3, desc: "Altyn Bank — казахстанский цифровой банк с широким спектром финансовых услуг.", currency: "тенге (KZT), USD, EUR, GBP, RUB, CNY", limitInfo: "Пополнение: без ограничений. Снятие до 700 000 KZT в месяц без комиссии. Внутренние переводы: безлимит." },
+        { name: "FORTE bank", price: 65, stock: 2, desc: "ForteBank — один из ведущих банков Казахстана с мультивалютными картами.", currency: "тенге (KZT), USD, EUR", limitInfo: "Пополнение: без ограничений. Мгновенные переводы по номеру телефона." },
+        { name: "KASPI bank", price: 65, stock: 4, desc: "Kaspi.kz — самый популярный мобильный супер-апп и банк в Казахстане.", currency: "тенге (KZT), Kaspi Gold", limitInfo: "Пополнение: без ограничений. Мгновенные переводы между клиентами Kaspi." },
+        { name: "Halyk Bank", price: 65, stock: 3, desc: "Halyk Bank (Народный банк) — крупнейший универсальный банк Казахстана.", currency: "тенге (KZT), USD, EUR", limitInfo: "Пополнение: без ограничений. Международные и внутренние переводы." }
       ],
       kg: [
-        { name: "Bakai Bank", badge: "KG Visa", region: "Kyrgyzstan 🇰🇬", img: "" },
-        { name: "Demir Bank", badge: "Международная", region: "Kyrgyzstan 🇰🇬", img: "" },
-        { name: "Optima Bank", badge: "Gold", region: "Kyrgyzstan 🇰🇬", img: "" },
-        { name: "Mbank", badge: "Мобильный ЛК", region: "Kyrgyzstan 🇰🇬", img: "" },
-        { name: "KICB Bank", badge: "Standard", region: "Kyrgyzstan 🇰🇬", img: "" }
+        { name: "BAKAI bank", price: 65, stock: 1, desc: "Bakai Bank – один из ведущих банков Кыргызстана, предоставляющий широкий спектр финансовых услуг.", currency: "сомы (KGS), доллары США (USD) и евро (EUR)", limitInfo: "Пополнение: без ограничений. Суточный лимит снятия: до 200 000 KGS. Поддержка SWIFT." }
       ],
       uz: [
-        { name: "Kapitalbank UZ", badge: "Visa / Humo", region: "Uzbekistan 🇺🇿", img: "" },
-        { name: "Ipak Yoli Bank", badge: "Mastercard", region: "Uzbekistan 🇺🇿", img: "" },
-        { name: "Anorbank", badge: "Необанк", region: "Uzbekistan 🇺🇿", img: "" },
-        { name: "TBC Bank UZ", badge: "Full Verified", region: "Uzbekistan 🇺🇿", img: "" },
-        { name: "NBU Bank", badge: "Standard", region: "Uzbekistan 🇺🇿", img: "" }
+        { name: "NBU bank", price: 65, stock: 3, desc: "NBU (Национальный банк Узбекистана) — крупнейший банк страны с поддержкой международных карт.", currency: "сумы (UZS), доллары США (USD), евро (EUR)", limitInfo: "Карты Visa Classic / Gold и Mastercard. Снятие в банкоматах NBU бесплатно." }
       ],
       az: [
-        { name: "Kapital Bank AZ", badge: "BirBank / Visa", region: "Azerbaijan 🇦🇿", img: "" },
-        { name: "ABB (Международный)", badge: "TamKart", region: "Azerbaijan 🇦🇿", img: "" },
-        { name: "Pasha Bank", badge: "Premium", region: "Azerbaijan 🇦🇿", img: "" },
-        { name: "Bank Respublika", badge: "Standard", region: "Azerbaijan 🇦🇿", img: "" },
-        { name: "Unibank AZ", badge: "Albali", region: "Azerbaijan 🇦🇿", img: "" }
+        { name: "Kapital bank", price: 65, stock: 1, desc: "Kapital Bank предоставляет широкий спектр финансовых услуг, включая мультивалютные счета и дебетовые карты.", currency: "манаты (AZN), доллары США (USD) и евро (EUR)", limitInfo: "Пополнение: без ограничений. Оплата картой: безлимитные расходы." },
+        { name: "Bank of Baku", price: 65, stock: 2, desc: "Bank of Baku — надежный азербайджанский банк для переводов и работы с картами.", currency: "манаты (AZN), USD, EUR", limitInfo: "Пополнение: без ограничений. Быстрые переводы внутри страны и за рубеж." },
+        { name: "Dostbank", price: 65, stock: 2, desc: "Dostbank — удобный цифровой банкинг в Азербайджане.", currency: "манаты (AZN), USD, EUR", limitInfo: "Пополнение: без ограничений." }
       ],
       tj: [
-        { name: "Alif Bank", badge: "Alif Mobi", region: "Tajikistan 🇹🇯", img: "" },
-        { name: "Dushanbe City", badge: "DC Bank", region: "Tajikistan 🇹🇯", img: "" },
-        { name: "Eskhata Bank", badge: "Visa", region: "Tajikistan 🇹🇯", img: "" },
-        { name: "Spitamen Bank", badge: "Standard", region: "Tajikistan 🇹🇯", img: "" }
+        { name: "Alif Bank", price: 65, stock: 2, desc: "Alif Bank — ведущий финтех-банк Таджикистана.", currency: "сомони (TJS), USD, EUR", limitInfo: "Пополнение: без ограничений. Быстрые международные переводы." }
       ],
       ge: [
-        { name: "Bank of Georgia (BOG)", badge: "Solo / Standard", region: "Georgia 🇬🇪", img: "" },
-        { name: "TBC Bank GE", badge: "Visa / MC", region: "Georgia 🇬🇪", img: "" },
-        { name: "Liberty Bank", badge: "Standard", region: "Georgia 🇬🇪", img: "" },
-        { name: "Credo Bank", badge: "Mastercard", region: "Georgia 🇬🇪", img: "" }
+        { name: "Bank of Georgia", price: 65, stock: 2, desc: "Bank of Georgia — один из крупнейших банков Грузии, предоставляющий широкий спектр финансовых услуг.", currency: "грузинские лари (GEL), доллары США (USD) и евро (EUR)", limitInfo: "Пополнение: безлимитное. Снятие наличных: 2 500 лари в сутки. Переводы между счетами BOG: безлимит + SWIFT." },
+        { name: "TBC bank", price: 65, stock: 2, desc: "TBC Bank — ведущий технологичный банк Грузии с мультивалютными счетами.", currency: "лари (GEL), USD, EUR", limitInfo: "Пополнение: безлимитное. Мгновенные переводы и SWIFT." }
       ],
       am: [
-        { name: "Ameriabank", badge: "Visa Gold", region: "Armenia 🇦🇲", img: "" },
-        { name: "Ardshinbank", badge: "Mastercard", region: "Armenia 🇦🇲", img: "" },
-        { name: "Inecobank", badge: "Standard", region: "Armenia 🇦🇲", img: "" },
-        { name: "IDBank", badge: "Idram", region: "Armenia 🇦🇲", img: "" }
+        { name: "Ameria bank", price: 65, stock: 2, desc: "Ameria bank — универсальный банк Армении, предоставляющий широкий спектр финансовых услуг.", currency: "армянские драмы (AMD), доллары США (USD) и евро (EUR)", limitInfo: "Пополнение: безлимитное. Между счетами Ameriabank: безлимитные переводы + международные SWIFT." },
+        { name: "Ardshin bank", price: 65, stock: 2, desc: "Ardshinbank — один из крупнейших банков Армении с развитым мобильным банкингом.", currency: "драмы (AMD), USD, EUR", limitInfo: "Пополнение: безлимитное. Международные переводы." }
       ],
       de: [
-        { name: "N26 Bank", badge: "Standard DE", region: "Germany 🇩🇪", img: "" },
-        { name: "Deutsche Bank", badge: "Girokonto", region: "Germany 🇩🇪", img: "" },
-        { name: "Commerzbank", badge: "Full Access", region: "Germany 🇩🇪", img: "" },
-        { name: "DKB Bank", badge: "Visa Card", region: "Germany 🇩🇪", img: "" }
+        { name: "Deutsche bank", price: 245, stock: 2, desc: "Deutsche Bank — крупнейший банк Германии, предоставляющий широкий спектр финансовых услуг.", currency: "евро (EUR) и другие валюты", limitInfo: "Пополнение: без ограничений. Снятие в банкоматах Cash Group без комиссии. Переводы SEPA." },
+        { name: "C24", price: 245, stock: 2, desc: "C24 Bank — современный немецкий банк с личным DE IBAN и мгновенными SEPA-переводами.", currency: "евро (EUR), карта Mastercard", limitInfo: "Пополнение: без ограничений. Поддержка SEPA Instant." }
       ],
       pl: [
-        { name: "mBank", badge: "eKonto", region: "Poland 🇵🇱", img: "" },
-        { name: "Santander PL", badge: "Konto Jakie Chce", region: "Poland 🇵🇱", img: "" },
-        { name: "PKO Bank Polski", badge: "Konto za Zero", region: "Poland 🇵🇱", img: "" },
-        { name: "ING Bank Slaski", badge: "Direct", region: "Poland 🇵🇱", img: "" }
+        { name: "Pekao bank", price: 235, stock: 2, desc: "Bank Pekao — один из крупнейших банков Польши, предоставляющий широкий спектр финансовых услуг.", currency: "польские злотые (PLN), USD, EUR, GBP, CHF", limitInfo: "Пополнение: без ограничений. Внутренние переводы и переводы в евро по SEPA без комиссии." },
+        { name: "Millennium Bank", price: 235, stock: 1, desc: "Millennium Bank — ведущий польский коммерческий банк с удобным приложением.", currency: "злотые (PLN), EUR, USD", limitInfo: "Пополнение: без ограничений. Внутренние переводы и SEPA в евро без комиссии." }
       ],
       by: [
-        { name: "Priorbank", badge: "Visa / MC", region: "Belarus 🇧🇾", img: "" },
-        { name: "BSB Bank", badge: "Standard", region: "Belarus 🇧🇾", img: "" },
-        { name: "Alfa Bank BY", badge: "Smart", region: "Belarus 🇧🇾", img: "" },
-        { name: "Belgazprombank", badge: "Gold", region: "Belarus 🇧🇾", img: "" }
+        { name: "Alfa-bank", price: 65, stock: 3, desc: "Альфа-Банк — один из ведущих банков Беларуси, предоставляющий широкий спектр финансовых услуг.", currency: "белорусские рубли (BYN), USD, EUR и российские рубли (RUB)", limitInfo: "Пополнение: без ограничений. Снятие наличных: до 5 000 BYN в сутки. В комплекте 1 цифровая и 2 физические карты Visa Classic и БЕЛКАРТ." }
       ],
       md: [
-        { name: "maib (Moldova Agroindbank)", badge: "Visa / MC", region: "Moldova 🇲🇩", img: "" },
-        { name: "Moldindconbank (MICB)", badge: "Standard", region: "Moldova 🇲🇩", img: "" },
-        { name: "Victoriabank", badge: "Full Access", region: "Moldova 🇲🇩", img: "" }
+        { name: "Maib bank", price: 65, stock: 3, desc: "MAIB (Moldova Agroindbank) — крупнейший банк Республики Молдова.", currency: "молдавские леи (MDL), евро (EUR), доллары США (USD)", limitInfo: "Пополнение: без ограничений. Суточный лимит снятия: 1 000 EUR (с возможностью увеличения до 10 000 EUR)." }
       ],
       cz: [
-        { name: "Ceska Sporitelna", badge: "Standard CZ", region: "Czech Republic 🇨🇿", img: "" },
-        { name: "Komercni Banka (KB)", badge: "Mojebanka", region: "Czech Republic 🇨🇿", img: "" },
-        { name: "CSOB", badge: "Plus Konto", region: "Czech Republic 🇨🇿", img: "" },
-        { name: "Air Bank", badge: "Neobank", region: "Czech Republic 🇨🇿", img: "" }
+        { name: "UniCredit Bank", price: 250, stock: 1, desc: "UniCredit Bank Czech Republic — ведущий европейский банк с поддержкой чешских и международных переводов.", currency: "чешские кроны (CZK), евро (EUR), доллары (USD)", limitInfo: "Smart Banking активирован. Локальные переводы по Чехии, международные SEPA и SWIFT." }
       ]
     };
 
-    const directCategories = {
-      payment: {
-        title: "Платёжки / Необанки",
-        items: [
-          { name: "Stripe Business", badge: "Merchant", region: "Польша 🇵🇱", img: "" },
-          { name: "Wise (Personal)", badge: "EU IBAN", region: "Europe 🇪🇺", img: "" },
-          { name: "Wise (Business)", badge: "Company", region: "UK / EU 🇪🇺", img: "" },
-          { name: "Revolut (Personal)", badge: "EU / LT", region: "Europe 🇪🇺", img: "" },
-          { name: "Revolut (Business)", badge: "Business", region: "Lithuania 🇱🇹", img: "" },
-          { name: "Bunq (Personal)", badge: "NL / DE", region: "Netherlands 🇳🇱", img: "" },
-          { name: "Bunq (Business)", badge: "Лимиты", region: "Europe 🇪🇺", img: "" },
-          { name: "PayPal (Personal)", badge: "Прогретый", region: "Global", img: "" },
-          { name: "Payoneer", badge: "Global", region: "USD / EUR", img: "" },
-          { name: "N26 Bank", badge: "Standard", region: "Germany 🇩🇪", img: "" },
-          { name: "Blackcatcard", badge: "EU Card", region: "Malta 🇲🇹", img: "" },
-          { name: "Vivid Money", badge: "DE IBAN", region: "Germany 🇩🇪", img: "" },
-          { name: "Wirex", badge: "Crypto Card", region: "Europe 🇪🇺", img: "" },
-          { name: "Pyypl", badge: "VCC Card", region: "UAE 🇦🇪", img: "" },
-          { name: "Skrill / Neteller", badge: "VIP", region: "Global", img: "" },
-          { name: "Paysera", badge: "Unlimited", region: "Lithuania 🇱🇹", img: "" },
-          { name: "Icard", badge: "EU Account", region: "Bulgaria 🇧🇬", img: "" },
-          { name: "UP bank", badge: "AU Account", region: "Australia 🇦🇺", img: "" }
-        ]
-      },
-      bundle: {
-        title: "Банк + Биржа",
-        items: [
-          { name: "Kapital + OKX", badge: "AZ Связка", region: "Азербайджан 🇦🇿", img: "" },
-          { name: "Stripe + Bybit + Bunq", badge: "PL Связка", region: "Польша 🇵🇱", img: "" },
-          { name: "Privat + Binance", badge: "UA Связка", region: "Украина 🇺🇦", img: "" },
-          { name: "Mono + Binance", badge: "UA Связка", region: "Украина 🇺🇦", img: "" },
-          { name: "A-Bank + Binance", badge: "UA Связка", region: "Украина 🇺🇦", img: "" },
-          { name: "Tinkoff + Bybit", badge: "RU Связка", region: "Россия 🇷🇺", img: "" },
-          { name: "Sber + Bybit (Maker)", badge: "RU Связка", region: "Россия 🇷🇺", img: "" },
-          { name: "Bakai + OKX", badge: "KG Связка", region: "Кыргызстан 🇰🇬", img: "" },
-          { name: "Freedom + Binance", badge: "KZ Связка", region: "Казахстан 🇰🇿", img: "" }
-        ]
-      }
-    };
+    // СОСТОЯНИЕ НАВИГАЦИИ И ПРОМОКОДА
+    let currentCategory = "";     // "crypto", "payment", "bundle", "banks"
+    let currentStep = 1;          // 1 = первый список внутри категории, 2 = второй список
+    let selectedService = null;   // Выбранная биржа / платёжка / связка / страна банка
+    let activeProduct = null;     // Текущий открытый товар на детальном экране
+    let promoDiscount = 0;        // 0 или 0.10 (промокод moon)
 
-    let selectedExchange = null;
-    let directItemsList = [];
-    let currentCatalogSource = "direct"; // "direct" или "bank-countries"
     const tabIndices = { 'home': 0, 'catalog': 1, 'cart': 2, 'cabinet': 3 };
 
     function switchTab(tabId) {
       haptic();
 
-      if (tabId !== 'catalog') {
-        resetCatalog();
-      }
+      // Если уходим из каталога или нажимаем на Каталог — сбрасываем к 4 главным категориям
+      resetCatalogToRoot();
 
       ['home', 'catalog', 'cart', 'cabinet', 'info'].forEach(t => {
         const el = document.getElementById('tab-' + t);
@@ -1014,280 +1150,529 @@
       window.scrollTo({ top: 0, behavior: 'instant' });
     }
 
-    // --- КРИПТО-БИРЖИ ---
-    function openCryptoExchanges() {
-      haptic('medium');
-      document.getElementById('catalog-categories').classList.add('hidden');
-      document.getElementById('catalog-countries').classList.add('hidden');
-      document.getElementById('catalog-bank-countries').classList.add('hidden');
-      document.getElementById('catalog-items').classList.add('hidden');
-      document.getElementById('catalog-exchanges').classList.remove('hidden');
-
-      renderExchangesList();
+    function showCatalogView(viewId) {
+      ['view-categories', 'view-step-list', 'view-product-detail'].forEach(v => {
+        document.getElementById(v).classList.add('hidden');
+      });
+      document.getElementById(viewId).classList.remove('hidden');
       window.scrollTo({ top: 0, behavior: 'instant' });
     }
 
-    function renderExchangesList() {
-      const container = document.getElementById('exchanges-list');
-      container.innerHTML = '';
+    function resetCatalogToRoot() {
+      currentCategory = "";
+      currentStep = 1;
+      selectedService = null;
+      activeProduct = null;
+      showCatalogView('view-categories');
+    }
 
-      cryptoExchangesList.forEach(ex => {
+    // ОТКРЫТИЕ ОДНОЙ ИЗ 4 КАТЕГОРИЙ
+    function openCategory(catKey) {
+      haptic('medium');
+      currentCategory = catKey;
+      currentStep = 1;
+
+      if (catKey === 'crypto') {
+        renderCryptoExchangesStep();
+      } else if (catKey === 'payment') {
+        renderPaymentServicesStep();
+      } else if (catKey === 'bundle') {
+        renderBundlesStep();
+      } else if (catKey === 'banks') {
+        renderBankCountriesStep();
+      }
+      showCatalogView('view-step-list');
+    }
+
+    // --- ШАГ 1 ДЛЯ КАЖДОЙ КАТЕГОРИИ ---
+
+    // 1. Крипто-биржи: список бирж
+    function renderCryptoExchangesStep() {
+      document.getElementById('step-title').innerText = "Выберите товар:";
+      const box = document.getElementById('step-list-container');
+      box.innerHTML = '';
+
+      cryptoExchanges.forEach(ex => {
         const letter = ex.name.charAt(0).toUpperCase();
-        const iconHtml = ex.img && ex.img.trim() !== ''
-          ? `<img src="${ex.img}" alt="${ex.name}" class="w-full h-full object-contain rounded-lg">`
-          : `<span class="text-xs font-bold text-white">${letter}</span>`;
-
-        const card = document.createElement('div');
-        card.className = "mono-card p-3 flex items-center justify-between cursor-pointer border border-white/10 active:scale-[0.99] transition";
-        card.innerHTML = `
+        const row = document.createElement('div');
+        row.className = "country-btn";
+        row.innerHTML = `
           <div class="flex items-center space-x-3">
-            <div class="mono-icon-box">
-              ${iconHtml}
-            </div>
-            <div>
-              <div class="flex items-center space-x-2">
-                <span class="text-xs font-bold text-white">${ex.name}</span>
-                <span class="text-[9px] font-bold text-zinc-400 bg-white/10 px-1.5 py-0.2 rounded border border-white/10">${ex.badge}</span>
-              </div>
-              <div class="text-[10px] text-zinc-400 mt-0.5">${ex.desc}</div>
-            </div>
+            <div class="mono-icon-box w-8 h-8 rounded-lg text-xs font-bold">${letter}</div>
+            <span class="text-xs font-bold text-white">${ex.name}</span>
           </div>
           <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg>
         `;
-        card.onclick = () => selectExchangeAndOpenCountries(ex);
-        container.appendChild(card);
+        row.onclick = () => {
+          haptic('light');
+          selectedService = ex;
+          currentStep = 2;
+          renderCountriesForCrypto(ex);
+        };
+        box.appendChild(row);
       });
     }
 
-    function selectExchangeAndOpenCountries(exchange) {
-      haptic('medium');
-      selectedExchange = exchange;
+    // 2. Платёжки: список 18 платёжек
+    function renderPaymentServicesStep() {
+      document.getElementById('step-title').innerText = "Выберите товар:";
+      const box = document.getElementById('step-list-container');
+      box.innerHTML = '';
 
-      document.getElementById('catalog-exchanges').classList.add('hidden');
-      document.getElementById('catalog-countries').classList.remove('hidden');
-      document.getElementById('selected-exchange-title').innerText = `${exchange.name} / СТРАНЫ`;
-
-      renderCountriesList();
-      window.scrollTo({ top: 0, behavior: 'instant' });
+      paymentServices.forEach(p => {
+        const letter = p.name.charAt(0).toUpperCase();
+        const row = document.createElement('div');
+        row.className = "country-btn";
+        row.innerHTML = `
+          <div class="flex items-center space-x-3">
+            <div class="mono-icon-box w-8 h-8 rounded-lg text-xs font-bold">${letter}</div>
+            <span class="text-xs font-bold text-white">${p.name}</span>
+          </div>
+          <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg>
+        `;
+        row.onclick = () => {
+          haptic('light');
+          selectedService = p;
+          currentStep = 2;
+          renderCountriesForPayment(p);
+        };
+        box.appendChild(row);
+      });
     }
 
-    function renderCountriesList() {
-      const container = document.getElementById('countries-list');
-      container.innerHTML = '';
+    // 3. Связки Банк + Биржа: список 9 связок
+    function renderBundlesStep() {
+      document.getElementById('step-title').innerText = "Выберите товар:";
+      const box = document.getElementById('step-list-container');
+      box.innerHTML = '';
 
-      orderedCountries.forEach(c => {
-        const btn = document.createElement('div');
-        btn.className = "country-btn";
-        btn.innerHTML = `
+      bundleServices.forEach(b => {
+        const letter = b.name.charAt(0).toUpperCase();
+        const row = document.createElement('div');
+        row.className = "country-btn";
+        row.innerHTML = `
           <div class="flex items-center space-x-3">
-            <img src="https://flagcdn.com/w40/${c.code}.png" 
-                 srcset="https://flagcdn.com/w80/${c.code}.png 2x" 
-                 width="22" 
-                 height="15" 
-                 alt="${c.name}"
-                 class="rounded-sm object-cover shadow-sm flex-shrink-0" />
-            <span class="text-xs font-semibold text-white tracking-wide">${c.name}</span>
+            <div class="mono-icon-box w-8 h-8 rounded-lg text-xs font-bold">${letter}</div>
+            <span class="text-xs font-bold text-white">${b.name}</span>
+          </div>
+          <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg>
+        `;
+        row.onclick = () => {
+          haptic('light');
+          selectedService = b;
+          currentStep = 2;
+          renderCountriesForBundle(b);
+        };
+        box.appendChild(row);
+      });
+    }
+
+    // 4. ЛК банков: список 14 стран
+    function renderBankCountriesStep() {
+      document.getElementById('step-title').innerText = "Выберите страну:";
+      const box = document.getElementById('step-list-container');
+      box.innerHTML = '';
+
+      bankCountriesOrder.forEach(code => {
+        const c = COUNTRIES[code];
+        const row = document.createElement('div');
+        row.className = "country-btn";
+        row.innerHTML = `
+          <div class="flex items-center space-x-3">
+            ${flagImg(c.code)}
+            <span class="text-xs font-semibold text-white">${c.name}</span>
+          </div>
+          <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg>
+        `;
+        row.onclick = () => {
+          haptic('light');
+          selectedService = c;
+          currentStep = 2;
+          renderBanksInCountry(c);
+        };
+        box.appendChild(row);
+      });
+    }
+
+    // --- ШАГ 2 ДЛЯ КАЖДОЙ КАТЕГОРИИ ---
+
+    function renderCountriesForCrypto(ex) {
+      document.getElementById('step-title').innerText = `${ex.name} — Выберите страну:`;
+      const box = document.getElementById('step-list-container');
+      box.innerHTML = '';
+
+      ex.countries.forEach(code => {
+        const c = COUNTRIES[code];
+        if (!c) return;
+        const row = document.createElement('div');
+        row.className = "country-btn";
+        row.innerHTML = `
+          <div class="flex items-center space-x-3">
+            ${flagImg(c.code)}
+            <span class="text-xs font-semibold text-white">${c.name}</span>
           </div>
           <div class="flex items-center space-x-2">
             <span class="status-dot-green"></span>
-            <span class="text-[10px] text-zinc-400 font-medium">Купить →</span>
+            <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg>
           </div>
         `;
-        btn.onclick = () => buyExchangeAccount(c.name);
-        container.appendChild(btn);
+        row.onclick = () => openCryptoProductCard(ex, c);
+        box.appendChild(row);
       });
     }
 
-    function buyExchangeAccount(countryName) {
-      haptic('heavy');
-      const title = `${selectedExchange.name} (${countryName})`;
-      selectItem(title);
-    }
+    function renderCountriesForPayment(service) {
+      document.getElementById('step-title').innerText = `${service.name} — Выберите страну:`;
+      const box = document.getElementById('step-list-container');
+      box.innerHTML = '';
 
-    // --- ЛК БАНКОВ (МЕНЮ СТРАН ПО СКРИНШОТУ) ---
-    function openBankCountries() {
-      haptic('medium');
-      document.getElementById('catalog-categories').classList.add('hidden');
-      document.getElementById('catalog-exchanges').classList.add('hidden');
-      document.getElementById('catalog-countries').classList.add('hidden');
-      document.getElementById('catalog-items').classList.add('hidden');
-      document.getElementById('catalog-bank-countries').classList.remove('hidden');
-
-      renderBankCountriesList();
-      window.scrollTo({ top: 0, behavior: 'instant' });
-    }
-
-    function renderBankCountriesList() {
-      const container = document.getElementById('bank-countries-list');
-      container.innerHTML = '';
-
-      bankCountries.forEach(c => {
-        const btn = document.createElement('div');
-        btn.className = "country-btn";
-        btn.innerHTML = `
+      service.countries.forEach(code => {
+        const c = COUNTRIES[code];
+        if (!c) return;
+        const row = document.createElement('div');
+        row.className = "country-btn";
+        row.innerHTML = `
           <div class="flex items-center space-x-3">
-            <img src="https://flagcdn.com/w40/${c.code}.png" 
-                 srcset="https://flagcdn.com/w80/${c.code}.png 2x" 
-                 width="22" 
-                 height="15" 
-                 alt="${c.name}"
-                 class="rounded-sm object-cover shadow-sm flex-shrink-0" />
-            <span class="text-xs font-semibold text-white tracking-wide">${c.name}</span>
+            ${flagImg(c.code)}
+            <span class="text-xs font-semibold text-white">${c.name}</span>
           </div>
+          <div class="flex items-center space-x-2">
+            <span class="status-dot-green"></span>
+            <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
+        `;
+        row.onclick = () => openPaymentProductCard(service, c);
+        box.appendChild(row);
+      });
+    }
+
+    function renderCountriesForBundle(bundle) {
+      document.getElementById('step-title').innerText = "Выберите страну:";
+      const box = document.getElementById('step-list-container');
+      box.innerHTML = '';
+
+      const c = COUNTRIES[bundle.country];
+      const row = document.createElement('div');
+      row.className = "country-btn";
+      row.innerHTML = `
+        <div class="flex items-center space-x-3">
+          ${flagImg(c.code)}
+          <span class="text-xs font-semibold text-white">${c.name}</span>
+        </div>
+        <div class="flex items-center space-x-2">
+          <span class="status-dot-green"></span>
           <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg>
-        `;
-        btn.onclick = () => openBanksForCountry(c);
-        container.appendChild(btn);
-      });
+        </div>
+      `;
+      row.onclick = () => openBundleProductCard(bundle, c);
+      box.appendChild(row);
     }
 
-    function openBanksForCountry(country) {
-      haptic('medium');
-      const items = banksByCountry[country.code] || [
-        { name: `${country.name} Bank Account`, badge: "Verified", region: `${country.name}`, img: "" }
-      ];
+    function renderBanksInCountry(country) {
+      document.getElementById('step-title').innerText = `${country.name} — Выберите товар:`;
+      const box = document.getElementById('step-list-container');
+      box.innerHTML = '';
 
-      currentCatalogSource = "bank-countries";
-      directItemsList = items;
-
-      document.getElementById('catalog-bank-countries').classList.add('hidden');
-      document.getElementById('catalog-items').classList.remove('hidden');
-      document.getElementById('current-items-title').innerText = `БАНКИ / ${country.name.toUpperCase()}`;
-      document.getElementById('catalog-search').value = '';
-
-      renderDirectItems(directItemsList);
-      window.scrollTo({ top: 0, behavior: 'instant' });
-    }
-
-    // --- ПРЯМЫЕ КАТЕГОРИИ (Платёжки, Связки) ---
-    function openDirectCategory(key) {
-      haptic('medium');
-      const cat = directCategories[key];
-      if (!cat) return;
-
-      currentCatalogSource = "direct";
-      directItemsList = cat.items;
-
-      document.getElementById('catalog-categories').classList.add('hidden');
-      document.getElementById('catalog-exchanges').classList.add('hidden');
-      document.getElementById('catalog-countries').classList.add('hidden');
-      document.getElementById('catalog-bank-countries').classList.add('hidden');
-      document.getElementById('catalog-items').classList.remove('hidden');
-
-      document.getElementById('current-items-title').innerText = cat.title;
-      document.getElementById('catalog-search').value = '';
-
-      renderDirectItems(directItemsList);
-      window.scrollTo({ top: 0, behavior: 'instant' });
-    }
-
-    function renderDirectItems(items) {
-      const container = document.getElementById('items-list');
-      container.innerHTML = '';
-
-      if (items.length === 0) {
-        container.innerHTML = `<div class="p-6 text-center text-xs text-zinc-500">Позиций не найдено</div>`;
-        return;
-      }
-
-      items.forEach(item => {
-        const letter = item.name.charAt(0).toUpperCase();
-        const iconHtml = item.img && item.img.trim() !== ''
-          ? `<img src="${item.img}" alt="${item.name}" class="w-full h-full object-contain rounded-lg">`
-          : `<span class="text-xs font-bold text-white">${letter}</span>`;
-
-        const card = document.createElement('div');
-        card.className = "mono-card p-3 flex items-center justify-between cursor-pointer border border-white/10 active:scale-[0.99] transition";
-        card.innerHTML = `
+      const banks = banksCatalog[country.code] || [];
+      banks.forEach(bank => {
+        const letter = bank.name.charAt(0).toUpperCase();
+        const row = document.createElement('div');
+        row.className = "country-btn";
+        row.innerHTML = `
           <div class="flex items-center space-x-3">
-            <div class="mono-icon-box">
-              ${iconHtml}
-            </div>
-            <div>
-              <div class="flex items-center space-x-2 flex-wrap gap-y-1">
-                <span class="text-xs font-bold text-white">${item.name}</span>
-                <span class="text-[9px] font-bold text-zinc-400 bg-white/10 px-1.5 py-0.2 rounded border border-white/10">${item.badge}</span>
-              </div>
-              <div class="text-[10px] text-zinc-400 mt-0.5">${item.region}</div>
-            </div>
+            <div class="mono-icon-box w-8 h-8 rounded-lg text-xs font-bold">${letter}</div>
+            <span class="text-xs font-bold text-white">${bank.name}</span>
           </div>
-          
-          <div class="flex flex-col items-end space-y-1.5 flex-shrink-0">
-            <div class="flex items-center space-x-1.5">
-              <span class="status-dot-green"></span>
-              <span class="text-[10px] text-emerald-400 font-semibold tracking-tight">В наличии</span>
-            </div>
-            <button class="px-2.5 py-1 bg-white hover:bg-zinc-200 text-black rounded-lg text-[10px] font-bold transition">
-              Купить
-            </button>
+          <div class="flex items-center space-x-2">
+            <span class="status-dot-green"></span>
+            <span class="text-xs font-mono font-bold text-zinc-300">${bank.price}$</span>
           </div>
         `;
-        card.onclick = () => selectItem(item.name);
-        container.appendChild(card);
+        row.onclick = () => openBankProductCard(bank, country);
+        box.appendChild(row);
       });
     }
 
-    function filterDirectItems() {
-      const q = document.getElementById('catalog-search').value.toLowerCase().trim();
-      const filtered = directItemsList.filter(i => 
-        i.name.toLowerCase().includes(q) || 
-        i.region.toLowerCase().includes(q) || 
-        i.badge.toLowerCase().includes(q)
-      );
-      renderDirectItems(filtered);
-    }
+    // --- ГЕНЕРАЦИЯ ДЕТАЛЬНЫХ КАРТОЧЕК ТОВАРОВ (ТОЧЬ-В-ТОЧЬ КАК В БОТЕ) ---
 
-    // --- НАВИГАЦИЯ НАЗАД ---
-    function backToMainCategories() {
-      haptic();
-      resetCatalog();
-    }
+    function openCryptoProductCard(ex, country) {
+      haptic('medium');
+      let price = 25;
+      let stock = 3;
+      const euCountries = ["pl","de","es","ee","lv","lt","it","gb"];
 
-    function backToExchanges() {
-      haptic();
-      document.getElementById('catalog-countries').classList.add('hidden');
-      document.getElementById('catalog-exchanges').classList.remove('hidden');
-    }
-
-    function backFromDirectItems() {
-      haptic();
-      if (currentCatalogSource === "bank-countries") {
-        document.getElementById('catalog-items').classList.add('hidden');
-        document.getElementById('catalog-bank-countries').classList.remove('hidden');
+      if (ex.isMaker) {
+        const highMaker = ["ua","kz","ru","pl"];
+        price = highMaker.includes(country.code) ? 110 : 80;
+        stock = country.code === 'kz' ? 5 : (country.code === 'ug' ? 4 : 2);
       } else {
-        resetCatalog();
+        if (euCountries.includes(country.code)) { price = 50; stock = 3; }
+        else if (country.code === "tr") { price = 30; stock = 3; }
+        else if (["id","ke","ng"].includes(country.code)) { price = 20; stock = 4; }
+        else if (country.code === "us") { price = 40; stock = 2; }
+        else { price = 25; stock = 3; }
+      }
+
+      let bodyHtml = "";
+      if (ex.isMaker) {
+        bodyHtml = `
+          <div>
+            <div class="font-bold text-white mb-1">Описание:</div>
+            <p class="text-zinc-300">${ex.desc}</p>
+          </div>
+          <div>
+            <div class="font-bold text-white mb-1">Комплект:</div>
+            <p class="text-zinc-300">Почта, пароль, вирт. номер (10 дней, можно продлить), аккаунт от смс сервиса идет в комплекте, ключ 2-фа, прокси.</p>
+          </div>
+        `;
+      } else {
+        const hasVirtualCard = euCountries.includes(country.code) && ex.id === "binance";
+        bodyHtml = `
+          <div>
+            <div class="font-bold text-white mb-1">Описание:</div>
+            <p>${ex.desc}</p>
+          </div>
+          <div>
+            <div class="font-bold text-white mb-1">Функции:</div>
+            <ul class="space-y-1 text-zinc-300">${ex.features.map(f => `<li>• ${f}</li>`).join('')}</ul>
+          </div>
+          <div>
+            <div class="font-bold text-white mb-1">Лимиты:</div>
+            <ul class="space-y-1 text-zinc-300">${ex.limits.map(l => `<li>• ${l}</li>`).join('')}</ul>
+          </div>
+          <div>
+            <div class="font-bold text-white mb-1">Комиссии:</div>
+            <ul class="space-y-1 text-zinc-300">${ex.commissions.map(c => `<li>• ${c}</li>`).join('')}</ul>
+          </div>
+          <div>
+            <div class="font-bold text-white mb-1">Комплект:</div>
+            <ul class="space-y-1 text-zinc-300">
+              <li>• Аккаунт: Верифицирован, 30+ дней с момента регистрации, ранее не был использован.</li>
+              <li>• Расширенная верификация: Подтвержден адрес проживания.</li>
+              ${hasVirtualCard ? `<li>• Карты: Выпущена виртуальная карта.</li>` : ''}
+              <li>• Доступ: Почта, пароли, прокси.</li>
+              <li>• Документы: Фото документа, селфи дропа, селфи дропа с документом в руках.</li>
+            </ul>
+          </div>
+        `;
+      }
+
+      showProductDetailModal({
+        name: ex.name,
+        country: country,
+        price: price,
+        stock: stock,
+        bodyHtml: bodyHtml
+      });
+    }
+
+    function openPaymentProductCard(service, country) {
+      haptic('medium');
+      const bodyHtml = `
+        <div>
+          <div class="font-bold text-white mb-1">Описание:</div>
+          <p>${service.name} — финансовый сервис для международных переводов, мультивалютных счетов дебетовых и виртуальных карт.</p>
+        </div>
+        <div>
+          <div class="font-bold text-white mb-1">Основные функции:</div>
+          <ul class="space-y-1 text-zinc-300">
+            <li>• Мультивалютный счет: Открытие счетов в 50+ валютах, конвертация по среднерыночному курсу. Локальные реквизиты для EUR, GBP, USD и др.</li>
+            <li>• Международные переводы: Низкие комиссии, переводы в 80+ стран.</li>
+            <li>• Карты: Поддержка Apple Pay, Google Pay.</li>
+          </ul>
+        </div>
+        <div>
+          <div class="font-bold text-white mb-1">Лимиты:</div>
+          <ul class="space-y-1 text-zinc-300">
+            <li>• Переводы: До 1 000 000 EUR/USD/GBP в день, 5 000 000 в месяц.</li>
+            <li>• Пополнение: До 20 000 EUR/GBP/USD в день (карта), до 100 000 (банковский перевод).</li>
+            <li>• Оплата картой: До 10 000 EUR/USD/GBP в день, 50 000 в месяц.</li>
+          </ul>
+        </div>
+        <div>
+          <div class="font-bold text-white mb-1">Комплект:</div>
+          <ul class="space-y-1 text-zinc-300">
+            <li>• Аккаунт: Верифицирован.</li>
+            <li>• Карты: ${service.cardInfo}</li>
+            <li>• Эмулятор: Авторизован в эмулятор duoplus (как это выглядит смотри в FAQ), также можно войти на своем устройстве.</li>
+            <li>• Доступ: Почта, Duoplus, пароли, прокси, виртуальный номер смс 24/7 (управление в разделе "Заказы", срок 10 дней, можно продлить/сменить на свой), аккаунт от смс сервиса.</li>
+            <li>• Документы: Фото документа, селфи дропа, селфи дропа с документом в руках.</li>
+          </ul>
+        </div>
+      `;
+
+      showProductDetailModal({
+        name: service.name,
+        country: country,
+        price: service.price,
+        stock: service.stock,
+        bodyHtml: bodyHtml
+      });
+    }
+
+    function openBundleProductCard(bundle, country) {
+      haptic('medium');
+      const bodyHtml = `
+        <div>
+          <div class="font-bold text-white mb-1">Описание:</div>
+          <p>Готовая верифицированная связка <b>${bundle.name}</b> на одного дропа. Идеально подходит для P2P-торговли, арбитража и беспрепятственных переводов без блокировок по 3-м лицам.</p>
+        </div>
+        <div>
+          <div class="font-bold text-white mb-1">Преимущества связки:</div>
+          <ul class="space-y-1 text-zinc-300">
+            <li>• Полное совпадение ФИО владельца банка и аккаунта криптобиржи.</li>
+            <li>• Высокие суточные и месячные лимиты по карте и счету.</li>
+            <li>• Отсутствие блоков при апелляциях на P2P.</li>
+          </ul>
+        </div>
+        <div>
+          <div class="font-bold text-white mb-1">Комплект:</div>
+          <ul class="space-y-1 text-zinc-300">
+            <li>• Банк + Биржа: Полностью верифицированы на одного человека.</li>
+            <li>• Эмулятор: Банк авторизован в эмуляторе Duoplus.</li>
+            <li>• Доступ: Родная почта, пароли, ключи 2FA, прокси, виртуальный номер SMS 24/7 (управление в разделе "Заказы").</li>
+            <li>• Документы: Фото документа, селфи дропа, селфи с документом в руках.</li>
+          </ul>
+        </div>
+      `;
+
+      showProductDetailModal({
+        name: bundle.name,
+        country: country,
+        price: bundle.price,
+        stock: bundle.stock,
+        bodyHtml: bodyHtml
+      });
+    }
+
+    function openBankProductCard(bank, country) {
+      haptic('medium');
+      const bodyHtml = `
+        <div>
+          <div class="font-bold text-white mb-1">Описание:</div>
+          <p>${bank.desc}</p>
+        </div>
+        <div>
+          <div class="font-bold text-white mb-1">Основные функции:</div>
+          <ul class="space-y-1 text-zinc-300">
+            <li>• Мультивалютные счета: Валюта счета — ${bank.currency}.</li>
+            <li>• Дебетовые карты: Выпуск виртуальных и физических карт для бесконтактной оплаты и переводов.</li>
+          </ul>
+        </div>
+        <div>
+          <div class="font-bold text-white mb-1">Лимиты и переводы:</div>
+          <p class="text-zinc-300">${bank.limitInfo}</p>
+        </div>
+        <div>
+          <div class="font-bold text-white mb-1">Комплект:</div>
+          <ul class="space-y-1 text-zinc-300">
+            <li>• Аккаунт: Верифицирован. Ранее не использовался.</li>
+            <li>• Карты: 1 цифровая, 1 физическая (отправка в ваш город по запросу).</li>
+            <li>• Эмулятор: Авторизован в эмулятор duoplus (как это выглядит смотри в FAQ).</li>
+            <li>• Доступ: Почта, Duoplus, пароли, прокси, виртуальный номер смс 24/7 (управление в разделе "Заказы", срок 10 дней, можно продлить), аккаунт от смс сервиса.</li>
+            <li>• Документы: Фото документа, селфи дропа, селфи дропа с документом в руках.</li>
+          </ul>
+        </div>
+      `;
+
+      showProductDetailModal({
+        name: bank.name,
+        country: country,
+        price: bank.price,
+        stock: bank.stock,
+        bodyHtml: bodyHtml
+      });
+    }
+
+    function showProductDetailModal(product) {
+      activeProduct = product;
+      const letter = product.name.charAt(0).toUpperCase();
+      document.getElementById('detail-icon-box').innerHTML = `<span class="text-sm font-bold text-white">${letter}</span>`;
+      document.getElementById('detail-title').innerHTML = `<span>${product.name} | ${product.country.name}</span> ${flagImg(product.country.code)}`;
+      document.getElementById('detail-body').innerHTML = product.bodyHtml;
+      document.getElementById('detail-stock-count').innerText = product.stock;
+
+      updateDisplayedPrice();
+      showCatalogView('view-product-detail');
+    }
+
+    function updateDisplayedPrice() {
+      if (!activeProduct) return;
+      const priceEl = document.getElementById('detail-price');
+      if (promoDiscount > 0) {
+        const discounted = (activeProduct.price * (1 - promoDiscount)).toFixed(1);
+        priceEl.innerHTML = `<span class="text-xs text-zinc-500 line-through mr-1.5">${activeProduct.price.toFixed(1)}$</span><span class="text-emerald-400">${discounted}$</span>`;
+      } else {
+        priceEl.innerText = `${activeProduct.price.toFixed(1)}$`;
       }
     }
 
-    function resetCatalog() {
-      const cat = document.getElementById('catalog-categories');
-      const ex = document.getElementById('catalog-exchanges');
-      const countries = document.getElementById('catalog-countries');
-      const bankCountries = document.getElementById('catalog-bank-countries');
-      const items = document.getElementById('catalog-items');
+    // --- КНОПКИ НАЗАД В КАТАЛОГЕ ---
 
-      if (cat) cat.classList.remove('hidden');
-      if (ex) ex.classList.add('hidden');
-      if (countries) countries.classList.add('hidden');
-      if (bankCountries) bankCountries.classList.add('hidden');
-      if (items) items.classList.add('hidden');
+    function handleStepBack() {
+      haptic();
+      if (currentStep === 2) {
+        currentStep = 1;
+        openCategory(currentCategory);
+      } else {
+        resetCatalogToRoot();
+      }
     }
 
-    function selectItem(name) {
+    function backFromProductDetail() {
+      haptic();
+      showCatalogView('view-step-list');
+    }
+
+    // --- ПОКУПКА И ПРОМОКОД ---
+
+    function confirmPurchase() {
       haptic('heavy');
+      if (!activeProduct) return;
+      const finalPrice = promoDiscount > 0
+        ? (activeProduct.price * (1 - promoDiscount)).toFixed(1)
+        : activeProduct.price.toFixed(1);
+
+      const title = `${activeProduct.name} | ${activeProduct.country.name}`;
       if (tg?.showPopup) {
         tg.showPopup({
-          title: 'Покупка товара',
-          message: `Товар: ${name}\nДля завершения заказа пополните баланс личного кабинета.`,
+          title: 'Оформление покупки',
+          message: `Товар: ${title}\nК оплате: ${finalPrice}$\n\nНа вашем балансе недостаточно средств (0.00$). Перейти к пополнению баланса?`,
           buttons: [
             { id: 'pay', type: 'default', text: 'Пополнить баланс' },
-            { type: 'cancel', text: 'Закрыть' }
+            { type: 'cancel', text: 'Отмена' }
           ]
         }, (btnId) => {
           if (btnId === 'pay') switchTab('cabinet');
         });
       } else {
-        alert(`Товар: ${name}\nПополните баланс в кабинете.`);
+        alert(`Товар: ${title}\nК оплате: ${finalPrice}$\nПополните баланс в личном кабинете.`);
+        switchTab('cabinet');
+      }
+    }
+
+    function activateMoonPromoBanner() {
+      haptic('medium');
+      promoDiscount = 0.10;
+      document.getElementById('promo-status-badge').innerText = "(активирован ✅ -10%)";
+      document.getElementById('promo-status-badge').className = "ml-1 text-[10px] text-emerald-400 font-bold";
+      document.getElementById('cabinet-discount').innerText = "10%";
+      tgAlert("💎 Промокод «moon» успешно применен! Скидка 10% активирована на все товары.");
+    }
+
+    function tgPromptPromo() {
+      haptic();
+      const code = prompt("💎 Введите промокод (например: moon):");
+      if (!code) return;
+      if (code.trim().toLowerCase() === 'moon') {
+        promoDiscount = 0.10;
+        document.getElementById('promo-status-badge').innerText = "(активирован ✅ -10%)";
+        document.getElementById('promo-status-badge').className = "ml-1 text-[10px] text-emerald-400 font-bold";
+        document.getElementById('cabinet-discount').innerText = "10%";
+        updateDisplayedPrice();
+        tgAlert("✅ Промокод «moon» активирован! Скидка 10% применена.");
+      } else {
+        tgAlert("❌ Промокод не найден или срок его действия истек.");
       }
     }
 
@@ -1295,19 +1680,6 @@
       haptic();
       if (tg?.showAlert) tg.showAlert(msg);
       else alert(msg);
-    }
-
-    function tgPromptPromo() {
-      haptic();
-      const code = prompt("Введите промокод:");
-      if (code) tgAlert("Промокод не найден или истек.");
-    }
-
-    let lang = 'RU';
-    function toggleLang() {
-      haptic();
-      lang = lang === 'RU' ? 'EN' : 'RU';
-      document.getElementById('lang-label').innerText = lang;
     }
   </script>
 </body>
