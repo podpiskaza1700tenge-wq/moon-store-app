@@ -453,8 +453,8 @@
                 </svg>
               </div>
               <div>
-                <div class="text-xs font-bold text-white">Автопополнение баланса</div>
-                <div class="text-[10px] text-zinc-400">CryptoBot (@send) и xRocket (@xrocket) по API</div>
+                <div class="text-xs font-bold text-white">Пополнение баланса</div>
+                <div class="text-[10px] text-zinc-400">CryptoBot (@send) и xRocket (@xrocket) в 1 клик</div>
               </div>
             </div>
             <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg>
@@ -565,7 +565,7 @@
             <span class="text-xs font-bold text-zinc-400 uppercase tracking-wider">Карточка товара</span>
           </div>
 
-          <!-- БЛОК РЕДАКТИРОВАНИЯ ТОВАРА -->
+          <!-- БЛОК РЕДАКТИРОВАНИЯ ТОВАРА (Только для ID 8677883972 или после ввода PIN) -->
           <div id="admin-item-editor" class="hidden mono-card p-4 space-y-3 border border-rose-500/40 bg-rose-950/15">
             <div class="flex items-center justify-between border-b border-white/10 pb-2">
               <span class="text-xs font-black text-rose-400 uppercase tracking-wider">✏️ Админ-редактор лота</span>
@@ -631,7 +631,7 @@
           <!-- Кнопки покупки -->
           <div class="space-y-2 pt-1">
             <button onclick="confirmPurchase()" class="w-full py-3.5 bg-[#22C55E] hover:bg-[#16A34A] active:scale-[0.98] text-black font-extrabold text-xs uppercase tracking-wider rounded-xl transition flex items-center justify-center space-x-2 shadow-[0_4px_20px_rgba(34,197,94,0.3)]">
-              <span>💳 Оформить покупку (Выставить счёт)</span>
+              <span>💳 Оформить покупку (CryptoBot / xRocket)</span>
             </button>
 
             <button onclick="tgPromptPromo()" class="w-full py-3 bg-[#14141A] hover:bg-[#1C1C24] active:scale-[0.98] text-white border border-white/10 font-bold text-xs rounded-xl transition flex items-center justify-center space-x-2">
@@ -665,7 +665,7 @@
           </div>
           <div class="text-base font-bold text-white mb-1">У вас пока нет покупок</div>
           <p class="text-xs text-zinc-400 max-w-xs mb-5 leading-relaxed">
-            Выберите любой аккаунт криптобиржи или банка в каталоге и оплатите персональный счёт через CryptoBot или xRocket.
+            Выберите любой аккаунт криптобиржи или банка в каталоге и оплатите через CryptoBot или xRocket.
           </p>
           <button onclick="switchTab('catalog')" class="px-6 py-2.5 rounded-xl bg-white text-black text-xs font-bold active:scale-95 transition">
             Перейти в каталог
@@ -821,18 +821,18 @@
 
     </main>
 
-    <!-- МОДАЛЬНОЕ ОКНО: АВТОМАТИЧЕСКОЕ ВЫСТАВЛЕНИЕ СЧЁТА (CRYPTOBOT + XROCKET) -->
+    <!-- МОДАЛЬНОЕ ОКНО: ОПЛАТА И ПОПОЛНЕНИЕ (CRYPTOBOT + XROCKET) -->
     <div id="payment-modal" class="modal-backdrop hidden" onclick="if(event.target===this) closePaymentModal()">
       <div class="modal-sheet space-y-4">
         <div class="flex items-center justify-between border-b border-white/10 pb-3">
           <div>
             <div id="pay-modal-title" class="text-sm font-black text-white uppercase tracking-wide">Оплата заказа</div>
-            <div id="pay-modal-subtitle" class="text-[11px] text-zinc-400 mt-0.5">Персональный счёт на точную сумму</div>
+            <div id="pay-modal-subtitle" class="text-[11px] text-zinc-400 mt-0.5">Мгновенная оплата через Telegram</div>
           </div>
           <button onclick="closePaymentModal()" class="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center text-zinc-400 hover:text-white text-xs">✕</button>
         </div>
 
-        <!-- Блок выбора суммы (при пополнении баланса) -->
+        <!-- Блок выбора суммы -->
         <div id="topup-amount-block" class="hidden space-y-2.5">
           <label class="text-[11px] font-bold text-zinc-400 uppercase block">Сумма пополнения (USDT / $):</label>
           <div class="grid grid-cols-4 gap-2">
@@ -847,7 +847,7 @@
         <!-- Сводка суммы к оплате -->
         <div class="p-3.5 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-between">
           <div>
-            <div class="text-[10px] text-zinc-400 uppercase font-semibold">Сумма счёта</div>
+            <div class="text-[10px] text-zinc-400 uppercase font-semibold">Сумма к переводу в счёте</div>
             <div id="pay-modal-item-name" class="text-xs font-bold text-zinc-200 mt-0.5">Пополнение баланса</div>
           </div>
           <div id="pay-modal-amount" class="text-xl font-black text-emerald-400 font-mono">50.00 $</div>
@@ -861,50 +861,50 @@
 
         <!-- Выбор платежной системы -->
         <div id="payment-methods-buttons" class="space-y-2">
-          <div class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider px-1">Выставить персональный счёт (USDT):</div>
+          <div class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider px-1">Выберите способ оплаты (USDT):</div>
 
           <!-- 1. CryptoBot (@send) -->
-          <button onclick="createExactInvoice('cryptobot')" id="btn-pay-cryptobot" class="w-full p-3.5 rounded-2xl bg-[#161922] hover:bg-[#1E222E] active:scale-[0.98] border border-sky-500/30 flex items-center justify-between transition">
+          <button onclick="openDirectInvoice('cryptobot')" id="btn-pay-cryptobot" class="w-full p-3.5 rounded-2xl bg-[#161922] hover:bg-[#1E222E] active:scale-[0.98] border border-sky-500/30 flex items-center justify-between transition">
             <div class="flex items-center space-x-3">
               <div class="w-9 h-9 rounded-xl bg-sky-500/20 border border-sky-500/40 flex items-center justify-center text-lg">
                 💎
               </div>
               <div class="text-left">
                 <div class="text-xs font-extrabold text-white">CryptoBot (@send)</div>
-                <div class="text-[10px] text-sky-400 font-medium">Автоматический счёт на точную сумму</div>
+                <div class="text-[10px] text-sky-400 font-medium">USDT • Счёт #IVAoDxeFHKrS</div>
               </div>
             </div>
-            <span id="label-btn-cryptobot" class="px-2.5 py-1 rounded-lg bg-sky-500 text-black font-extrabold text-[10px] uppercase">Счёт →</span>
+            <span class="px-2.5 py-1 rounded-lg bg-sky-500 text-black font-extrabold text-[10px] uppercase">Оплатить →</span>
           </button>
 
           <!-- 2. xRocket (@xrocket) -->
-          <button onclick="createExactInvoice('xrocket')" id="btn-pay-xrocket" class="w-full p-3.5 rounded-2xl bg-[#181520] hover:bg-[#211C2C] active:scale-[0.98] border border-purple-500/30 flex items-center justify-between transition">
+          <button onclick="openDirectInvoice('xrocket')" id="btn-pay-xrocket" class="w-full p-3.5 rounded-2xl bg-[#181520] hover:bg-[#211C2C] active:scale-[0.98] border border-purple-500/30 flex items-center justify-between transition">
             <div class="flex items-center space-x-3">
               <div class="w-9 h-9 rounded-xl bg-purple-500/20 border border-purple-500/40 flex items-center justify-center text-lg">
                 🚀
               </div>
               <div class="text-left">
                 <div class="text-xs font-extrabold text-white">xRocket Pay (@xrocket)</div>
-                <div class="text-[10px] text-purple-400 font-medium">Автоматический счёт на точную сумму</div>
+                <div class="text-[10px] text-purple-400 font-medium">USDT • Быстрая крипто-оплата</div>
               </div>
             </div>
-            <span id="label-btn-xrocket" class="px-2.5 py-1 rounded-lg bg-purple-400 text-black font-extrabold text-[10px] uppercase">Счёт →</span>
+            <span class="px-2.5 py-1 rounded-lg bg-purple-400 text-black font-extrabold text-[10px] uppercase">Оплатить →</span>
           </button>
         </div>
 
-        <!-- Блок созданного счёта с автопроверкой -->
+        <!-- Блок подтверждения после открытия счёта -->
         <div id="active-invoice-box" class="hidden p-4 rounded-2xl bg-emerald-950/20 border border-emerald-500/40 space-y-3">
           <div class="flex items-center justify-between">
-            <span id="invoice-provider-badge" class="text-[10px] font-black uppercase px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300">Счёт выставлен</span>
-            <span id="invoice-status-text" class="text-[11px] text-amber-300 font-semibold animate-pulse">⏳ Ожидание оплаты...</span>
+            <span id="invoice-provider-badge" class="text-[10px] font-black uppercase px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300">Счёт открыт</span>
+            <span id="invoice-status-text" class="text-[11px] text-amber-300 font-semibold">Переведите ровно <b id="invoice-exact-sum"></b></span>
           </div>
 
           <a id="invoice-pay-link" href="#" target="_blank" class="w-full py-3 bg-[#22C55E] hover:bg-[#16A34A] text-black font-extrabold text-xs uppercase rounded-xl flex items-center justify-center space-x-2 shadow-lg transition">
-            <span>🔗 Оплатить счёт в Telegram</span>
+            <span>🔗 Открыть счёт в Telegram ещё раз</span>
           </a>
 
-          <button onclick="verifyExactInvoicePayment()" id="btn-check-invoice" class="w-full py-3 bg-white hover:bg-zinc-200 text-black font-extrabold text-xs uppercase rounded-xl transition shadow-md">
-            🔄 Я оплатил — Проверить оплату
+          <button onclick="confirmDirectInvoicePaid()" id="btn-check-invoice" class="w-full py-3 bg-white hover:bg-zinc-200 text-black font-extrabold text-xs uppercase rounded-xl transition shadow-md">
+            ✅ Я оплатил — Подтвердить заказ
           </button>
         </div>
       </div>
@@ -950,18 +950,15 @@
 
   <script>
     // =========================================================================
-    // НАСТРОЙКИ АДМИНА И GOOGLE APPS SCRIPT ШЛЮЗА (CRYPTOBOT + XROCKET)
+    // НАСТРОЙКИ АДМИНА И ПРЯМЫХ ССЫЛОК ОПЛАТЫ (@send и @xrocket)
     // =========================================================================
     const ADMIN_TG_IDS = [8677883972];
     const ADMIN_PIN = "admin";
     const GITHUB_REPO = "podpiskaza1700tenge-wq/moon-store-app";
 
-    // Твой персональный серверный шлюз Google Apps Script (из скриншота)
-    const GOOGLE_PAYMENT_GATEWAY_URL = "https://script.google.com/macros/s/AKfycbxwXEppfHI7Fdumiyhb89iMOrZrcbMIh4GuKcIY8oShsVMXUe5M1mSYgCRrC6CL57Ea/exec";
-
-    // Резервные прямые ссылки
-    const FALLBACK_SEND_URL = "https://t.me/send?start=IVAoDxeFHKrS";
-    const FALLBACK_XROCKET_URL = "https://t.me/xrocket?start=inv_QG1ObbtPW4Nyvfv";
+    // Твои прямые ссылки на многоразовые счета
+    const SEND_INVOICE_URL = "https://t.me/send?start=IVAoDxeFHKrS";
+    const XROCKET_INVOICE_URL = "https://t.me/xrocket?start=inv_QG1ObbtPW4Nyvfv";
     const TG_BOT_TOKEN_NOTIFY = "8977291915:AAHz7fRlCgq0C9v4rCzDJbmL5KxqJ7oafKk";
 
     let isAdmin = false;
@@ -1089,7 +1086,7 @@
       }
 
       emptyBox.classList.add('hidden');
-      container.innerHTML = `<div class="text-xs font-bold text-zinc-400 uppercase tracking-wider px-1">Ваши оплаченные заказы (${userOrders.length}):</div>`;
+      container.innerHTML = `<div class="text-xs font-bold text-zinc-400 uppercase tracking-wider px-1">Ваши заказы (${userOrders.length}):</div>`;
 
       userOrders.slice().reverse().forEach(ord => {
         const card = document.createElement('div');
@@ -1099,7 +1096,7 @@
             <span class="text-xs font-extrabold text-white">${ord.title}</span>
             <span class="text-xs font-mono font-bold text-emerald-400">${ord.amount} $</span>
           </div>
-          <div class="text-[11px] text-zinc-400">Статус: <span class="text-emerald-400 font-semibold">✅ Оплачено (${ord.provider})</span></div>
+          <div class="text-[11px] text-zinc-400">Способ оплаты: <span class="text-emerald-400 font-semibold">${ord.provider}</span></div>
           <div class="text-[10px] text-zinc-500 font-mono">Дата: ${ord.date} • Заказ #${ord.id}</div>
           <a href="https://t.me/Moon_store_news" target="_blank" class="block w-full text-center py-2.5 mt-1 rounded-xl bg-white text-black font-bold text-xs">
             📲 Получить данные аккаунта
@@ -1110,7 +1107,7 @@
     }
 
     // =========================================================================
-    // ДИНАМИЧЕСКИЕ СЧЕТА ЧЕРЕЗ ТВОЙ GOOGLE-ШЛЮЗ (ТОЧНАЯ СУММА НА КАЖДЫЙ ТОВАР)
+    // МГНОВЕННАЯ ОПЛАТА ЧЕРЕЗ ТВОИ СЧЕТА @send и @xrocket
     // =========================================================================
 
     function openTopupModal() {
@@ -1126,7 +1123,7 @@
       document.getElementById('topup-amount-block').classList.remove('hidden');
 
       document.getElementById('pay-modal-title').innerText = 'Пополнение баланса';
-      document.getElementById('pay-modal-subtitle').innerText = 'Автоматическое зачисление после оплаты счёта';
+      document.getElementById('pay-modal-subtitle').innerText = 'Выберите сумму и удобный крипто-кошелек';
       document.getElementById('topup-custom-amount').value = 50;
       updatePayModalSummary();
 
@@ -1167,7 +1164,7 @@
       document.getElementById('active-invoice-box').classList.add('hidden');
       document.getElementById('topup-amount-block').classList.add('hidden');
       document.getElementById('pay-modal-title').innerText = 'Оформление покупки';
-      document.getElementById('pay-modal-subtitle').innerText = 'Выставление персонального счёта на оплату';
+      document.getElementById('pay-modal-subtitle').innerText = 'Мгновенная оплата через CryptoBot или xRocket';
 
       const balBtn = document.getElementById('pay-with-balance-btn');
       balBtn.classList.remove('hidden');
@@ -1198,158 +1195,53 @@
       switchTab('cart');
     }
 
-    // Запрос к твоему Google Apps Script (используем text/plain чтобы браузер не блокировал CORS Preflight)
-    async function callGoogleGateway(payloadObj) {
-      const response = await fetch(GOOGLE_PAYMENT_GATEWAY_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'text/plain;charset=utf-8'
-        },
-        body: JSON.stringify(payloadObj)
-      });
-      return await response.json();
-    }
-
-    async function createExactInvoice(provider) {
+    // Открытие прямого счёта @send или @xrocket без прокси-ошибок
+    function openDirectInvoice(provider) {
       if (!currentPaymentContext) return;
       haptic('medium');
 
       const amount = parseFloat(currentPaymentContext.amount.toFixed(2));
-      const description = `${currentPaymentContext.title} (ID: ${tgUser.id})`;
+      const isCryptoBot = provider === 'cryptobot';
+      const providerName = isCryptoBot ? 'CryptoBot (@send)' : 'xRocket (@xrocket)';
+      const payUrl = isCryptoBot ? SEND_INVOICE_URL : XROCKET_INVOICE_URL;
 
-      // Визуально реагирует ТОЛЬКО нажатая кнопка
-      const btnId = provider === 'cryptobot' ? 'btn-pay-cryptobot' : 'btn-pay-xrocket';
-      const labelId = provider === 'cryptobot' ? 'label-btn-cryptobot' : 'label-btn-xrocket';
-      const btnEl = document.getElementById(btnId);
-      const labelEl = document.getElementById(labelId);
-      const oldLabel = labelEl.innerText;
-
-      btnEl.style.pointerEvents = 'none';
-      labelEl.innerText = '⏳ Счёт...';
-
-      try {
-        const data = await callGoogleGateway({
-          provider: provider,
-          action: 'create',
-          amount: amount,
-          description: description
-        });
-
-        if (provider === 'cryptobot') {
-          if (data && data.ok && data.result) {
-            const inv = data.result;
-            const payUrl = inv.mini_app_invoice_url || inv.bot_invoice_url || inv.pay_url;
-            showActiveInvoiceBox('CryptoBot', inv.invoice_id, payUrl, amount, false);
-            return;
-          }
-          throw new Error(data?.error?.name || 'Ошибка ответа CryptoBot');
-        } else if (provider === 'xrocket') {
-          const inv = data?.data || data?.result;
-          if (inv && inv.link) {
-            showActiveInvoiceBox('xRocket', inv.id, inv.link, amount, false);
-            return;
-          }
-          throw new Error(data?.message || 'Ошибка ответа xRocket');
-        }
-      } catch (err) {
-        // Если вдруг API вернул ошибку — открываем резервный счёт, чтобы не терять клиента
-        const fallbackUrl = provider === 'cryptobot' ? FALLBACK_SEND_URL : FALLBACK_XROCKET_URL;
-        const provName = provider === 'cryptobot' ? 'CryptoBot' : 'xRocket';
-        showActiveInvoiceBox(provName, 'direct', fallbackUrl, amount, true);
-      } finally {
-        btnEl.style.pointerEvents = 'auto';
-        labelEl.innerText = oldLabel;
-      }
-    }
-
-    function showActiveInvoiceBox(providerName, invoiceId, payUrl, amount, isFallback) {
       activeInvoice = {
         provider: providerName,
-        id: invoiceId,
         url: payUrl,
         amount: amount,
         mode: currentPaymentContext.mode,
-        title: currentPaymentContext.title,
-        isFallback: isFallback
+        title: currentPaymentContext.title
       };
 
+      // Показываем блок подтверждения оплаты
       document.getElementById('active-invoice-box').classList.remove('hidden');
-      document.getElementById('invoice-provider-badge').innerText = isFallback
-        ? `${providerName} • ${amount.toFixed(2)} USDT`
-        : `${providerName} • Счёт #${invoiceId} (${amount.toFixed(2)}$)`;
-      document.getElementById('invoice-status-text').innerText = '⏳ Ожидание оплаты...';
+      document.getElementById('invoice-provider-badge').innerText = providerName;
+      document.getElementById('invoice-exact-sum').innerText = `${amount.toFixed(2)} USDT`;
       document.getElementById('invoice-pay-link').href = payUrl;
 
-      notifyAdminEvent(`🧾 <b>Выставлен счёт на оплату</b>\n\n📦 Товар: <b>${currentPaymentContext.title}</b>\n💵 Сумма: <b>${amount.toFixed(2)} USDT</b>\n💳 Шлюз: <b>${providerName} (#${invoiceId})</b>\n👤 Клиент: ${tgUser.first_name || ''} (@${tgUser.username || 'без_юзернейма'}) [ID: <code>${tgUser.id}</code>]`);
+      // Отправляем админу уведомление, что покупатель открыл счёт
+      notifyAdminEvent(`⏳ <b>Покупатель открыл счёт на оплату</b>\n\n📦 Товар: <b>${currentPaymentContext.title}</b>\n💵 Сумма к оплате: <b>${amount.toFixed(2)} USDT</b>\n💳 Система: <b>${providerName}</b>\n👤 Клиент: ${tgUser.first_name || ''} (@${tgUser.username || 'без_юзернейма'}) [ID: <code>${tgUser.id}</code>]`);
 
-      if (tg?.openTelegramLink && payUrl.includes('t.me/')) {
+      // Мгновенно открываем счёт внутри Telegram
+      if (tg?.openTelegramLink) {
         tg.openTelegramLink(payUrl);
       } else {
         window.open(payUrl, '_blank');
       }
     }
 
-    async function verifyExactInvoicePayment() {
+    function confirmDirectInvoicePaid() {
       if (!activeInvoice) return;
-      haptic('medium');
-
-      const statusEl = document.getElementById('invoice-status-text');
-      const checkBtn = document.getElementById('btn-check-invoice');
-      statusEl.innerText = '🔄 Проверяем оплату по API...';
-      checkBtn.style.pointerEvents = 'none';
-
-      try {
-        if (activeInvoice.isFallback) {
-          completeVerifiedOrder(activeInvoice);
-          return;
-        }
-
-        const providerCode = activeInvoice.provider === 'CryptoBot' ? 'cryptobot' : 'xrocket';
-        const data = await callGoogleGateway({
-          provider: providerCode,
-          action: 'check',
-          invoiceId: activeInvoice.id
-        });
-
-        let isPaid = false;
-        if (providerCode === 'cryptobot') {
-          const item = data?.result?.items?.[0];
-          if (item && item.status === 'paid') isPaid = true;
-        } else {
-          const item = data?.data || data?.result;
-          if (item && (item.status === 'paid' || item.paid === true || item.activationsLeft === 0)) {
-            isPaid = true;
-          }
-        }
-
-        if (isPaid) {
-          statusEl.innerText = '✅ Счёт успешно оплачен!';
-          completeVerifiedOrder(activeInvoice);
-        } else {
-          statusEl.innerText = '⏳ Оплата еще не поступила';
-          tgAlert(`Счёт #${activeInvoice.id} на сумму ${activeInvoice.amount.toFixed(2)} USDT ещё не оплачен. Нажмите зелёную кнопку «Оплатить счёт в Telegram», завершите перевод и нажмите проверку снова.`);
-        }
-      } catch (err) {
-        statusEl.innerText = '⏳ Ожидание подтверждения';
-        tgAlert('Ошибка при проверке статуса: ' + err.message);
-      } finally {
-        checkBtn.style.pointerEvents = 'auto';
-      }
-    }
-
-    function completeVerifiedOrder(inv) {
       haptic('heavy');
-      if (inv.mode === 'topup') {
-        userBalance += inv.amount;
-        localStorage.setItem('moon_user_balance', userBalance.toFixed(2));
-        updateBalanceUI();
-        notifyAdminEvent(`💰 <b>Успешное пополнение баланса!</b>\n\n💵 Сумма: <b>${inv.amount.toFixed(2)} USDT</b>\n💳 Шлюз: <b>${inv.provider} (#${inv.id})</b>\n👤 Клиент: ${tgUser.first_name || ''} (@${tgUser.username || 'без_юзернейма'}) [ID: <code>${tgUser.id}</code>]`);
+
+      if (activeInvoice.mode === 'topup') {
+        notifyAdminEvent(`💰 <b>Клиент нажал «Я оплатил» (Пополнение баланса)!</b>\n\n💵 Сумма: <b>${activeInvoice.amount.toFixed(2)} USDT</b>\n💳 Система: <b>${activeInvoice.provider}</b>\n👤 Клиент: ${tgUser.first_name || ''} (@${tgUser.username || 'без_юзернейма'}) [ID: <code>${tgUser.id}</code>]`);
         closePaymentModal();
-        tgAlert(`✅ Оплата подтверждена! Ваш баланс пополнен на ${inv.amount.toFixed(2)} $.`);
+        tgAlert(`✅ Заявка на пополнение ${activeInvoice.amount.toFixed(2)} USDT отправлена на проверку! После зачисления в ${activeInvoice.provider} баланс обновится.`);
       } else {
-        registerCompletedOrder(inv.title, inv.amount, `${inv.provider} #${inv.id}`);
+        registerCompletedOrder(activeInvoice.title, activeInvoice.amount, activeInvoice.provider);
         closePaymentModal();
-        tgAlert(`✅ Оплата подтверждена! Заказ «${inv.title}» добавлен в раздел «Заказы».`);
+        tgAlert(`✅ Заказ «${activeInvoice.title}» оформлен! Перейдите во вкладку «Заказы» для получения товара.`);
         switchTab('cart');
       }
       activeInvoice = null;
@@ -1368,7 +1260,7 @@
       localStorage.setItem('moon_user_orders', JSON.stringify(userOrders));
       updateBalanceUI();
 
-      notifyAdminEvent(`🔥 <b>ОПЛАЧЕН НОВЫЙ ЗАКАЗ #${orderId}!</b>\n\n📦 Товар: <b>${title}</b>\n💵 Сумма: <b>${amount.toFixed(2)} USDT</b>\n💳 Способ: <b>${provider}</b>\n👤 Покупатель: ${tgUser.first_name || ''} (@${tgUser.username || 'без_юзернейма'}) [ID: <code>${tgUser.id}</code>]`);
+      notifyAdminEvent(`🔥 <b>Новый заказ #${orderId} в MOON STORE!</b>\n\n📦 Лот: <b>${title}</b>\n💵 Сумма: <b>${amount.toFixed(2)} USDT</b>\n💳 Оплата: <b>${provider}</b>\n👤 Покупатель: ${tgUser.first_name || ''} (@${tgUser.username || 'без_юзернейма'}) [ID: <code>${tgUser.id}</code>]`);
     }
 
     function notifyAdminEvent(htmlText) {
@@ -1732,4 +1624,545 @@
     let activeProduct = null;
     let promoDiscount = 0;
 
-    const tabIndices = { 'home': 0, 'catalog': 1, 'cart': 2, 'cabinet':
+    const tabIndices = { 'home': 0, 'catalog': 1, 'cart': 2, 'cabinet': 3 };
+
+    function switchTab(tabId) {
+      haptic();
+      resetCatalogToRoot();
+
+      ['home', 'catalog', 'cart', 'cabinet', 'info', 'admin'].forEach(t => {
+        const el = document.getElementById('tab-' + t);
+        if (el) el.classList.add('hidden');
+      });
+
+      ['home', 'catalog', 'cart', 'cabinet'].forEach(t => {
+        const nav = document.getElementById('nav-' + t);
+        if (nav) nav.classList.remove('active');
+      });
+
+      const currentSec = document.getElementById('tab-' + tabId);
+      if (currentSec) currentSec.classList.remove('hidden');
+
+      if (tabIndices.hasOwnProperty(tabId)) {
+        const idx = tabIndices[tabId];
+        const slider = document.getElementById('tab-slider');
+        if (slider) slider.style.transform = `translateX(${idx * 100}%)`;
+
+        const currentNav = document.getElementById('nav-' + tabId);
+        if (currentNav) currentNav.classList.add('active');
+      }
+
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+
+    function showCatalogView(viewId) {
+      ['view-categories', 'view-step-list', 'view-product-detail'].forEach(v => {
+        document.getElementById(v).classList.add('hidden');
+      });
+      document.getElementById(viewId).classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+
+    function resetCatalogToRoot() {
+      currentCategory = "";
+      currentStep = 1;
+      selectedService = null;
+      activeProduct = null;
+      showCatalogView('view-categories');
+    }
+
+    function openCategory(catKey) {
+      haptic('medium');
+      currentCategory = catKey;
+      currentStep = 1;
+
+      if (catKey === 'crypto') renderCryptoExchangesStep();
+      else if (catKey === 'payment') renderPaymentServicesStep();
+      else if (catKey === 'bundle') renderBundlesStep();
+      else if (catKey === 'banks') renderBankCountriesStep();
+
+      showCatalogView('view-step-list');
+    }
+
+    function renderCryptoExchangesStep() {
+      document.getElementById('step-title').innerText = "Выберите товар:";
+      const box = document.getElementById('step-list-container');
+      box.innerHTML = '';
+
+      cryptoExchanges.forEach(ex => {
+        const row = document.createElement('div');
+        row.className = "country-btn";
+        row.innerHTML = `
+          <div class="flex items-center space-x-3">
+            ${renderBrandLogo(ex.domain, ex.name)}
+            <span class="text-xs font-bold text-white">${ex.name}</span>
+          </div>
+          <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg>
+        `;
+        row.onclick = () => {
+          haptic('light');
+          selectedService = ex;
+          currentStep = 2;
+          renderCountriesForCrypto(ex);
+        };
+        box.appendChild(row);
+      });
+    }
+
+    function renderPaymentServicesStep() {
+      document.getElementById('step-title').innerText = "Выберите товар:";
+      const box = document.getElementById('step-list-container');
+      box.innerHTML = '';
+
+      paymentServices.forEach(p => {
+        const row = document.createElement('div');
+        row.className = "country-btn";
+        row.innerHTML = `
+          <div class="flex items-center space-x-3">
+            ${renderBrandLogo(p.domain, p.name)}
+            <span class="text-xs font-bold text-white">${p.name}</span>
+          </div>
+          <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg>
+        `;
+        row.onclick = () => {
+          haptic('light');
+          selectedService = p;
+          currentStep = 2;
+          renderCountriesForPayment(p);
+        };
+        box.appendChild(row);
+      });
+    }
+
+    function renderBundlesStep() {
+      document.getElementById('step-title').innerText = "Выберите товар:";
+      const box = document.getElementById('step-list-container');
+      box.innerHTML = '';
+
+      bundleServices.forEach(b => {
+        const row = document.createElement('div');
+        row.className = "country-btn";
+        row.innerHTML = `
+          <div class="flex items-center space-x-3">
+            ${renderBrandLogo(b.domain, b.name, b.domain2)}
+            <span class="text-xs font-bold text-white">${b.name}</span>
+          </div>
+          <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg>
+        `;
+        row.onclick = () => {
+          haptic('light');
+          selectedService = b;
+          currentStep = 2;
+          renderCountriesForBundle(b);
+        };
+        box.appendChild(row);
+      });
+    }
+
+    function renderBankCountriesStep() {
+      document.getElementById('step-title').innerText = "Выберите страну:";
+      const box = document.getElementById('step-list-container');
+      box.innerHTML = '';
+
+      bankCountriesOrder.forEach(code => {
+        const c = COUNTRIES[code];
+        const row = document.createElement('div');
+        row.className = "country-btn";
+        row.innerHTML = `
+          <div class="flex items-center space-x-3">
+            ${flagImg(c.code)}
+            <span class="text-xs font-semibold text-white">${c.name}</span>
+          </div>
+          <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg>
+        `;
+        row.onclick = () => {
+          haptic('light');
+          selectedService = c;
+          currentStep = 2;
+          renderBanksInCountry(c);
+        };
+        box.appendChild(row);
+      });
+    }
+
+    function renderCountriesForCrypto(ex) {
+      document.getElementById('step-title').innerText = `${ex.name} — Выберите страну:`;
+      const box = document.getElementById('step-list-container');
+      box.innerHTML = '';
+
+      ex.countries.forEach(code => {
+        const c = COUNTRIES[code];
+        if (!c) return;
+        const row = document.createElement('div');
+        row.className = "country-btn";
+        row.innerHTML = `
+          <div class="flex items-center space-x-3">
+            ${flagImg(c.code)}
+            <span class="text-xs font-semibold text-white">${c.name}</span>
+          </div>
+          <div class="flex items-center space-x-2">
+            <span class="status-dot-green"></span>
+            <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
+        `;
+        row.onclick = () => openCryptoProductCard(ex, c);
+        box.appendChild(row);
+      });
+    }
+
+    function renderCountriesForPayment(service) {
+      document.getElementById('step-title').innerText = `${service.name} — Выберите страну:`;
+      const box = document.getElementById('step-list-container');
+      box.innerHTML = '';
+
+      service.countries.forEach(code => {
+        const c = COUNTRIES[code];
+        if (!c) return;
+        const row = document.createElement('div');
+        row.className = "country-btn";
+        row.innerHTML = `
+          <div class="flex items-center space-x-3">
+            ${flagImg(c.code)}
+            <span class="text-xs font-semibold text-white">${c.name}</span>
+          </div>
+          <div class="flex items-center space-x-2">
+            <span class="status-dot-green"></span>
+            <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
+        `;
+        row.onclick = () => openPaymentProductCard(service, c);
+        box.appendChild(row);
+      });
+    }
+
+    function renderCountriesForBundle(bundle) {
+      document.getElementById('step-title').innerText = "Выберите страну:";
+      const box = document.getElementById('step-list-container');
+      box.innerHTML = '';
+
+      const c = COUNTRIES[bundle.country];
+      const row = document.createElement('div');
+      row.className = "country-btn";
+      row.innerHTML = `
+        <div class="flex items-center space-x-3">
+          ${flagImg(c.code)}
+          <span class="text-xs font-semibold text-white">${c.name}</span>
+        </div>
+        <div class="flex items-center space-x-2">
+          <span class="status-dot-green"></span>
+          <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+      `;
+      row.onclick = () => openBundleProductCard(bundle, c);
+      box.appendChild(row);
+    }
+
+    function renderBanksInCountry(country) {
+      document.getElementById('step-title').innerText = `${country.name} — Выберите товар:`;
+      const box = document.getElementById('step-list-container');
+      box.innerHTML = '';
+
+      const banks = banksCatalog[country.code] || [];
+      banks.forEach(bank => {
+        const key = `bank_${bank.name}_${country.code}`;
+        const ov = customOverrides[key];
+        const displayPrice = ov && ov.price !== undefined ? ov.price : bank.price;
+
+        const row = document.createElement('div');
+        row.className = "country-btn";
+        row.innerHTML = `
+          <div class="flex items-center space-x-3">
+            ${renderBrandLogo(bank.domain, bank.name)}
+            <span class="text-xs font-bold text-white">${bank.name}</span>
+          </div>
+          <div class="flex items-center space-x-2">
+            <span class="status-dot-green"></span>
+            <span class="text-xs font-mono font-bold text-zinc-300">${displayPrice}$</span>
+          </div>
+        `;
+        row.onclick = () => openBankProductCard(bank, country);
+        box.appendChild(row);
+      });
+    }
+
+    function openCryptoProductCard(ex, country) {
+      haptic('medium');
+      let price = 25;
+      let stock = 3;
+      const euCountries = ["pl","de","es","ee","lv","lt","it","gb"];
+
+      if (ex.isMaker) {
+        const highMaker = ["ua","kz","ru","pl"];
+        price = highMaker.includes(country.code) ? 110 : 80;
+        stock = country.code === 'kz' ? 5 : (country.code === 'ug' ? 4 : 2);
+      } else {
+        if (euCountries.includes(country.code)) { price = 50; stock = 3; }
+        else if (country.code === "tr") { price = 30; stock = 3; }
+        else if (["id","ke","ng"].includes(country.code)) { price = 20; stock = 4; }
+        else if (country.code === "us") { price = 40; stock = 2; }
+        else { price = 25; stock = 3; }
+      }
+
+      let bodyHtml = "";
+      if (ex.isMaker) {
+        bodyHtml = `<div><div class="font-bold text-white mb-1">Описание:</div><p class="text-zinc-300">${ex.desc}</p></div><div><div class="font-bold text-white mb-1">Комплект:</div><p class="text-zinc-300">Почта, пароль, вирт. номер (10 дней, можно продлить), аккаунт от смс сервиса идет в комплекте, ключ 2-фа, прокси.</p></div>`;
+      } else {
+        const hasVirtualCard = euCountries.includes(country.code) && ex.id === "binance";
+        bodyHtml = `<div><div class="font-bold text-white mb-1">Описание:</div><p>${ex.desc}</p></div><div><div class="font-bold text-white mb-1">Функции:</div><ul class="space-y-1 text-zinc-300">${ex.features.map(f => `<li>• ${f}</li>`).join('')}</ul></div><div><div class="font-bold text-white mb-1">Лимиты:</div><ul class="space-y-1 text-zinc-300">${ex.limits.map(l => `<li>• ${l}</li>`).join('')}</ul></div><div><div class="font-bold text-white mb-1">Комиссии:</div><ul class="space-y-1 text-zinc-300">${ex.commissions.map(c => `<li>• ${c}</li>`).join('')}</ul></div><div><div class="font-bold text-white mb-1">Комплект:</div><ul class="space-y-1 text-zinc-300"><li>• Аккаунт: Верифицирован, 30+ дней с момента регистрации, ранее не был использован.</li><li>• Расширенная верификация: Подтвержден адрес проживания.</li>${hasVirtualCard ? `<li>• Карты: Выпущена виртуальная карта.</li>` : ''}<li>• Доступ: Почта, пароли, прокси.</li><li>• Документы: Фото документа, селфи дропа, селфи дропа с документом в руках.</li></ul></div>`;
+      }
+
+      showProductDetailModal({
+        key: `crypto_${ex.id}_${country.code}`,
+        name: ex.name,
+        domain: ex.domain,
+        domain2: null,
+        country: country,
+        price: price,
+        stock: stock,
+        bodyHtml: bodyHtml
+      });
+    }
+
+    function openPaymentProductCard(service, country) {
+      haptic('medium');
+      const bodyHtml = `<div><div class="font-bold text-white mb-1">Описание:</div><p>${service.name} — финансовый сервис для международных переводов, мультивалютных счетов дебетовых и виртуальных карт.</p></div><div><div class="font-bold text-white mb-1">Основные функции:</div><ul class="space-y-1 text-zinc-300"><li>• Мультивалютный счет: Открытие счетов в 50+ валютах, конвертация по среднерыночному курсу. Локальные реквизиты для EUR, GBP, USD и др.</li><li>• Международные переводы: Низкие комиссии, переводы в 80+ стран.</li><li>• Карты: Поддержка Apple Pay, Google Pay.</li></ul></div><div><div class="font-bold text-white mb-1">Лимиты:</div><ul class="space-y-1 text-zinc-300"><li>• Переводы: До 1 000 000 EUR/USD/GBP в день, 5 000 000 в месяц.</li><li>• Пополнение: До 20 000 EUR/GBP/USD в день (карта), до 100 000 (банковский перевод).</li><li>• Оплата картой: До 10 000 EUR/USD/GBP в день, 50 000 в месяц.</li></ul></div><div><div class="font-bold text-white mb-1">Комплект:</div><ul class="space-y-1 text-zinc-300"><li>• Аккаунт: Верифицирован.</li><li>• Карты: ${service.cardInfo}</li><li>• Эмулятор: Авторизован в эмулятор duoplus (как это выглядит смотри в FAQ), также можно войти на своем устройстве.</li><li>• Доступ: Почта, Duoplus, пароли, прокси, виртуальный номер смс 24/7 (управление в разделе "Заказы", срок 10 дней, можно продлить/сменить на свой), аккаунт от смс сервиса.</li><li>• Документы: Фото документа, селфи дропа, селфи дропа с документом в руках.</li></ul></div>`;
+
+      showProductDetailModal({
+        key: `pay_${service.id}_${country.code}`,
+        name: service.name,
+        domain: service.domain,
+        domain2: null,
+        country: country,
+        price: service.price,
+        stock: service.stock,
+        bodyHtml: bodyHtml
+      });
+    }
+
+    function openBundleProductCard(bundle, country) {
+      haptic('medium');
+      const bodyHtml = `<div><div class="font-bold text-white mb-1">Описание:</div><p>Готовая верифицированная связка <b>${bundle.name}</b> на одного дропа. Идеально подходит для P2P-торговли, арбитража и беспрепятственных переводов без блокировок по 3-м лицам.</p></div><div><div class="font-bold text-white mb-1">Преимущества связки:</div><ul class="space-y-1 text-zinc-300"><li>• Полное совпадение ФИО владельца банка и аккаунта криптобиржи.</li><li>• Высокие суточные и месячные лимиты по карте и счету.</li><li>• Отсутствие блоков при апелляциях на P2P.</li></ul></div><div><div class="font-bold text-white mb-1">Комплект:</div><ul class="space-y-1 text-zinc-300"><li>• Банк + Биржа: Полностью верифицированы на одного человека.</li><li>• Эмулятор: Банк авторизован в эмуляторе Duoplus.</li><li>• Доступ: Родная почта, пароли, ключи 2FA, прокси, виртуальный номер SMS 24/7 (управление в разделе "Заказы").</li><li>• Документы: Фото документа, селфи дропа, селфи с документом в руках.</li></ul></div>`;
+
+      showProductDetailModal({
+        key: `bundle_${bundle.id}_${country.code}`,
+        name: bundle.name,
+        domain: bundle.domain,
+        domain2: bundle.domain2,
+        country: country,
+        price: bundle.price,
+        stock: bundle.stock,
+        bodyHtml: bodyHtml
+      });
+    }
+
+    function openBankProductCard(bank, country) {
+      haptic('medium');
+      const bodyHtml = `<div><div class="font-bold text-white mb-1">Описание:</div><p>${bank.desc}</p></div><div><div class="font-bold text-white mb-1">Основные функции:</div><ul class="space-y-1 text-zinc-300"><li>• Мультивалютные счета: Валюта счета — ${bank.currency}.</li><li>• Дебетовые карты: Выпуск виртуальных и физических карт для бесконтактной оплаты и переводов.</li></ul></div><div><div class="font-bold text-white mb-1">Лимиты и переводы:</div><p class="text-zinc-300">${bank.limitInfo}</p></div><div><div class="font-bold text-white mb-1">Комплект:</div><ul class="space-y-1 text-zinc-300"><li>• Аккаунт: Верифицирован. Ранее не использовался.</li><li>• Карты: 1 цифровая, 1 физическая (отправка в ваш город по запросу).</li><li>• Эмулятор: Авторизован в эмулятор duoplus (как это выглядит смотри в FAQ).</li><li>• Доступ: Почта, Duoplus, пароли, прокси, виртуальный номер смс 24/7 (управление в разделе "Заказы", срок 10 дней, можно продлить), аккаунт от смс сервиса.</li><li>• Документы: Фото документа, селфи дропа, селфи дропа с документом в руках.</li></ul></div>`;
+
+      showProductDetailModal({
+        key: `bank_${bank.name}_${country.code}`,
+        name: bank.name,
+        domain: bank.domain,
+        domain2: null,
+        country: country,
+        price: bank.price,
+        stock: bank.stock,
+        bodyHtml: bodyHtml
+      });
+    }
+
+    function showProductDetailModal(product) {
+      const ov = customOverrides[product.key];
+      if (ov) {
+        if (ov.price !== undefined) product.price = Number(ov.price);
+        if (ov.stock !== undefined) product.stock = Number(ov.stock);
+        if (ov.bodyHtml !== undefined) product.bodyHtml = ov.bodyHtml;
+      }
+
+      activeProduct = product;
+      document.getElementById('detail-icon-box').innerHTML = renderBrandLogo(product.domain, product.name, product.domain2);
+      document.getElementById('detail-title').innerHTML = `<span>${product.name} | ${product.country.name}</span> ${flagImg(product.country.code)}`;
+      document.getElementById('detail-body').innerHTML = product.bodyHtml;
+      document.getElementById('detail-stock-count').innerText = product.stock;
+
+      if (isAdmin) {
+        document.getElementById('admin-item-editor').classList.remove('hidden');
+        document.getElementById('edit-price').value = product.price;
+        document.getElementById('edit-stock').value = product.stock;
+        document.getElementById('edit-body').value = product.bodyHtml;
+      } else {
+        document.getElementById('admin-item-editor').classList.add('hidden');
+      }
+
+      updateDisplayedPrice();
+      showCatalogView('view-product-detail');
+    }
+
+    function saveCurrentProductEdits() {
+      if (!activeProduct) return;
+      haptic('heavy');
+      const newPrice = Number(document.getElementById('edit-price').value);
+      const newStock = Number(document.getElementById('edit-stock').value);
+      const newBody = document.getElementById('edit-body').value;
+
+      activeProduct.price = newPrice;
+      activeProduct.stock = newStock;
+      activeProduct.bodyHtml = newBody;
+
+      customOverrides[activeProduct.key] = {
+        price: newPrice,
+        stock: newStock,
+        bodyHtml: newBody
+      };
+
+      localStorage.setItem('moon_custom_overrides', JSON.stringify(customOverrides));
+
+      document.getElementById('detail-body').innerHTML = newBody;
+      document.getElementById('detail-stock-count').innerText = newStock;
+      updateDisplayedPrice();
+
+      tgAlert("✅ Изменения сохранены! Чтобы обновить их для всех покупателей — нажми «☁️ Сохранить для всех».");
+    }
+
+    function buildUpdatedFullHtml() {
+      const ghInput = document.getElementById('gh-token-input');
+      const tempToken = ghInput ? ghInput.value : '';
+      if (ghInput) ghInput.value = '';
+
+      switchTab('home');
+      document.getElementById('admin-badge')?.classList.add('hidden');
+      document.getElementById('cabinet-admin-btn')?.classList.add('hidden');
+      document.getElementById('admin-item-editor')?.classList.add('hidden');
+      document.getElementById('payment-modal')?.classList.add('hidden');
+
+      let currentHtml = document.documentElement.outerHTML;
+
+      if (ghInput) ghInput.value = tempToken;
+      updateAdminUI();
+      openAdminDashboard();
+
+      const overridesBlock = `/*__OVERRIDES_START__*/\n    const SAVED_OVERRIDES = ${JSON.stringify(customOverrides, null, 2)};\n    /*__OVERRIDES_END__*/`;
+      return "<!DOCTYPE html>\n" + currentHtml.replace(/\/\*__OVERRIDES_START__\*\/[\s\S]*?\/\*__OVERRIDES_END__\*\//, overridesBlock);
+    }
+
+    function copyUpdatedHtmlToClipboard() {
+      haptic('medium');
+      const fullHtml = buildUpdatedFullHtml();
+      navigator.clipboard.writeText(fullHtml).then(() => {
+        tgAlert("📋 Полный чистый код index.html скопирован в буфер обмена!");
+      }).catch(() => {
+        tgAlert("Не удалось скопировать автоматически. Используй публикацию через токен.");
+      });
+    }
+
+    async function publishOverridesToGitHub() {
+      const token = document.getElementById('gh-token-input').value.trim();
+      if (!token) {
+        tgAlert("Введи GitHub Personal Access Token или используй кнопку «📋 Скопировать готовый код index.html» выше.");
+        return;
+      }
+      localStorage.setItem('moon_gh_token', token);
+
+      try {
+        haptic('medium');
+        const apiUrl = `https://api.github.com/repos/${GITHUB_REPO}/contents/index.html`;
+        const getRes = await fetch(apiUrl, {
+          headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' }
+        });
+        if (!getRes.ok) throw new Error("Не удалось получить index.html с GitHub. Проверь права токена (галочка repo).");
+        const fileData = await getRes.json();
+
+        const updatedHtml = buildUpdatedFullHtml();
+        const base64Content = btoa(unescape(encodeURIComponent(updatedHtml)));
+
+        const putRes = await fetch(apiUrl, {
+          method: 'PUT',
+          headers: {
+            'Authorization': `token ${token}`,
+            'Accept': 'application/vnd.github.v3+json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            message: "Update store prices & descriptions via Admin Panel",
+            content: base64Content,
+            sha: fileData.sha
+          })
+        });
+
+        if (!putRes.ok) throw new Error("Ошибка при сохранении на GitHub.");
+        tgAlert("🚀 Опубликовано на GitHub! Через 30 секунд изменения вступят в силу для всех пользователей бота.");
+      } catch (err) {
+        tgAlert("Ошибка: " + err.message);
+      }
+    }
+
+    function resetAllOverrides() {
+      if (!confirm("Сбросить все локальные изменения цен и описаний?")) return;
+      customOverrides = {};
+      localStorage.removeItem('moon_custom_overrides');
+      tgAlert("Все локальные правки сброшены.");
+    }
+
+    function updateDisplayedPrice() {
+      if (!activeProduct) return;
+      const priceEl = document.getElementById('detail-price');
+      if (promoDiscount > 0) {
+        const discounted = (activeProduct.price * (1 - promoDiscount)).toFixed(1);
+        priceEl.innerHTML = `<span class="text-xs text-zinc-500 line-through mr-1.5">${activeProduct.price.toFixed(1)}$</span><span class="text-emerald-400">${discounted}$</span>`;
+      } else {
+        priceEl.innerText = `${activeProduct.price.toFixed(1)}$`;
+      }
+    }
+
+    function handleStepBack() {
+      haptic();
+      if (currentStep === 2) {
+        currentStep = 1;
+        openCategory(currentCategory);
+      } else {
+        resetCatalogToRoot();
+      }
+    }
+
+    function backFromProductDetail() {
+      haptic();
+      showCatalogView('view-step-list');
+    }
+
+    function activateMoonPromoBanner() {
+      haptic('medium');
+      promoDiscount = 0.10;
+      document.getElementById('promo-status-badge').innerText = "(активирован ✅ -10%)";
+      document.getElementById('promo-status-badge').className = "ml-1 text-[10px] text-emerald-400 font-bold";
+      document.getElementById('cabinet-discount').innerText = "10%";
+      tgAlert("💎 Промокод «moon» успешно применен! Скидка 10% активирована на все товары.");
+    }
+
+    function tgPromptPromo() {
+      haptic();
+      const code = prompt("💎 Введите промокод (например: moon):");
+      if (!code) return;
+      if (code.trim().toLowerCase() === 'moon') {
+        promoDiscount = 0.10;
+        document.getElementById('promo-status-badge').innerText = "(активирован ✅ -10%)";
+        document.getElementById('promo-status-badge').className = "ml-1 text-[10px] text-emerald-400 font-bold";
+        document.getElementById('cabinet-discount').innerText = "10%";
+        updateDisplayedPrice();
+        tgAlert("✅ Промокод «moon» активирован! Скидка 10% применена.");
+      } else {
+        tgAlert("❌ Промокод не найден или срок его действия истек.");
+      }
+    }
+
+    function tgAlert(msg) {
+      haptic();
+      if (tg?.showAlert) tg.showAlert(msg);
+      else alert(msg);
+    }
+
+    switchTab('home');
+    updateAdminUI();
+    updateBalanceUI();
+  </script>
+</body>
+</html>
