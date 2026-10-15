@@ -470,7 +470,7 @@
       <!-- 2. КАТАЛОГ -->
       <section id="tab-catalog" class="tab-content hidden space-y-3">
         
-        <!-- Главные 4 категории -->
+        <!-- ЭКРАН 1: 4 Главные категории -->
         <div id="view-categories" class="space-y-2.5">
           <div class="flex items-center justify-between px-1">
             <div class="text-[11px] font-bold text-zinc-400 uppercase tracking-widest">
@@ -519,7 +519,7 @@
                 </div>
                 <div>
                   <div class="text-sm font-bold text-white">Платёжки / Необанки</div>
-                  <div class="text-[11px] text-zinc-400">Wise, Revolut, Bunq, Stripe, Payoneer...</div>
+                  <div class="text-[11px] text-zinc-400">Wise, Revolut, Bunq, Stripe, Payoneer, N26...</div>
                 </div>
               </div>
               <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg>
@@ -534,7 +534,7 @@
                 </div>
                 <div>
                   <div class="text-sm font-bold text-white">Банк + Биржа</div>
-                  <div class="text-[11px] text-zinc-400">Privat, Tinkoff, Sber, Mono, Bakai...</div>
+                  <div class="text-[11px] text-zinc-400">Privat, Tinkoff, Sber, Mono, Bakai, Kapital...</div>
                 </div>
               </div>
               <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg>
@@ -542,7 +542,7 @@
           </div>
         </div>
 
-        <!-- Список товаров шага -->
+        <!-- ЭКРАН 2: Универсальный список шага -->
         <div id="view-step-list" class="hidden space-y-3">
           <div class="flex items-center justify-between pb-1">
             <button onclick="handleStepBack()" class="text-xs font-semibold text-white hover:text-zinc-300 flex items-center space-x-1.5 py-1">
@@ -555,7 +555,7 @@
           <div id="step-list-container" class="space-y-1.5"></div>
         </div>
 
-        <!-- Детальная карточка товара -->
+        <!-- ЭКРАН 3: Детальная карточка товара + Админ-редактор -->
         <div id="view-product-detail" class="hidden space-y-3">
           <div class="flex items-center justify-between pb-1">
             <button onclick="backFromProductDetail()" class="text-xs font-semibold text-white hover:text-zinc-300 flex items-center space-x-1.5 py-1">
@@ -565,7 +565,7 @@
             <span class="text-xs font-bold text-zinc-400 uppercase tracking-wider">Карточка товара</span>
           </div>
 
-          <!-- Админ-редактор -->
+          <!-- БЛОК РЕДАКТИРОВАНИЯ ТОВАРА (Только для ID 8677883972 или после ввода PIN) -->
           <div id="admin-item-editor" class="hidden mono-card p-4 space-y-3 border border-rose-500/40 bg-rose-950/15">
             <div class="flex items-center justify-between border-b border-white/10 pb-2">
               <span class="text-xs font-black text-rose-400 uppercase tracking-wider">✏️ Админ-редактор лота</span>
@@ -584,16 +584,21 @@
             </div>
 
             <div>
-              <label class="text-[10px] text-zinc-400 font-bold uppercase block mb-1">Описание</label>
-              <textarea id="edit-body" rows="4" class="admin-input font-mono text-[11px]"></textarea>
+              <label class="text-[10px] text-zinc-400 font-bold uppercase block mb-1">Описание / Текст карточки (HTML или текст)</label>
+              <textarea id="edit-body" rows="5" class="admin-input font-mono text-[11px]"></textarea>
             </div>
 
-            <button onclick="saveCurrentProductEdits()" class="w-full py-2.5 bg-rose-500 hover:bg-rose-600 text-white font-bold text-xs rounded-xl transition">
-              💾 Сохранить изменения
-            </button>
+            <div class="flex gap-2">
+              <button onclick="saveCurrentProductEdits()" class="flex-1 py-2.5 bg-rose-500 hover:bg-rose-600 text-white font-bold text-xs rounded-xl transition">
+                💾 Применить к этому лоту
+              </button>
+              <button onclick="openAdminDashboard()" class="px-3 py-2.5 bg-white/10 hover:bg-white/15 text-white font-bold text-xs rounded-xl transition">
+                ☁️ Сохранить для всех
+              </button>
+            </div>
           </div>
 
-          <!-- Карточка -->
+          <!-- Сама карточка товара -->
           <div class="mono-card p-4 space-y-3.5 border border-white/12">
             <div class="flex items-center justify-between border-b border-white/10 pb-3">
               <div class="flex items-center space-x-3">
@@ -613,7 +618,7 @@
 
             <div class="pt-3 border-t border-white/10 flex items-center justify-between">
               <div class="space-y-0.5 text-xs">
-                <div class="text-zinc-400">В наличии: <span id="detail-stock-count" class="text-white font-bold">1</span> шт.</div>
+                <div class="text-zinc-400">В наличии: <span id="detail-stock-count" class="text-white font-bold"></span> шт.</div>
                 <div class="text-zinc-400">Минимальное количество: <span class="text-white font-bold">1</span></div>
               </div>
               <div class="text-right">
@@ -623,7 +628,7 @@
             </div>
           </div>
 
-          <!-- Кнопка покупки -->
+          <!-- Кнопки покупки -->
           <div class="space-y-2 pt-1">
             <button onclick="confirmPurchase()" class="w-full py-3.5 bg-[#22C55E] hover:bg-[#16A34A] active:scale-[0.98] text-black font-extrabold text-xs uppercase tracking-wider rounded-xl transition flex items-center justify-center space-x-2 shadow-[0_4px_20px_rgba(34,197,94,0.3)]">
               <span>💳 Купить товар</span>
@@ -660,7 +665,7 @@
           </div>
           <div class="text-base font-bold text-white mb-1">У вас пока нет покупок</div>
           <p class="text-xs text-zinc-400 max-w-xs mb-5 leading-relaxed">
-            Выберите любой товар в каталоге и оплатите персональный счёт через CryptoBot или xRocket.
+            Выберите любой товар в каталоге и оплатите персональный счёт через CryptoBot, xRocket или внутренний баланс.
           </p>
           <button onclick="switchTab('catalog')" class="px-6 py-2.5 rounded-xl bg-white text-black text-xs font-bold active:scale-95 transition">
             Перейти в каталог
@@ -712,7 +717,7 @@
                 </div>
                 <div>
                   <div class="text-xs font-semibold text-white">Мои заказы и SMS-сервис 24/7</div>
-                  <div class="text-[10px] text-zinc-400">Купленные лоты и проверка оплаты</div>
+                  <div class="text-[10px] text-zinc-400">Купленные лоты и история счетов</div>
                 </div>
               </div>
               <span id="cabinet-orders-count" class="text-xs text-zinc-400 font-mono">0 шт.</span>
@@ -729,6 +734,18 @@
               </div>
               <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg>
             </div>
+
+            <div onclick="tgAlert('Реферальная ссылка: https://t.me/moonstore_shop_bot?start=ref')" class="mono-row">
+              <div class="flex items-center space-x-3">
+                <div class="mono-icon-box">
+                  <svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                  </svg>
+                </div>
+                <span class="text-xs font-semibold text-white">Реферальная система</span>
+              </div>
+              <span class="text-[11px] font-bold text-white bg-white/10 px-2 py-0.5 rounded-md border border-white/20">5%</span>
+            </div>
           </div>
         </div>
       </section>
@@ -743,24 +760,68 @@
             <span>Комплектация и Duoplus</span>
           </div>
           <p class="text-xs text-zinc-300 leading-relaxed">
-            Все банковские аккаунты и необанки авторизованы в облачном антидетект-эмуляторе <b>Duoplus</b>. Виртуальный номер для приёма SMS работает 24/7 в разделе «Заказы» (срок 10 дней с возможностью продления).
+            Все банковские аккаунты и необанки авторизованы в облачном антидетект-эмуляторе <b>Duoplus</b> (также можно войти со своего устройства). Виртуальный номер для приёма SMS работает 24/7 в разделе «Заказы» (срок 10 дней с возможностью продления или смены на свой).
           </p>
+        </div>
+
+        <div class="mono-card p-4 space-y-2">
+          <div class="font-bold text-xs text-white">Физические карты и Документы</div>
+          <div class="text-xs text-zinc-400 space-y-1.5 leading-relaxed">
+            <p>• По всем банкам и платёжкам в комплекте идут фото документа, селфи дропа и селфи дропа с документом в руках.</p>
+            <p>• Выпущенные физические карты Visa / Mastercard отправляются в ваш город по запросу.</p>
+            <p>• В комплекте также идут родная почта, пароли, резервные коды 2FA и резидентские прокси.</p>
+          </div>
+        </div>
+
+        <div class="mono-card p-4 flex items-center justify-between">
+          <div>
+            <div class="text-xs font-bold text-white">Поддержка MOON STORE</div>
+            <div class="text-[10px] text-zinc-400">Помощь с входом и отправкой карт</div>
+          </div>
+          <a href="https://t.me/Moon_store_news" target="_blank" class="px-3.5 py-1.5 rounded-xl bg-white text-black text-xs font-bold transition active:scale-95 flex items-center gap-1.5 shadow-[0_2px_12px_rgba(255,255,255,0.15)]">
+            <span>Написать</span>
+          </a>
         </div>
       </section>
 
-      <!-- 6. АДМИН-ПАНЕЛЬ -->
+      <!-- 6. ГЛОБАЛЬНАЯ АДМИН-ПАНЕЛЬ -->
       <section id="tab-admin" class="tab-content hidden space-y-4">
         <div class="mono-card p-4 border border-rose-500/40 space-y-3">
-          <div class="text-sm font-black text-rose-400 uppercase">⚙️ Админ-панель владельца</div>
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="text-sm font-black text-rose-400 uppercase">⚙️ Админ-панель владельца</div>
+              <div class="text-[10px] text-zinc-400 font-mono">Admin ID: 8677883972</div>
+            </div>
+            <button onclick="switchTab('catalog')" class="px-2.5 py-1 rounded-lg bg-white/10 text-xs font-bold text-white">В каталог</button>
+          </div>
           <p class="text-xs text-zinc-300 leading-relaxed">
-            Зайдите в любой товар в каталоге — прямо в карточке открыт редактор цены и описания.
+            1. Зайди в любой товар в <b>Каталоге</b> — прямо внутри его карточки открыт редактор цены, остатка и описания.<br>
+            2. После того как поменял нужные товары, нажми кнопку ниже, чтобы скопировать готовый код сайта или опубликовать его на GitHub в 1 клик.
           </p>
+
+          <div class="pt-2 border-t border-white/10 space-y-2.5">
+            <button onclick="copyUpdatedHtmlToClipboard()" class="w-full py-3 bg-white hover:bg-zinc-200 text-black font-extrabold text-xs uppercase rounded-xl transition shadow-md">
+              📋 Скопировать готовый код index.html
+            </button>
+
+            <div class="pt-2 border-t border-white/10 space-y-2">
+              <div class="text-[11px] font-bold text-zinc-300">Или авто-выгрузка на GitHub по токену:</div>
+              <input type="password" id="gh-token-input" placeholder="GitHub Token (ghp_...)" class="admin-input" />
+              <button onclick="publishOverridesToGitHub()" class="w-full py-3 bg-emerald-500 hover:bg-emerald-600 text-black font-extrabold text-xs uppercase rounded-xl transition">
+                🚀 Опубликовать на GitHub в 1 клик
+              </button>
+            </div>
+
+            <button onclick="resetAllOverrides()" class="w-full py-2.5 bg-white/5 hover:bg-white/10 text-zinc-400 font-semibold text-xs rounded-xl transition">
+              Сбросить все локальные правки
+            </button>
+          </div>
         </div>
       </section>
 
     </main>
 
-    <!-- МОДАЛЬНОЕ ОКНО ОПЛАТЫ -->
+    <!-- МОДАЛЬНОЕ ОКНО: ПОЛНЫЙ ЦИКЛ ПОКУПКИ (ШАГ 1: КОЛ-ВО -> ШАГ 2: ВЫБОР ОПЛАТЫ -> ШАГ 3-5: ПРОВЕРКА/БАЛАНС) -->
     <div id="payment-modal" class="modal-backdrop hidden" onclick="if(event.target===this) closePaymentModal()">
       <div class="modal-sheet space-y-4">
         
@@ -772,10 +833,10 @@
           <button onclick="closePaymentModal()" class="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center text-zinc-400 hover:text-white text-xs">✕</button>
         </div>
 
-        <!-- Шаг 1: Количество -->
+        <!-- ШАГ 1: ВЫБОР И ВАЛИДАЦИЯ КОЛИЧЕСТВА (STOCK И MIN_QTY) -->
         <div id="product-qty-block" class="space-y-3">
           <div class="flex items-center justify-between text-xs">
-            <span class="text-zinc-400">В наличии: <b id="modal-stock-count" class="text-white">0</b> шт.</span>
+            <span class="text-zinc-400">В наличии на складе: <b id="modal-stock-count" class="text-white">0</b> шт.</span>
             <span class="text-zinc-400">Цена за шт: <b id="modal-unit-price" class="text-emerald-400 font-mono">0.00 $</b></span>
           </div>
 
@@ -791,7 +852,7 @@
           </button>
         </div>
 
-        <!-- Пополнение баланса -->
+        <!-- БЛОК ВЫБОРА СУММЫ ПРИ ПОПОЛНЕНИИ БАЛАНСА -->
         <div id="topup-amount-block" class="hidden space-y-2.5">
           <label class="text-[11px] font-bold text-zinc-400 uppercase block">Сумма пополнения (USDT / $):</label>
           <div class="grid grid-cols-4 gap-2">
@@ -803,7 +864,7 @@
           <input type="number" id="topup-custom-amount" value="50" min="1" step="1" oninput="updatePayModalSummary()" class="admin-input font-mono text-base font-bold text-center" placeholder="Введите сумму в $" />
         </div>
 
-        <!-- Шаг 2: Выбор метода оплаты -->
+        <!-- ШАГ 2: ИТОГОВАЯ СУММА (TOTAL) И ВЫБОР 3 СПОСОБОВ ОПЛАТЫ -->
         <div id="payment-methods-block" class="hidden space-y-3.5">
           <div class="p-3.5 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-between">
             <div>
@@ -813,31 +874,35 @@
             <div id="pay-modal-amount" class="text-xl font-black text-emerald-400 font-mono">0.00 $</div>
           </div>
 
+          <!-- Способ 1: Внутренний баланс (*_pbalance:) -->
           <button id="pay-with-balance-btn" onclick="payWithInternalBalance()" class="w-full py-3 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 text-white font-bold text-xs transition flex items-center justify-between px-4 active:scale-98">
             <span class="flex items-center gap-2">💰 Оплатить с баланса</span>
             <span id="pay-modal-user-bal" class="font-mono text-emerald-400">0.00 $</span>
           </button>
 
+          <!-- Способы 2 и 3: Внешние криптопроцессинги (CryptoBot и xRocket) -->
           <div id="payment-methods-buttons" class="space-y-2">
-            <div class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider px-1">Криптопроцессинг (Точный счёт):</div>
+            <div class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider px-1">Криптопроцессинг (USDT):</div>
 
+            <!-- Способ 2: CryptoBot -->
             <button onclick="createInvoiceUnified('cryptobot')" id="btn-pay-cryptobot" class="w-full p-3.5 rounded-2xl bg-[#161922] hover:bg-[#1E222E] active:scale-[0.98] border border-sky-500/30 flex items-center justify-between transition">
               <div class="flex items-center space-x-3">
                 <div class="w-9 h-9 rounded-xl bg-sky-500/20 border border-sky-500/40 flex items-center justify-center text-lg">💎</div>
                 <div class="text-left">
                   <div class="text-xs font-extrabold text-white">CryptoBot (@send)</div>
-                  <div class="text-[10px] text-sky-400 font-medium">Счёт на точную сумму</div>
+                  <div class="text-[10px] text-sky-400 font-medium">Официальный API крипто-бота</div>
                 </div>
               </div>
               <span id="label-btn-cryptobot" class="px-2.5 py-1 rounded-lg bg-sky-500 text-black font-extrabold text-[10px] uppercase">Счёт →</span>
             </button>
 
+            <!-- Способ 3: xRocket -->
             <button onclick="createInvoiceUnified('xrocket')" id="btn-pay-xrocket" class="w-full p-3.5 rounded-2xl bg-[#181520] hover:bg-[#211C2C] active:scale-[0.98] border border-purple-500/30 flex items-center justify-between transition">
               <div class="flex items-center space-x-3">
                 <div class="w-9 h-9 rounded-xl bg-purple-500/20 border border-purple-500/40 flex items-center justify-center text-lg">🚀</div>
                 <div class="text-left">
                   <div class="text-xs font-extrabold text-white">xRocket Pay (@xrocket)</div>
-                  <div class="text-[10px] text-purple-400 font-medium">Счёт на точную сумму</div>
+                  <div class="text-[10px] text-purple-400 font-medium">Альтернативный криптопроцессинг</div>
                 </div>
               </div>
               <span id="label-btn-xrocket" class="px-2.5 py-1 rounded-lg bg-purple-400 text-black font-extrabold text-[10px] uppercase">Счёт →</span>
@@ -845,7 +910,7 @@
           </div>
         </div>
 
-        <!-- Экран выставленного счёта -->
+        <!-- ШАГИ 3 И 4: ЭКРАН ВЫСТАВЛЕННОГО СЧЁТА С PAY_URL И КНОПКОЙ «ПРОВЕРИТЬ ОПЛАТУ» -->
         <div id="active-invoice-box" class="hidden p-4 rounded-2xl bg-emerald-950/20 border border-emerald-500/40 space-y-3">
           <div class="flex items-center justify-between">
             <span id="invoice-provider-badge" class="text-[10px] font-black uppercase px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300">Счёт создан</span>
@@ -853,7 +918,7 @@
           </div>
 
           <a id="invoice-pay-link" href="#" target="_blank" class="w-full py-3 bg-[#22C55E] hover:bg-[#16A34A] text-black font-extrabold text-xs uppercase rounded-xl flex items-center justify-center space-x-2 shadow-lg transition">
-            <span>🔗 Оплатить счёт в Telegram</span>
+            <span>🔗 Оплатить (pay_url)</span>
           </a>
 
           <button onclick="checkInvoiceUnified()" id="btn-check-invoice" class="w-full py-3 bg-white hover:bg-zinc-200 text-black font-extrabold text-xs uppercase rounded-xl transition shadow-md active:scale-98">
@@ -864,7 +929,7 @@
       </div>
     </div>
 
-    <!-- Навигация -->
+    <!-- Нижняя панель навигации -->
     <div class="tabbar-dock">
       <div class="tabbar">
         <div id="tab-slider" class="tab-slider"></div>
@@ -903,18 +968,103 @@
   </div>
 
   <script>
+    // =========================================================================
+    // НАСТРОЙКИ АДМИНА И ШЛЮЗА
+    // =========================================================================
     const ADMIN_TG_IDS = [8677883972];
     const ADMIN_PIN = "admin";
+    const GITHUB_REPO = "podpiskaza1700tenge-wq/moon-store-app";
+
+    // ВАШ РАБОЧИЙ ШЛЮЗ GOOGLE APPS SCRIPT
     const GOOGLE_PAYMENT_GATEWAY_URL = "https://script.google.com/macros/s/AKfycbxIrWRcmdwqqD3_izi8LhJusRL6o3jJ5el8F6DzIkP_xWCDBP2UprBd8bgrhFyS0s4/exec";
     const TG_BOT_TOKEN_NOTIFY = "8977291915:AAHz7fRlCgq0C9v4rCzDJbmL5KxqJ7oafKk";
 
     let isAdmin = false;
+    let secretTapCount = 0;
+    let secretTapTimer = null;
+
     let userBalance = parseFloat(localStorage.getItem('moon_user_balance') || '0.00');
     let userOrders = JSON.parse(localStorage.getItem('moon_user_orders') || '[]');
     let currentPaymentContext = null;
     let activeInvoice = null;
 
-    let customOverrides = JSON.parse(localStorage.getItem('moon_custom_overrides') || '{}');
+    /*__OVERRIDES_START__*/
+    const SAVED_OVERRIDES = {};
+    /*__OVERRIDES_END__*/
+
+    let customOverrides = Object.assign({}, SAVED_OVERRIDES, JSON.parse(localStorage.getItem('moon_custom_overrides') || '{}'));
+
+    // Анимация звездного фона
+    const canvas = document.getElementById('stars-canvas');
+    const ctx = canvas.getContext('2d');
+    let stars = [];
+    let shootingStar = null;
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      initStars();
+    }
+
+    function initStars() {
+      stars = [];
+      const count = Math.floor((canvas.width * canvas.height) / 3200);
+      for (let i = 0; i < count; i++) {
+        stars.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          radius: Math.random() * 1.2 + 0.3,
+          alpha: Math.random(),
+          speed: Math.random() * 0.02 + 0.005,
+          increasing: Math.random() > 0.5
+        });
+      }
+    }
+
+    function drawStars() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let s of stars) {
+        if (s.increasing) {
+          s.alpha += s.speed;
+          if (s.alpha >= 0.95) s.increasing = false;
+        } else {
+          s.alpha -= s.speed;
+          if (s.alpha <= 0.15) s.increasing = true;
+        }
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 255, 255, ${s.alpha})`;
+        ctx.fill();
+      }
+
+      if (!shootingStar && Math.random() < 0.008) {
+        shootingStar = {
+          x: Math.random() * canvas.width,
+          y: Math.random() * (canvas.height * 0.4),
+          length: Math.random() * 80 + 40,
+          speed: Math.random() * 10 + 12,
+          opacity: 1
+        };
+      }
+
+      if (shootingStar) {
+        ctx.beginPath();
+        ctx.moveTo(shootingStar.x, shootingStar.y);
+        ctx.lineTo(shootingStar.x - shootingStar.length, shootingStar.y + shootingStar.length * 0.6);
+        ctx.strokeStyle = `rgba(255, 255, 255, ${shootingStar.opacity})`;
+        ctx.lineWidth = 1.2;
+        ctx.stroke();
+        shootingStar.x += shootingStar.speed;
+        shootingStar.y += shootingStar.speed * 0.6;
+        shootingStar.opacity -= 0.025;
+        if (shootingStar.opacity <= 0) shootingStar = null;
+      }
+      requestAnimationFrame(drawStars);
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+    drawStars();
 
     const tg = window.Telegram?.WebApp;
     let tgUser = { id: 'guest', first_name: 'Moon Member', username: '' };
@@ -928,13 +1078,23 @@
         tgUser = tg.initDataUnsafe.user;
         document.getElementById('user-name').innerText = [tgUser.first_name, tgUser.last_name].filter(Boolean).join(' ') || tgUser.username || 'Пользователь';
         document.getElementById('user-tg-id').innerText = `ID: ${tgUser.id}`;
-        if (ADMIN_TG_IDS.includes(Number(tgUser.id))) isAdmin = true;
+        if (ADMIN_TG_IDS.includes(Number(tgUser.id))) {
+          isAdmin = true;
+        }
       }
     }
 
+    function haptic(style = 'light') {
+      if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred(style);
+    }
+
     function tgAlert(msg) {
-      if (tg && tg.showAlert) tg.showAlert(msg);
-      else alert(msg);
+      haptic();
+      if (tg && tg.showAlert) {
+        tg.showAlert(msg);
+      } else {
+        alert(msg);
+      }
     }
 
     function updateBalanceUI() {
@@ -977,25 +1137,39 @@
       });
     }
 
+    // =========================================================================
+    // ШАГ 1: ВЫБОР ТОВАРА И ВАЛИДАЦИЯ КОЛИЧЕСТВА (STOCK И MIN_QTY)
+    // =========================================================================
     function confirmPurchase() {
       haptic('heavy');
       if (!activeProduct) return;
-      const stock = activeProduct.stock || 1;
-      const unitPrice = promoDiscount > 0 ? parseFloat((activeProduct.price * (1 - promoDiscount)).toFixed(2)) : parseFloat(activeProduct.price.toFixed(2));
+
+      const stock = typeof activeProduct.stock === 'number' ? activeProduct.stock : 1;
+      const minQty = 1;
+
+      if (stock < minQty) {
+        tgAlert("❌ Данного товара нет в наличии на складе.");
+        return;
+      }
+
+      const unitPrice = promoDiscount > 0
+        ? parseFloat((activeProduct.price * (1 - promoDiscount)).toFixed(2))
+        : parseFloat(activeProduct.price.toFixed(2));
 
       currentPaymentContext = {
         mode: 'product',
-        itemType: 'buy_acc',
-        productId: activeProduct.name,
-        title: `${activeProduct.name} | ${activeProduct.country?.name || 'Global'}`,
+        itemType: activeProduct.serviceType || 'buy_acc',
+        productId: activeProduct.key || activeProduct.id || activeProduct.name,
+        title: `${activeProduct.name} | ${activeProduct.country ? activeProduct.country.name : 'Global'}`,
         unitPrice: unitPrice,
         stock: stock,
-        minQty: 1,
+        minQty: minQty,
         qty: 1,
         total: unitPrice
       };
 
       activeInvoice = null;
+
       document.getElementById('active-invoice-box').classList.add('hidden');
       document.getElementById('topup-amount-block').classList.add('hidden');
       document.getElementById('payment-methods-block').classList.add('hidden');
@@ -1007,13 +1181,15 @@
       document.getElementById('modal-unit-price').innerText = `${unitPrice.toFixed(2)} $`;
       document.getElementById('purchase-qty-input').value = 1;
       document.getElementById('qty-error-msg').classList.add('hidden');
+
       document.getElementById('payment-modal').classList.remove('hidden');
     }
 
     function changeQty(delta) {
       haptic('light');
       const input = document.getElementById('purchase-qty-input');
-      input.value = Math.max(1, (parseInt(input.value) || 1) + delta);
+      let val = (parseInt(input.value) || 1) + delta;
+      input.value = val;
       handleQtyChange();
     }
 
@@ -1022,13 +1198,14 @@
       const errorEl = document.getElementById('qty-error-msg');
       let val = parseInt(input.value);
 
-      if (isNaN(val) || val < 1) {
-        errorEl.innerText = `Минимальный заказ: 1 шт.`;
+      if (isNaN(val) || val < currentPaymentContext.minQty) {
+        errorEl.innerText = `Минимальный заказ: ${currentPaymentContext.minQty} шт.`;
         errorEl.classList.remove('hidden');
         return false;
       }
+
       if (val > currentPaymentContext.stock) {
-        errorEl.innerText = `Превышен остаток! Доступно: ${currentPaymentContext.stock} шт.`;
+        errorEl.innerText = `Превышен остаток! Доступно на складе: ${currentPaymentContext.stock} шт.`;
         errorEl.classList.remove('hidden');
         return false;
       }
@@ -1039,8 +1216,14 @@
       return true;
     }
 
+    // =========================================================================
+    // ШАГ 2: РАСЧЕТ TOTAL И ПЕРЕХОД К ВЫБОРУ ОПЛАТЫ
+    // =========================================================================
     function proceedToPaymentMethods() {
-      if (!handleQtyChange()) return;
+      if (!handleQtyChange()) {
+        haptic('error');
+        return;
+      }
       haptic('medium');
 
       document.getElementById('product-qty-block').classList.add('hidden');
@@ -1048,8 +1231,12 @@
 
       document.getElementById('pay-modal-title').innerText = 'Метод оплаты';
       document.getElementById('pay-modal-subtitle').innerText = 'Шаг 2: Выберите способ оплаты';
+      
       document.getElementById('pay-modal-item-name').innerText = `${currentPaymentContext.title} (${currentPaymentContext.qty} шт.)`;
       document.getElementById('pay-modal-amount').innerText = `${currentPaymentContext.total.toFixed(2)} $`;
+
+      const balBtn = document.getElementById('pay-with-balance-btn');
+      balBtn.classList.remove('hidden');
       document.getElementById('pay-modal-user-bal').innerText = `Баланс: ${userBalance.toFixed(2)} $`;
     }
 
@@ -1069,7 +1256,7 @@
 
       document.getElementById('active-invoice-box').classList.add('hidden');
       document.getElementById('product-qty-block').classList.add('hidden');
-      document.getElementById('pay-with-balance-btn').classList.remove('hidden');
+      document.getElementById('pay-with-balance-btn').classList.add('hidden');
       document.getElementById('topup-amount-block').classList.remove('hidden');
       document.getElementById('payment-methods-block').classList.remove('hidden');
 
@@ -1077,6 +1264,7 @@
       document.getElementById('pay-modal-subtitle').innerText = 'Выберите сумму пополнения';
       document.getElementById('topup-custom-amount').value = 50;
       updatePayModalSummary();
+
       document.getElementById('payment-modal').classList.remove('hidden');
     }
 
@@ -1099,6 +1287,7 @@
       document.getElementById('payment-modal').classList.add('hidden');
     }
 
+    // Вызов шлюза Google Apps Script
     async function callGoogleGateway(payloadObj) {
       const response = await fetch(GOOGLE_PAYMENT_GATEWAY_URL, {
         method: 'POST',
@@ -1108,6 +1297,9 @@
       return await response.json();
     }
 
+    // =========================================================================
+    // ШАГ 3: СОЗДАНИЕ СЧЕТА (create_invoice_unified)
+    // =========================================================================
     async function createInvoiceUnified(provider) {
       if (!currentPaymentContext) return;
       haptic('medium');
@@ -1120,7 +1312,15 @@
       const oldLabel = labelEl.innerText;
 
       btnEl.style.pointerEvents = 'none';
-      labelEl.innerText = '⏳ Счёт...';
+      labelEl.innerText = '⏳ Создание...';
+
+      const payloadObj = {
+        user_id: tgUser.id,
+        item_type: currentPaymentContext.itemType,
+        product_id: currentPaymentContext.productId || null,
+        qty: currentPaymentContext.qty,
+        amount: totalAmount
+      };
 
       try {
         const data = await callGoogleGateway({
@@ -1128,6 +1328,7 @@
           provider: provider,
           amount: totalAmount,
           description: `${currentPaymentContext.title} | ${totalAmount}$ [${tgUser.id}]`,
+          payload: JSON.stringify(payloadObj),
           user_id: tgUser.id
         });
 
@@ -1143,9 +1344,12 @@
 
           document.getElementById('payment-methods-block').classList.add('hidden');
           document.getElementById('active-invoice-box').classList.remove('hidden');
+
           document.getElementById('invoice-provider-badge').innerText = `${provider.toUpperCase()} • Счёт #${inv.invoice_id}`;
           document.getElementById('invoice-status-text').innerText = '⏳ Ожидание оплаты...';
           document.getElementById('invoice-pay-link').href = inv.pay_url;
+
+          notifyAdminEvent(`🧾 <b>Выставлен счёт на оплату</b>\n\n📦 Товар: <b>${currentPaymentContext.title}</b>\n🔢 Кол-во: <b>${currentPaymentContext.qty} шт.</b>\n💵 Сумма: <b>${totalAmount.toFixed(2)} USDT</b>\n💳 Шлюз: <b>${provider.toUpperCase()} (#${inv.invoice_id})</b>\n👤 Клиент: ${tgUser.first_name || ''} (@${tgUser.username || 'без_юзернейма'}) [ID: <code>${tgUser.id}</code>]`);
 
           if (tg?.openTelegramLink && inv.pay_url.includes('t.me/')) {
             tg.openTelegramLink(inv.pay_url);
@@ -1154,20 +1358,28 @@
           }
           return;
         }
-        throw new Error(data?.error || 'Не удалось создать счёт');
+
+        throw new Error(data?.error || 'Сервер не вернул ссылку на оплату');
       } catch (err) {
-        tgAlert(`Ошибка: ${err.message}`);
+        tgAlert(`Ошибка при создании счёта: ${err.message}`);
       } finally {
         btnEl.style.pointerEvents = 'auto';
         labelEl.innerText = oldLabel;
       }
     }
 
+    // =========================================================================
+    // ШАГ 4: ПРОВЕРКА ОПЛАТЫ (Callback chkinv:)
+    // =========================================================================
     async function checkInvoiceUnified() {
       if (!activeInvoice) return;
       haptic('medium');
+
       const statusEl = document.getElementById('invoice-status-text');
-      statusEl.innerText = '🔄 Проверяем оплату...';
+      const checkBtn = document.getElementById('btn-check-invoice');
+
+      statusEl.innerText = '🔄 Проверяем статус по API...';
+      checkBtn.style.pointerEvents = 'none';
 
       try {
         const res = await callGoogleGateway({
@@ -1187,28 +1399,43 @@
             updateBalanceUI();
             tgAlert(`✅ Баланс пополнен на ${activeInvoice.amount.toFixed(2)} $!`);
           } else {
-            if (activeProduct && activeProduct.stock) {
+            if (activeProduct && activeProduct.stock !== undefined) {
               activeProduct.stock = Math.max(0, activeProduct.stock - activeInvoice.context.qty);
               document.getElementById('detail-stock-count').innerText = activeProduct.stock;
             }
-            registerCompletedOrder(activeInvoice.context.title, activeInvoice.amount, `${activeInvoice.provider.toUpperCase()} #${activeInvoice.id}`, activeInvoice.context.qty);
-            tgAlert(`✅ Оплата получена! Заказ подтверждён.`);
+
+            registerCompletedOrder(
+              activeInvoice.context.title,
+              activeInvoice.amount,
+              `${activeInvoice.provider.toUpperCase()} #${activeInvoice.id}`,
+              activeInvoice.context.qty
+            );
+
+            tgAlert(`✅ Оплата успешно получена! Заказ на ${activeInvoice.context.qty} шт. подтверждён.`);
             switchTab('cart');
           }
+
           closePaymentModal();
           activeInvoice = null;
         } else {
           statusEl.innerText = '⏳ Оплата еще не поступила';
-          tgAlert('Счёт ещё не оплачен. Завершите перевод и проверьте снова.');
+          tgAlert('Счёт ещё не оплачен. Завершите перевод по кнопке «Оплатить» и нажмите проверку снова.');
         }
       } catch (err) {
-        tgAlert('Ошибка проверки: ' + err.message);
+        statusEl.innerText = '❌ Ошибка проверки';
+        tgAlert('Ошибка соединения со шлюзом: ' + err.message);
+      } finally {
+        checkBtn.style.pointerEvents = 'auto';
       }
     }
 
+    // =========================================================================
+    // ШАГ 5: ОПЛАТА С ВНУТРЕННЕГО БАЛАНСА (*_pbalance:)
+    // =========================================================================
     async function payWithInternalBalance() {
       if (!currentPaymentContext) return;
       haptic('heavy');
+
       const total = currentPaymentContext.total;
 
       if (userBalance < total) {
@@ -1220,30 +1447,937 @@
       localStorage.setItem('moon_user_balance', userBalance.toFixed(2));
       updateBalanceUI();
 
-      if (activeProduct && activeProduct.stock) {
+      if (activeProduct && activeProduct.stock !== undefined) {
         activeProduct.stock = Math.max(0, activeProduct.stock - currentPaymentContext.qty);
         document.getElementById('detail-stock-count').innerText = activeProduct.stock;
       }
 
-      registerCompletedOrder(currentPaymentContext.title, total, 'С баланса', currentPaymentContext.qty);
+      registerCompletedOrder(
+        currentPaymentContext.title,
+        total,
+        'С баланса',
+        currentPaymentContext.qty
+      );
+
+      callGoogleGateway({
+        action: 'pay_internal_balance',
+        user_id: tgUser.id,
+        amount: total,
+        item_title: currentPaymentContext.title,
+        qty: currentPaymentContext.qty
+      }).catch(() => {});
+
       closePaymentModal();
-      tgAlert(`✅ Заказ успешно оплачен с баланса!`);
+      tgAlert(`✅ Заказ «${currentPaymentContext.title}» (${currentPaymentContext.qty} шт.) успешно оплачен с баланса!`);
       switchTab('cart');
     }
 
     function registerCompletedOrder(title, amount, provider, qty = 1) {
       const orderId = Math.floor(100000 + Math.random() * 900000);
-      userOrders.push({ id: orderId, title, amount: Number(amount).toFixed(2), qty, provider, date: new Date().toLocaleDateString('ru-RU') });
+      const newOrd = {
+        id: orderId,
+        title: title,
+        amount: Number(amount).toFixed(2),
+        qty: qty,
+        provider: provider,
+        date: new Date().toLocaleDateString('ru-RU')
+      };
+      userOrders.push(newOrd);
       localStorage.setItem('moon_user_orders', JSON.stringify(userOrders));
       updateBalanceUI();
+
+      notifyAdminEvent(`🔥 <b>ОПЛАЧЕН НОВЫЙ ЗАКАЗ #${orderId}!</b>\n\n📦 Товар: <b>${title}</b>\n🔢 Количество: <b>${qty} шт.</b>\n💵 Сумма: <b>${newOrd.amount} $</b>\n💳 Способ: <b>${provider}</b>\n👤 Клиент: ${tgUser.first_name || ''} (@${tgUser.username || 'без_юзернейма'}) [ID: <code>${tgUser.id}</code>]`);
     }
 
-    function haptic(style = 'light') {
-      if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred(style);
+    function notifyAdminEvent(htmlText) {
+      fetch(`https://api.telegram.org/bot${TG_BOT_TOKEN_NOTIFY}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          chat_id: ADMIN_TG_IDS[0],
+          text: htmlText,
+          parse_mode: 'HTML'
+        })
+      }).catch(() => {});
     }
 
-    updateBalanceUI();
+    // =========================================================================
+    // ПОЛНЫЙ ОРИГИНАЛЬНЫЙ КАТАЛОГ И АДМИНКА (С АВТОПУБЛИКАЦИЕЙ НА GITHUB)
+    // =========================================================================
+    function updateAdminUI() {
+      const badge = document.getElementById('admin-badge');
+      const cabBtn = document.getElementById('cabinet-admin-btn');
+      const editor = document.getElementById('admin-item-editor');
+      if (isAdmin) {
+        if (badge) badge.classList.remove('hidden');
+        if (cabBtn) cabBtn.classList.remove('hidden');
+        if (editor && activeProduct) editor.classList.remove('hidden');
+      } else {
+        if (badge) badge.classList.add('hidden');
+        if (cabBtn) cabBtn.classList.add('hidden');
+        if (editor) editor.classList.add('hidden');
+      }
+      const savedToken = localStorage.getItem('moon_gh_token');
+      if (savedToken && document.getElementById('gh-token-input')) {
+        document.getElementById('gh-token-input').value = savedToken;
+      }
+    }
+
+    function handleSecretAdminTap() {
+      secretTapCount++;
+      clearTimeout(secretTapTimer);
+      secretTapTimer = setTimeout(() => { secretTapCount = 0; }, 1800);
+
+      if (secretTapCount >= 5) {
+        secretTapCount = 0;
+        haptic('heavy');
+        if (isAdmin) {
+          openAdminDashboard();
+          return;
+        }
+        const pin = prompt("🔐 Вход в Админ-панель MOON STORE.\nВведите секретный пароль:");
+        if (pin === ADMIN_PIN) {
+          isAdmin = true;
+          updateAdminUI();
+          tgAlert("✅ Режим Администратора активирован!");
+        } else if (pin !== null) {
+          tgAlert("❌ Неверный пароль.");
+        }
+      }
+    }
+
+    function openAdminDashboard() {
+      if (!isAdmin) return;
+      haptic();
+      ['home', 'catalog', 'cart', 'cabinet', 'info', 'admin'].forEach(t => {
+        const el = document.getElementById('tab-' + t);
+        if (el) el.classList.add('hidden');
+      });
+      document.getElementById('tab-admin').classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+
+    function getOfficialPngUrl(domain) {
+      return `https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://${domain}&size=128`;
+    }
+
+    function renderBrandLogo(domain, name, domain2 = null) {
+      const firstLetter = (name || '?').charAt(0).toUpperCase();
+      if (domain2) {
+        return `
+          <div class="flex items-center -space-x-2 flex-shrink-0">
+            <div class="brand-logo-box w-8 h-8 rounded-lg z-10 shadow-md">
+              <img src="${getOfficialPngUrl(domain)}" alt="${name}" class="brand-logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+              <span class="hidden w-full h-full items-center justify-center text-[10px] font-bold text-white">${firstLetter}</span>
+            </div>
+            <div class="brand-logo-box w-8 h-8 rounded-lg z-0 opacity-95">
+              <img src="${getOfficialPngUrl(domain2)}" alt="${name}" class="brand-logo-img" onerror="this.style.display='none';">
+            </div>
+          </div>
+        `;
+      }
+      return `
+        <div class="brand-logo-box">
+          <img src="${getOfficialPngUrl(domain)}" alt="${name}" class="brand-logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+          <span class="hidden w-full h-full items-center justify-center text-xs font-bold text-white">${firstLetter}</span>
+        </div>
+      `;
+    }
+
+    const COUNTRIES = {
+      ua: { code: "ua", name: "Ukraine" },
+      kz: { code: "kz", name: "Kazakhstan" },
+      by: { code: "by", name: "Belarus" },
+      md: { code: "md", name: "Moldova" },
+      az: { code: "az", name: "Azerbaijan" },
+      kg: { code: "kg", name: "Kyrgyzstan" },
+      uz: { code: "uz", name: "Uzbekistan" },
+      ge: { code: "ge", name: "Georgia" },
+      pl: { code: "pl", name: "Poland" },
+      de: { code: "de", name: "Germany" },
+      es: { code: "es", name: "Spain" },
+      ee: { code: "ee", name: "Estonia" },
+      lv: { code: "lv", name: "Latvia" },
+      lt: { code: "lt", name: "Lithuania" },
+      it: { code: "it", name: "Italy" },
+      tr: { code: "tr", name: "Turkey" },
+      id: { code: "id", name: "Indonesia" },
+      ke: { code: "ke", name: "Kenya" },
+      ng: { code: "ng", name: "Nigeria" },
+      us: { code: "us", name: "USA" },
+      ru: { code: "ru", name: "Russia" },
+      cr: { code: "cr", name: "Costa-Rica" },
+      ug: { code: "ug", name: "Uganda" },
+      ye: { code: "ye", name: "Yemen" },
+      dm: { code: "dm", name: "Dominica" },
+      fr: { code: "fr", name: "France" },
+      gb: { code: "gb", name: "United Kingdom" },
+      ca: { code: "ca", name: "Canada" },
+      no: { code: "no", name: "Norway" },
+      au: { code: "au", name: "Australia" },
+      fi: { code: "fi", name: "Finland" },
+      at: { code: "at", name: "Austria" },
+      be: { code: "be", name: "Belgium" },
+      bg: { code: "bg", name: "Bulgaria" },
+      cy: { code: "cy", name: "Cyprus" },
+      nl: { code: "nl", name: "Netherlands" },
+      tj: { code: "tj", name: "Tajikistan" },
+      am: { code: "am", name: "Armenia" },
+      cz: { code: "cz", name: "Czech Republic" }
+    };
+
+    function flagImg(code) {
+      return `<img src="https://flagcdn.com/w40/${code}.png" srcset="https://flagcdn.com/w80/${code}.png 2x" width="22" height="15" class="rounded-sm object-cover shadow-sm flex-shrink-0" alt="${code}">`;
+    }
+
+    // ПОЛНЫЕ БАЗЫ ДАННЫХ МАГАЗИНА
+    const cryptoExchanges = [
+      {
+        id: "binance", name: "Binance", domain: "binance.com",
+        countries: ["ua","kz","by","md","az","kg","uz","ge","pl","de","es","ee","lv","lt","it","tr","id","ke","ng","us"],
+        desc: "Binance - криптобиржа для торговли, инвестиций и управления цифровыми активами.",
+        features: ["Торговля криптовалютами – тысячи пар (BTC, ETH, USDT и др.)", "Фьючерсы и маржа – плечо до 125x", "Earn и стейкинг – пассивный доход", "P2P – сделки напрямую между пользователями"],
+        limits: ["Пополнение – без ограничений", "Вывод – до 100 BTC в сутки", "Торговля – без лимитов"],
+        commissions: ["Торговля – от 0,1%", "Вывод – зависит от сети и актива", "P2P – зависит от способа оплаты и валюты"]
+      },
+      {
+        id: "bybit", name: "Bybit", domain: "bybit.com",
+        countries: ["ua","kz","by","md","az","kg","ge","pl","de","es","ee","lv","lt","it","tr","id","ke","ng","ru"],
+        desc: "Bybit – популярная криптовалютная биржа для спотовой и деривативной торговли, P2P и стейкинга.",
+        features: ["Торговля криптовалютой: Доступ к сотням торговых пар, включая BTC, ETH, USDT.", "Фьючерсы и маржинальная торговля с плечом до 100x.", "Стейкинг и Earn-продукты.", "P2P-платформа: Покупка и продажа напрямую.", "Копи-трейдинг."],
+        limits: ["Пополнение: Безлимитное в криптовалюте.", "Вывод: До 2 BTC в день.", "Торговля: Безлимитная."],
+        commissions: ["Торговля: от 0,1% за сделку.", "Вывод: Зависит от сети.", "P2P: Зависит от метода оплаты."]
+      },
+      {
+        id: "mexc", name: "MEXC", domain: "mexc.com",
+        countries: ["ua","kz","by","md","az","kg","ge","pl","de","es","ee","lv","lt","it","tr","id","ke","ng","ru"],
+        desc: "MEXC – глобальная криптобиржа с самым широким выбором альткоинов и фьючерсных пар.",
+        features: ["Спотовая и фьючерсная торговля с плечом до 200x", "Тысячи новых листингов", "P2P-торговля без комиссий"],
+        limits: ["Пополнение – без ограничений", "Вывод – до 80 BTC в сутки", "Торговля – без лимитов"],
+        commissions: ["Спот – от 0%", "Фьючерсы – от 0,01%"]
+      },
+      {
+        id: "okx", name: "OKX", domain: "okx.com",
+        countries: ["ua","kz","by","md","az","kg","ge","pl","de","es","ee","lv","lt","it","tr","id","ke","ng","ru"],
+        desc: "OKX – ведущая криптовалютная биржа и Web3-экосистема для профессиональной торговли и P2P.",
+        features: ["Спотовая, маржинальная и фьючерсная торговля", "Ликвидный P2P-рынок", "Встроенный Web3-кошелек и Earn"],
+        limits: ["Пополнение – без ограничений", "Вывод – до 10 000 000 USD в сутки"],
+        commissions: ["Торговля – от 0,08%", "P2P – 0%"]
+      },
+      {
+        id: "bitget", name: "Bitget", domain: "bitget.com",
+        countries: ["ua","kz","by","md","az","kg","ge","pl","de","es","ee","lv","lt","it","tr","id","ke","ng","ru"],
+        desc: "Bitget – крупная криптобиржа, лидер в сфере копи-трейдинга и деривативов.",
+        features: ["Фьючерсная и спотовая торговля", "Флагманский копи-трейдинг", "P2P-рынок и Bitget Earn"],
+        limits: ["Пополнение – без ограничений", "Вывод – до 3 000 000 USDT в сутки"],
+        commissions: ["Торговля – от 0,1%", "Вывод – зависит от сети"]
+      },
+      {
+        id: "kucoin", name: "KuCoin", domain: "kucoin.com",
+        countries: ["ua","kz","by","md","az","kg","ge","pl","de","es","ee","lv","lt","it","tr","id","ke","ng","ru"],
+        desc: "KuCoin – популярная международная биржа для торговли криптовалютами и альткоинами.",
+        features: ["Торговля сотнями криптопар", "Фьючерсы, торговые боты и стейкинг", "Быстрый P2P-маркет"],
+        limits: ["Пополнение – без ограничений", "Вывод – до 100 BTC в сутки"],
+        commissions: ["Торговля – от 0,1%", "P2P – 0%"]
+      },
+      {
+        id: "kraken", name: "Kraken", domain: "kraken.com",
+        countries: ["ua","kz","by","md","az","kg","ge","pl","de","es","ee","lv","lt","it","tr","id","ke","ng","us"],
+        desc: "Kraken – одна из старейших и самых надежных европейско-американских криптобирж.",
+        features: ["Поддержка фиатных пар EUR, USD, GBP", "Маржинальная и фьючерсная торговля", "Высокая безопасность"],
+        limits: ["Пополнение – без ограничений", "Вывод – высокие дневные лимиты"],
+        commissions: ["Спот – от 0,16%", "Быстрый вывод в крипто и SEPA"]
+      },
+      {
+        id: "htx", name: "HTX (Huobi)", domain: "htx.com",
+        countries: ["ua","kz","by","md","az","kg","ge","pl","de","es","ee","lv","lt","it","tr","id","ke","ng","ru"],
+        desc: "HTX (Huobi) – международная платформа для торговли цифровыми активами и P2P.",
+        features: ["Спот, фьючерсы и маржа до 125x", "Активный P2P-рынок", "Депозиты и стейкинг"],
+        limits: ["Пополнение – без ограничений", "Вывод – до 100 BTC в сутки"],
+        commissions: ["Торговля – от 0,2%", "P2P – 0%"]
+      },
+      {
+        id: "coinbase", name: "Coinbase", domain: "coinbase.com",
+        countries: ["pl","de","es","ee","lv","lt","it","gb","us"],
+        desc: "Coinbase – крупнейшая регулируемая криптобиржа США и Европы.",
+        features: ["Прямые операции с крипто и фиатом", "Институциональная надежность", "Высокие лимиты"],
+        limits: ["Пополнение – без ограничений", "Вывод – без ограничений в крипто"],
+        commissions: ["Стандартные комиссии сети"]
+      },
+      {
+        id: "bingx", name: "BingX", domain: "bingx.com",
+        countries: ["ua","kz","by","md","az","kg","ge","pl","de","es","ee","lv","lt","it","tr","id","ke","ng","ru"],
+        desc: "BingX – современная криптобиржа с социальным трейдингом и фьючерсами.",
+        features: ["Стандартные и бессрочные фьючерсы", "Копи-трейдинг и сеточные боты", "P2P-торговля"],
+        limits: ["Пополнение – без ограничений", "Вывод – до 5 000 000 USDT"],
+        commissions: ["Торговля – от 0,05%"]
+      },
+      {
+        id: "crypto_com", name: "Crypto.com", domain: "crypto.com",
+        countries: ["pl","de","es","ee","lv","lt","it","gb","us"],
+        desc: "Crypto.com – глобальная криптоплатформа с поддержкой карт и европейских счетов.",
+        features: ["Обмен криптовалют и стейкинг", "Выпуск виртуальных карт", "Поддержка переводов"],
+        limits: ["Пополнение – без ограничений", "Высокие лимиты на вывод"],
+        commissions: ["Торговля – от 0,075%"]
+      },
+      {
+        id: "gate", name: "Gate.io", domain: "gate.io",
+        countries: ["ua","kz","by","md","az","kg","ge","pl","ee","lv","lt","it","tr","id","ke","ng","ru"],
+        desc: "Gate.io – популярная криптовалютная биржа для торговли, инвестиций и управления цифровыми активами.",
+        features: ["Торговля криптовалютами – тысячи активов", "Мультивалютный кошелек", "Стейкинг и Earn", "P2P – прямые сделки", "Фьючерсы и маржа"],
+        limits: ["Пополнение – без ограничений", "Вывод – до 100 BTC", "Торговля – без лимитов"],
+        commissions: ["Торговля – от 0,2%", "Вывод – зависит от сети", "P2P – зависит от способа оплаты"]
+      },
+      {
+        id: "bybit_maker", name: "Bybit (Maker)", domain: "bybit.com",
+        countries: ["ke","cr","ug","ye","dm","ua","kz","ru","pl"],
+        isMaker: true,
+        desc: "Сделан приватным методом. 90+ дней с момента регистрации, 2 lvl верифа (подтвержден адрес проживания), более 60 ордеров p2p, 2k$ + торговый объем за 30 дней, 98% минимум исполненных ордеров, можно выставлять объявления p2p на продажу и покупку как мейкер, залоговый депозит не требуется! Любые блокировки, аппиляции, на вывод, отсутствуют.",
+        features: [], limits: [], commissions: []
+      }
+    ];
+
+    const paymentServices = [
+      { id: "wise_p", name: "Wise (Personal)", domain: "wise.com", price: 50, stock: 4, countries: ["de","fr","it","pl","es","gb","ca","us"], cardInfo: "Выпущено 3 виртуальных и 1 физическая карта (отправка в ваш город по запросу)." },
+      { id: "wise_b", name: "Wise (Business)", domain: "wise.com", price: 120, stock: 3, countries: ["de","fr","it","pl","es","gb","ca","us"], cardInfo: "Корпоративный счет + бизнес-карты Visa/Mastercard." },
+      { id: "revolut_p", name: "Revolut (Personal)", domain: "revolut.com", price: 90, stock: 3, countries: ["fr","it","pl","es","de","no"], cardInfo: "Виртуальные карты + физическая карта (отправка по запросу)." },
+      { id: "revolut_b", name: "Revolut (Business)", domain: "revolut.com", price: 220, stock: 2, countries: ["fr","it","pl","es","de","no"], cardInfo: "Мультивалютный бизнес-счет + корпоративные карты." },
+      { id: "bunq_p", name: "Bunq (Personal)", domain: "bunq.com", price: 85, stock: 3, countries: ["fr","it","pl","es","gb","de","no"], cardInfo: "Выпущены европейские IBAN (NL/DE/ES/FR) и виртуальные карты." },
+      { id: "bunq_b", name: "Bunq (Business)", domain: "bunq.com", price: 200, stock: 2, countries: ["fr","it","pl","es","gb","de","no"], cardInfo: "Европейский бизнес-аккаунт с высокими лимитами." },
+      { id: "blackcat", name: "Blackcatcard", domain: "blackcatcard.com", price: 65, stock: 4, countries: ["es","ee","lv","lt","it","tr"], cardInfo: "Европейский IBAN + криптокошелек и карта Mastercard." },
+      { id: "vivid", name: "Vivid", domain: "vivid.money", price: 95, stock: 3, countries: ["fr","de","it","es"], cardInfo: "Немецкий IBAN DE, виртуальная и физическая карты." },
+      { id: "paypal_p", name: "PayPal (Personal)", domain: "paypal.com", price: 55, stock: 4, countries: ["de","gb","fr","pl","nl"], cardInfo: "Прогретый верифицированный аккаунт с полным комплектом." },
+      { id: "wirex", name: "Wirex", domain: "wirexapp.com", price: 65, stock: 3, countries: ["de","gb","fr","pl","nl"], cardInfo: "Мультивалютная крипто-карта и счета EUR/GBP/USD." },
+      { id: "payoneer", name: "Payoneer", domain: "payoneer.com", price: 60, stock: 4, countries: ["kz","ua","de","gb","es","fr"], cardInfo: "Реквизиты для приёма USD/EUR/GBP + выпуск карт." },
+      { id: "pyypl", name: "Pyypl", domain: "pyypl.com", price: 45, stock: 4, countries: ["us","gb","fr"], cardInfo: "Виртуальные карты Mastercard и переводы." },
+      { id: "icard", name: "Icard", domain: "icard.com", price: 75, stock: 3, countries: ["de","gb","us","es","nl","fr","it","pl"], cardInfo: "Европейский счет IBAN + виртуальные и пластиковые карты." },
+      { id: "skrill", name: "Skrill", domain: "skrill.com", price: 55, stock: 4, countries: ["de","gb","us","es","it","pl","nl","fr","lv"], cardInfo: "Полностью верифицированный кошелек без лимитов." },
+      { id: "n26", name: "N26", domain: "n26.com", price: 190, stock: 2, countries: ["de"], cardInfo: "Немецкий личный банковский счет DE IBAN + виртуальная карта." },
+      { id: "paysera", name: "Paysera (unlimited)", domain: "paysera.com", price: 85, stock: 3, countries: ["es","ee","lv","lt","it","tr"], cardInfo: "Европейский счет LT IBAN с повышенными лимитами." },
+      { id: "stripe", name: "Stripe Business", domain: "stripe.com", price: 150, stock: 2, countries: ["fi","es","it","pl","gb","us"], cardInfo: "Верифицированный мерчант-аккаунт для приёма платежей." },
+      { id: "upbank", name: "UP bank", domain: "up.com.au", price: 95, stock: 2, countries: ["au"], cardInfo: "Австралийский необанк с поддержкой карт и переводов." }
+    ];
+
+    const bundleServices = [
+      { id: "privat_bin", name: "Privat Bank + Binance", domain: "privatbank.ua", domain2: "binance.com", country: "ua", price: 85, stock: 3 },
+      { id: "tinkoff_byb", name: "Tinkoff Bank + Bybit", domain: "tbank.ru", domain2: "bybit.com", country: "ru", price: 90, stock: 3 },
+      { id: "sber_bybm", name: "Sber Bank + Bybit(maker)", domain: "sberbank.ru", domain2: "bybit.com", country: "ru", price: 165, stock: 2 },
+      { id: "mono_bin", name: "Mono Bank + Binance", domain: "monobank.ua", domain2: "binance.com", country: "ua", price: 85, stock: 4 },
+      { id: "abank_bin", name: "A-Bank + Binance", domain: "a-bank.com.ua", domain2: "binance.com", country: "ua", price: 85, stock: 2 },
+      { id: "bakai_okx", name: "Bakai Bank + OKX", domain: "bakai.kg", domain2: "okx.com", country: "kg", price: 85, stock: 2 },
+      { id: "kapital_okx", name: "Kapital Bank + OKX", domain: "kapitalbank.az", domain2: "okx.com", country: "az", price: 85, stock: 2 },
+      { id: "stripe_byb_bunq", name: "Stripe Business + Bybit + Bunq", domain: "stripe.com", domain2: "bybit.com", country: "pl", price: 240, stock: 1 },
+      { id: "freedom_bin", name: "Freedom bank + Binance", domain: "bankffin.kz", domain2: "binance.com", country: "kz", price: 85, stock: 3 }
+    ];
+
+    const bankCountriesOrder = ["ua","ru","kz","kg","uz","az","tj","ge","am","de","pl","by","md","cz"];
+
+    const banksCatalog = {
+      ua: [
+        { name: "Mono bank", domain: "monobank.ua", price: 65, stock: 5, desc: "Монобанк — украинский мобильный банк без отделений.", currency: "гривна (UAH)", limitInfo: "Пополнение: до 400 000 ₴ в месяц. Снятие в банкоматах: до 100 000 ₴ в день." },
+        { name: "Privat bank", domain: "privatbank.ua", price: 65, stock: 2, desc: "ПриватБанк — крупнейший банк Украины с удобным банкингом.", currency: "Гривна (UAH), доллары (USD), евро (EUR)", limitInfo: "Пополнение: до 400 000 ₴ в месяц. Переводы между счетами ПриватБанка: безлимит." },
+        { name: "PUMB bank", domain: "pumb.ua", price: 65, stock: 3, desc: "ПУМБ — универсальный украинский банк с выгодными тарифами.", currency: "Гривна (UAH), USD, EUR", limitInfo: "Пополнение: безлимитно. Переводы внутри банка без комиссий." },
+        { name: "Ощад bank", domain: "oschadbank.ua", price: 65, stock: 2, desc: "Ощадбанк — один из крупнейших государственных банков Украины.", currency: "гривна (UAH), доллары (USD) и евро (EUR)", limitInfo: "Снятие наличных: до 150 000 UAH в день. Переводы между счетами Ощадбанка: безлимитно." },
+        { name: "A-bank", domain: "a-bank.com.ua", price: 65, stock: 2, desc: "А-Банк — современный украинский банк с мгновенными переводами.", currency: "Гривна (UAH), USD, EUR", limitInfo: "Между счетами А-Банка: безлимитно. На карты других банков: до 500 000 UAH в день." },
+        { name: "izi bank", domain: "izibank.com.ua", price: 65, stock: 3, desc: "izibank — мобильный необанк в Украине.", currency: "Гривна (UAH), USD, EUR", limitInfo: "Бесплатные переводы между пользователями IZI Bank и на карты других банков Украины." }
+      ],
+      ru: [
+        { name: "Tinkoff bank", domain: "tbank.ru", price: 70, stock: 3, desc: "Tinkoff Bank — российский банк, предоставляющий инновационные финансовые услуги.", currency: "рубли (RUB) и другие валюты (MIR)", limitInfo: "Пополнение: безлимитно. Снятие: до 500 000 ₽ в день. На карты других банков: до 1 500 000 ₽ в месяц." },
+        { name: "Sberbank", domain: "sberbank.ru", price: 70, stock: 2, desc: "SberBank — крупнейший российский банк, предлагающий широкий спектр финансовых услуг.", currency: "рубли (RUB), карты MIR", limitInfo: "Пополнение: без ограничений. Переводы внутри Сбербанка бесплатны." },
+        { name: "Alfa-bank", domain: "alfabank.ru", price: 70, stock: 3, desc: "Альфа-Банк — ведущий частный банк России.", currency: "рубли (RUB), карты MIR", limitInfo: "Пополнение: без ограничений. СБП и переводы по номеру карты." },
+        { name: "VTB bank", domain: "vtb.ru", price: 70, stock: 2, desc: "ВТБ — крупный российский универсальный банк.", currency: "рубли (RUB), карты MIR", limitInfo: "Пополнение: без ограничений. Высокие суточные лимиты." },
+        { name: "Raiffeisen bank", domain: "raiffeisen.ru", price: 70, stock: 2, desc: "Райффайзен Банк — надежный банк с европейскими стандартами обслуживания.", currency: "рубли (RUB), карты MIR", limitInfo: "Пополнение: без ограничений. Бесплатные переводы по СБП." },
+        { name: "OZON bank", domain: "ozon.ru", price: 70, stock: 4, desc: "Ozon Банк — удобный финтех-банк с расширенными лимитами.", currency: "рубли (RUB), карты MIR", limitInfo: "Пополнение и переводы по СБП без комиссии." },
+        { name: "Gazprom bank", domain: "gazprombank.ru", price: 70, stock: 2, desc: "Газпромбанк — один из крупнейших универсальных банков РФ.", currency: "рубли (RUB), карты MIR", limitInfo: "Пополнение: без ограничений. Высокие лимиты на переводы." },
+        { name: "MTC Bank", domain: "mtsbank.ru", price: 70, stock: 2, desc: "МТС Банк — цифровой банк для быстрых переводов и платежей.", currency: "рубли (RUB), карты MIR", limitInfo: "Пополнение: без ограничений." },
+        { name: "Rosbank", domain: "rosbank.ru", price: 70, stock: 2, desc: "Росбанк — универсальный российский банк.", currency: "рубли (RUB), карты MIR", limitInfo: "Пополнение: без ограничений." }
+      ],
+      kz: [
+        { name: "Altyn bank", domain: "altynbank.kz", price: 65, stock: 3, desc: "Altyn Bank — казахстанский цифровой банк с широким спектром финансовых услуг.", currency: "тенге (KZT), USD, EUR, GBP, RUB, CNY", limitInfo: "Пополнение: без ограничений. Снятие до 700 000 KZT в месяц без комиссии. Внутренние переводы: безлимит." },
+        { name: "FORTE bank", domain: "forte.kz", price: 65, stock: 2, desc: "ForteBank — один из ведущих банков Казахстана с мультивалютными картами.", currency: "тенге (KZT), USD, EUR", limitInfo: "Пополнение: без ограничений. Мгновенные переводы по номеру телефона." },
+        { name: "KASPI bank", domain: "kaspi.kz", price: 65, stock: 4, desc: "Kaspi.kz — самый популярный мобильный супер-апп и банк в Казахстане.", currency: "тенге (KZT), Kaspi Gold", limitInfo: "Пополнение: без ограничений. Мгновенные переводы между клиентами Kaspi." },
+        { name: "Halyk Bank", domain: "halykbank.kz", price: 65, stock: 3, desc: "Halyk Bank (Народный банк) — крупнейший универсальный банк Казахстана.", currency: "тенге (KZT), USD, EUR", limitInfo: "Пополнение: без ограничений. Международные и внутренние переводы." }
+      ],
+      kg: [
+        { name: "BAKAI bank", domain: "bakai.kg", price: 65, stock: 1, desc: "Bakai Bank – один из ведущих банков Кыргызстана, предоставляющий широкий спектр финансовых услуг.", currency: "сомы (KGS), доллары США (USD) и евро (EUR)", limitInfo: "Пополнение: без ограничений. Суточный лимит снятия: до 200 000 KGS. Поддержка SWIFT." }
+      ],
+      uz: [
+        { name: "NBU bank", domain: "nbu.uz", price: 65, stock: 3, desc: "NBU (Национальный банк Узбекистана) — крупнейший банк страны с поддержкой международных карт.", currency: "сумы (UZS), доллары США (USD), евро (EUR)", limitInfo: "Карты Visa Classic / Gold и Mastercard. Снятие в банкоматах NBU бесплатно." }
+      ],
+      az: [
+        { name: "Kapital bank", domain: "kapitalbank.az", price: 65, stock: 1, desc: "Kapital Bank предоставляет широкий спектр финансовых услуг, включая мультивалютные счета и дебетовые карты.", currency: "манаты (AZN), доллары США (USD) и евро (EUR)", limitInfo: "Пополнение: без ограничений. Оплата картой: безлимитные расходы." },
+        { name: "Bank of Baku", domain: "bankofbaku.com", price: 65, stock: 2, desc: "Bank of Baku — надежный азербайджанский банк для переводов и работы с картами.", currency: "манаты (AZN), USD, EUR", limitInfo: "Пополнение: без ограничений. Быстрые переводы внутри страны и за рубеж." },
+        { name: "Dostbank", domain: "rabitabank.com", price: 65, stock: 2, desc: "Dostbank — удобный цифровой банкинг в Азербайджане.", currency: "манаты (AZN), USD, EUR", limitInfo: "Пополнение: без ограничений." }
+      ],
+      tj: [
+        { name: "Alif Bank", domain: "alif.tj", price: 65, stock: 2, desc: "Alif Bank — ведущий финтех-банк Таджикистана.", currency: "сомони (TJS), USD, EUR", limitInfo: "Пополнение: без ограничений. Быстрые международные переводы." }
+      ],
+      ge: [
+        { name: "Bank of Georgia", domain: "bankofgeorgia.ge", price: 65, stock: 2, desc: "Bank of Georgia — один из крупнейших банков Грузии, предоставляющий широкий спектр финансовых услуг.", currency: "грузинские лари (GEL), доллары США (USD) и евро (EUR)", limitInfo: "Пополнение: безлимитное. Снятие наличных: 2 500 лари в сутки. Переводы между счетами BOG: безлимит + SWIFT." },
+        { name: "TBC bank", domain: "tbcbank.ge", price: 65, stock: 2, desc: "TBC Bank — ведущий технологичный банк Грузии с мультивалютными счетами.", currency: "лари (GEL), USD, EUR", limitInfo: "Пополнение: безлимитное. Мгновенные переводы и SWIFT." }
+      ],
+      am: [
+        { name: "Ameria bank", domain: "ameriabank.am", price: 65, stock: 2, desc: "Ameria bank — универсальный банк Армении, предоставляющий широкий спектр финансовых услуг.", currency: "армянские драмы (AMD), доллары США (USD) и евро (EUR)", limitInfo: "Пополнение: безлимитное. Между счетами Ameriabank: безлимитные переводы + международные SWIFT." },
+        { name: "Ardshin bank", domain: "ardshinbank.am", price: 65, stock: 2, desc: "Ardshinbank — один из крупнейших банков Армении с развитым мобильным банкингом.", currency: "драмы (AMD), USD, EUR", limitInfo: "Пополнение: безлимитное. Международные переводы." }
+      ],
+      de: [
+        { name: "Deutsche bank", domain: "deutsche-bank.de", price: 245, stock: 2, desc: "Deutsche Bank — крупнейший банк Германии, предоставляющий широкий спектр финансовых услуг.", currency: "евро (EUR) и другие валюты", limitInfo: "Пополнение: без ограничений. Снятие в банкоматах Cash Group без комиссии. Переводы SEPA." },
+        { name: "C24", domain: "c24.de", price: 245, stock: 2, desc: "C24 Bank — современный немецкий банк с личным DE IBAN и мгновенными SEPA-переводами.", currency: "евро (EUR), карта Mastercard", limitInfo: "Пополнение: без ограничений. Поддержка SEPA Instant." }
+      ],
+      pl: [
+        { name: "Pekao bank", domain: "pekao.com.pl", price: 235, stock: 2, desc: "Bank Pekao — один из крупнейших банков Польши, предоставляющий широкий спектр финансовых услуг.", currency: "польские злотые (PLN), USD, EUR, GBP, CHF", limitInfo: "Пополнение: без ограничений. Внутренние переводы и переводы в евро по SEPA без комиссии." },
+        { name: "Millennium Bank", domain: "bankmillennium.pl", price: 235, stock: 1, desc: "Millennium Bank — ведущий польский коммерческий банк с удобным приложением.", currency: "злотые (PLN), EUR, USD", limitInfo: "Пополнение: без ограничений. Внутренние переводы и SEPA в евро без комиссии." }
+      ],
+      by: [
+        { name: "Alfa-bank", domain: "alfabank.by", price: 65, stock: 3, desc: "Альфа-Банк — один из ведущих банков Беларуси, предоставляющий широкий спектр финансовых услуг.", currency: "белорусские рубли (BYN), USD, EUR и российские рубли (RUB)", limitInfo: "Пополнение: без ограничений. Снятие наличных: до 5 000 BYN в сутки. В комплекте 1 цифровая и 2 физические карты Visa Classic и БЕЛКАРТ." }
+      ],
+      md: [
+        { name: "Maib bank", domain: "maib.md", price: 65, stock: 3, desc: "MAIB (Moldova Agroindbank) — крупнейший банк Республики Молдова.", currency: "молдавские леи (MDL), евро (EUR), доллары США (USD)", limitInfo: "Пополнение: без ограничений. Суточный лимит снятия: 1 000 EUR (с возможностью увеличения до 10 000 EUR)." }
+      ],
+      cz: [
+        { name: "UniCredit Bank", domain: "unicreditbank.cz", price: 250, stock: 1, desc: "UniCredit Bank Czech Republic — ведущий европейский банк с поддержкой чешских и международных переводов.", currency: "чешские кроны (CZK), евро (EUR), доллары (USD)", limitInfo: "Smart Banking активирован. Локальные переводы по Чехии, международные SEPA и SWIFT." }
+      ]
+    };
+
+    let currentCategory = "";
+    let currentStep = 1;
+    let selectedService = null;
+    let activeProduct = null;
+    let promoDiscount = 0;
+
+    const tabIndices = { 'home': 0, 'catalog': 1, 'cart': 2, 'cabinet': 3 };
+
+    function switchTab(tabId) {
+      haptic();
+      resetCatalogToRoot();
+
+      ['home', 'catalog', 'cart', 'cabinet', 'info', 'admin'].forEach(t => {
+        const el = document.getElementById('tab-' + t);
+        if (el) el.classList.add('hidden');
+      });
+
+      ['home', 'catalog', 'cart', 'cabinet'].forEach(t => {
+        const nav = document.getElementById('nav-' + t);
+        if (nav) nav.classList.remove('active');
+      });
+
+      const currentSec = document.getElementById('tab-' + tabId);
+      if (currentSec) currentSec.classList.remove('hidden');
+
+      if (tabIndices.hasOwnProperty(tabId)) {
+        const idx = tabIndices[tabId];
+        const slider = document.getElementById('tab-slider');
+        if (slider) slider.style.transform = `translateX(${idx * 100}%)`;
+
+        const currentNav = document.getElementById('nav-' + tabId);
+        if (currentNav) currentNav.classList.add('active');
+      }
+
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+
+    function showCatalogView(viewId) {
+      ['view-categories', 'view-step-list', 'view-product-detail'].forEach(v => {
+        document.getElementById(v).classList.add('hidden');
+      });
+      document.getElementById(viewId).classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+
+    function resetCatalogToRoot() {
+      currentCategory = "";
+      currentStep = 1;
+      selectedService = null;
+      activeProduct = null;
+      showCatalogView('view-categories');
+    }
+
+    function openCategory(catKey) {
+      haptic('medium');
+      currentCategory = catKey;
+      currentStep = 1;
+
+      if (catKey === 'crypto') renderCryptoExchangesStep();
+      else if (catKey === 'payment') renderPaymentServicesStep();
+      else if (catKey === 'bundle') renderBundlesStep();
+      else if (catKey === 'banks') renderBankCountriesStep();
+
+      showCatalogView('view-step-list');
+    }
+
+    function renderCryptoExchangesStep() {
+      document.getElementById('step-title').innerText = "Выберите товар:";
+      const box = document.getElementById('step-list-container');
+      box.innerHTML = '';
+
+      cryptoExchanges.forEach(ex => {
+        const row = document.createElement('div');
+        row.className = "country-btn";
+        row.innerHTML = `
+          <div class="flex items-center space-x-3">
+            ${renderBrandLogo(ex.domain, ex.name)}
+            <span class="text-xs font-bold text-white">${ex.name}</span>
+          </div>
+          <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg>
+        `;
+        row.onclick = () => {
+          haptic('light');
+          selectedService = ex;
+          currentStep = 2;
+          renderCountriesForCrypto(ex);
+        };
+        box.appendChild(row);
+      });
+    }
+
+    function renderPaymentServicesStep() {
+      document.getElementById('step-title').innerText = "Выберите товар:";
+      const box = document.getElementById('step-list-container');
+      box.innerHTML = '';
+
+      paymentServices.forEach(p => {
+        const row = document.createElement('div');
+        row.className = "country-btn";
+        row.innerHTML = `
+          <div class="flex items-center space-x-3">
+            ${renderBrandLogo(p.domain, p.name)}
+            <span class="text-xs font-bold text-white">${p.name}</span>
+          </div>
+          <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg>
+        `;
+        row.onclick = () => {
+          haptic('light');
+          selectedService = p;
+          currentStep = 2;
+          renderCountriesForPayment(p);
+        };
+        box.appendChild(row);
+      });
+    }
+
+    function renderBundlesStep() {
+      document.getElementById('step-title').innerText = "Выберите товар:";
+      const box = document.getElementById('step-list-container');
+      box.innerHTML = '';
+
+      bundleServices.forEach(b => {
+        const row = document.createElement('div');
+        row.className = "country-btn";
+        row.innerHTML = `
+          <div class="flex items-center space-x-3">
+            ${renderBrandLogo(b.domain, b.name, b.domain2)}
+            <span class="text-xs font-bold text-white">${b.name}</span>
+          </div>
+          <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg>
+        `;
+        row.onclick = () => {
+          haptic('light');
+          selectedService = b;
+          currentStep = 2;
+          renderCountriesForBundle(b);
+        };
+        box.appendChild(row);
+      });
+    }
+
+    function renderBankCountriesStep() {
+      document.getElementById('step-title').innerText = "Выберите страну:";
+      const box = document.getElementById('step-list-container');
+      box.innerHTML = '';
+
+      bankCountriesOrder.forEach(code => {
+        const c = COUNTRIES[code];
+        const row = document.createElement('div');
+        row.className = "country-btn";
+        row.innerHTML = `
+          <div class="flex items-center space-x-3">
+            ${flagImg(c.code)}
+            <span class="text-xs font-semibold text-white">${c.name}</span>
+          </div>
+          <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg>
+        `;
+        row.onclick = () => {
+          haptic('light');
+          selectedService = c;
+          currentStep = 2;
+          renderBanksInCountry(c);
+        };
+        box.appendChild(row);
+      });
+    }
+
+    function renderCountriesForCrypto(ex) {
+      document.getElementById('step-title').innerText = `${ex.name} — Выберите страну:`;
+      const box = document.getElementById('step-list-container');
+      box.innerHTML = '';
+
+      ex.countries.forEach(code => {
+        const c = COUNTRIES[code];
+        if (!c) return;
+        const row = document.createElement('div');
+        row.className = "country-btn";
+        row.innerHTML = `
+          <div class="flex items-center space-x-3">
+            ${flagImg(c.code)}
+            <span class="text-xs font-semibold text-white">${c.name}</span>
+          </div>
+          <div class="flex items-center space-x-2">
+            <span class="status-dot-green"></span>
+            <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
+        `;
+        row.onclick = () => openCryptoProductCard(ex, c);
+        box.appendChild(row);
+      });
+    }
+
+    function renderCountriesForPayment(service) {
+      document.getElementById('step-title').innerText = `${service.name} — Выберите страну:`;
+      const box = document.getElementById('step-list-container');
+      box.innerHTML = '';
+
+      service.countries.forEach(code => {
+        const c = COUNTRIES[code];
+        if (!c) return;
+        const row = document.createElement('div');
+        row.className = "country-btn";
+        row.innerHTML = `
+          <div class="flex items-center space-x-3">
+            ${flagImg(c.code)}
+            <span class="text-xs font-semibold text-white">${c.name}</span>
+          </div>
+          <div class="flex items-center space-x-2">
+            <span class="status-dot-green"></span>
+            <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
+        `;
+        row.onclick = () => openPaymentProductCard(service, c);
+        box.appendChild(row);
+      });
+    }
+
+    function renderCountriesForBundle(bundle) {
+      document.getElementById('step-title').innerText = "Выберите страну:";
+      const box = document.getElementById('step-list-container');
+      box.innerHTML = '';
+
+      const c = COUNTRIES[bundle.country];
+      const row = document.createElement('div');
+      row.className = "country-btn";
+      row.innerHTML = `
+        <div class="flex items-center space-x-3">
+          ${flagImg(c.code)}
+          <span class="text-xs font-semibold text-white">${c.name}</span>
+        </div>
+        <div class="flex items-center space-x-2">
+          <span class="status-dot-green"></span>
+          <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+      `;
+      row.onclick = () => openBundleProductCard(bundle, c);
+      box.appendChild(row);
+    }
+
+    function renderBanksInCountry(country) {
+      document.getElementById('step-title').innerText = `${country.name} — Выберите товар:`;
+      const box = document.getElementById('step-list-container');
+      box.innerHTML = '';
+
+      const banks = banksCatalog[country.code] || [];
+      banks.forEach(bank => {
+        const key = `bank_${bank.name}_${country.code}`;
+        const ov = customOverrides[key];
+        const displayPrice = ov && ov.price !== undefined ? ov.price : bank.price;
+
+        const row = document.createElement('div');
+        row.className = "country-btn";
+        row.innerHTML = `
+          <div class="flex items-center space-x-3">
+            ${renderBrandLogo(bank.domain, bank.name)}
+            <span class="text-xs font-bold text-white">${bank.name}</span>
+          </div>
+          <div class="flex items-center space-x-2">
+            <span class="status-dot-green"></span>
+            <span class="text-xs font-mono font-bold text-zinc-300">${displayPrice}$</span>
+          </div>
+        `;
+        row.onclick = () => openBankProductCard(bank, country);
+        box.appendChild(row);
+      });
+    }
+
+    function openCryptoProductCard(ex, country) {
+      haptic('medium');
+      let price = 25;
+      let stock = 3;
+      const euCountries = ["pl","de","es","ee","lv","lt","it","gb"];
+
+      if (ex.isMaker) {
+        const highMaker = ["ua","kz","ru","pl"];
+        price = highMaker.includes(country.code) ? 110 : 80;
+        stock = country.code === 'kz' ? 5 : (country.code === 'ug' ? 4 : 2);
+      } else {
+        if (euCountries.includes(country.code)) { price = 50; stock = 3; }
+        else if (country.code === "tr") { price = 30; stock = 3; }
+        else if (["id","ke","ng"].includes(country.code)) { price = 20; stock = 4; }
+        else if (country.code === "us") { price = 40; stock = 2; }
+        else { price = 25; stock = 3; }
+      }
+
+      let bodyHtml = "";
+      if (ex.isMaker) {
+        bodyHtml = `<div><div class="font-bold text-white mb-1">Описание:</div><p class="text-zinc-300">${ex.desc}</p></div><div><div class="font-bold text-white mb-1">Комплект:</div><p class="text-zinc-300">Почта, пароль, вирт. номер (10 дней, можно продлить), аккаунт от смс сервиса идет в комплекте, ключ 2-фа, прокси.</p></div>`;
+      } else {
+        const hasVirtualCard = euCountries.includes(country.code) && ex.id === "binance";
+        bodyHtml = `<div><div class="font-bold text-white mb-1">Описание:</div><p>${ex.desc}</p></div><div><div class="font-bold text-white mb-1">Функции:</div><ul class="space-y-1 text-zinc-300">${ex.features.map(f => `<li>• ${f}</li>`).join('')}</ul></div><div><div class="font-bold text-white mb-1">Лимиты:</div><ul class="space-y-1 text-zinc-300">${ex.limits.map(l => `<li>• ${l}</li>`).join('')}</ul></div><div><div class="font-bold text-white mb-1">Комиссии:</div><ul class="space-y-1 text-zinc-300">${ex.commissions.map(c => `<li>• ${c}</li>`).join('')}</ul></div><div><div class="font-bold text-white mb-1">Комплект:</div><ul class="space-y-1 text-zinc-300"><li>• Аккаунт: Верифицирован, 30+ дней с момента регистрации, ранее не был использован.</li><li>• Расширенная верификация: Подтвержден адрес проживания.</li>${hasVirtualCard ? `<li>• Карты: Выпущена виртуальная карта.</li>` : ''}<li>• Доступ: Почта, пароли, прокси.</li><li>• Документы: Фото документа, селфи дропа, селфи дропа с документом в руках.</li></ul></div>`;
+      }
+
+      showProductDetailModal({
+        key: `crypto_${ex.id}_${country.code}`,
+        name: ex.name,
+        domain: ex.domain,
+        domain2: null,
+        country: country,
+        price: price,
+        stock: stock,
+        bodyHtml: bodyHtml
+      });
+    }
+
+    function openPaymentProductCard(service, country) {
+      haptic('medium');
+      const bodyHtml = `<div><div class="font-bold text-white mb-1">Описание:</div><p>${service.name} — финансовый сервис для международных переводов, мультивалютных счетов дебетовых и виртуальных карт.</p></div><div><div class="font-bold text-white mb-1">Основные функции:</div><ul class="space-y-1 text-zinc-300"><li>• Мультивалютный счет: Открытие счетов в 50+ валютах, конвертация по среднерыночному курсу. Локальные реквизиты для EUR, GBP, USD и др.</li><li>• Международные переводы: Низкие комиссии, переводы в 80+ стран.</li><li>• Карты: Поддержка Apple Pay, Google Pay.</li></ul></div><div><div class="font-bold text-white mb-1">Лимиты:</div><ul class="space-y-1 text-zinc-300"><li>• Переводы: До 1 000 000 EUR/USD/GBP в день, 5 000 000 в месяц.</li><li>• Пополнение: До 20 000 EUR/GBP/USD в день (карта), до 100 000 (банковский перевод).</li><li>• Оплата картой: До 10 000 EUR/USD/GBP в день, 50 000 в месяц.</li></ul></div><div><div class="font-bold text-white mb-1">Комплект:</div><ul class="space-y-1 text-zinc-300"><li>• Аккаунт: Верифицирован.</li><li>• Карты: ${service.cardInfo}</li><li>• Эмулятор: Авторизован в эмулятор duoplus (как это выглядит смотри в FAQ), также можно войти на своем устройстве.</li><li>• Доступ: Почта, Duoplus, пароли, прокси, виртуальный номер смс 24/7 (управление в разделе "Заказы", срок 10 дней, можно продлить/сменить на свой), аккаунт от смс сервиса.</li><li>• Документы: Фото документа, селфи дропа, селфи дропа с документом в руках.</li></ul></div>`;
+
+      showProductDetailModal({
+        key: `pay_${service.id}_${country.code}`,
+        name: service.name,
+        domain: service.domain,
+        domain2: null,
+        country: country,
+        price: service.price,
+        stock: service.stock,
+        bodyHtml: bodyHtml
+      });
+    }
+
+    function openBundleProductCard(bundle, country) {
+      haptic('medium');
+      const bodyHtml = `<div><div class="font-bold text-white mb-1">Описание:</div><p>Готовая верифицированная связка <b>${bundle.name}</b> на одного дропа. Идеально подходит для P2P-торговли, арбитража и беспрепятственных переводов без блокировок по 3-м лицам.</p></div><div><div class="font-bold text-white mb-1">Преимущества связки:</div><ul class="space-y-1 text-zinc-300"><li>• Полное совпадение ФИО владельца банка и аккаунта криптобиржи.</li><li>• Высокие суточные и месячные лимиты по карте и счету.</li><li>• Отсутствие блоков при апелляциях на P2P.</li></ul></div><div><div class="font-bold text-white mb-1">Комплект:</div><ul class="space-y-1 text-zinc-300"><li>• Банк + Биржа: Полностью верифицированы на одного человека.</li><li>• Эмулятор: Банк авторизован в эмуляторе Duoplus.</li><li>• Доступ: Родная почта, пароли, ключи 2FA, прокси, виртуальный номер SMS 24/7 (управление в разделе "Заказы").</li><li>• Документы: Фото документа, селфи дропа, селфи с документом в руках.</li></ul></div>`;
+
+      showProductDetailModal({
+        key: `bundle_${bundle.id}_${country.code}`,
+        name: bundle.name,
+        domain: bundle.domain,
+        domain2: bundle.domain2,
+        country: country,
+        price: bundle.price,
+        stock: bundle.stock,
+        bodyHtml: bodyHtml
+      });
+    }
+
+    function openBankProductCard(bank, country) {
+      haptic('medium');
+      const bodyHtml = `<div><div class="font-bold text-white mb-1">Описание:</div><p>${bank.desc}</p></div><div><div class="font-bold text-white mb-1">Основные функции:</div><ul class="space-y-1 text-zinc-300"><li>• Мультивалютные счета: Валюта счета — ${bank.currency}.</li><li>• Дебетовые карты: Выпуск виртуальных и физических карт для бесконтактной оплаты и переводов.</li></ul></div><div><div class="font-bold text-white mb-1">Лимиты и переводы:</div><p class="text-zinc-300">${bank.limitInfo}</p></div><div><div class="font-bold text-white mb-1">Комплект:</div><ul class="space-y-1 text-zinc-300"><li>• Аккаунт: Верифицирован. Ранее не использовался.</li><li>• Карты: 1 цифровая, 1 физическая (отправка в ваш город по запросу).</li><li>• Эмулятор: Авторизован в эмулятор duoplus (как это выглядит смотри в FAQ).</li><li>• Доступ: Почта, Duoplus, пароли, прокси, виртуальный номер смс 24/7 (управление в разделе "Заказы", срок 10 дней, можно продлить), аккаунт от смс сервиса.</li><li>• Документы: Фото документа, селфи дропа, селфи дропа с документом в руках.</li></ul></div>`;
+
+      showProductDetailModal({
+        key: `bank_${bank.name}_${country.code}`,
+        name: bank.name,
+        domain: bank.domain,
+        domain2: null,
+        country: country,
+        price: bank.price,
+        stock: bank.stock,
+        bodyHtml: bodyHtml
+      });
+    }
+
+    function showProductDetailModal(product) {
+      const ov = customOverrides[product.key];
+      if (ov) {
+        if (ov.price !== undefined) product.price = Number(ov.price);
+        if (ov.stock !== undefined) product.stock = Number(ov.stock);
+        if (ov.bodyHtml !== undefined) product.bodyHtml = ov.bodyHtml;
+      }
+
+      activeProduct = product;
+      document.getElementById('detail-icon-box').innerHTML = renderBrandLogo(product.domain, product.name, product.domain2);
+      document.getElementById('detail-title').innerHTML = `<span>${product.name} | ${product.country.name}</span> ${flagImg(product.country.code)}`;
+      document.getElementById('detail-body').innerHTML = product.bodyHtml;
+      document.getElementById('detail-stock-count').innerText = product.stock;
+
+      if (isAdmin) {
+        document.getElementById('admin-item-editor').classList.remove('hidden');
+        document.getElementById('edit-price').value = product.price;
+        document.getElementById('edit-stock').value = product.stock;
+        document.getElementById('edit-body').value = product.bodyHtml;
+      } else {
+        document.getElementById('admin-item-editor').classList.add('hidden');
+      }
+
+      updateDisplayedPrice();
+      showCatalogView('view-product-detail');
+    }
+
+    function saveCurrentProductEdits() {
+      if (!activeProduct) return;
+      haptic('heavy');
+      const newPrice = Number(document.getElementById('edit-price').value);
+      const newStock = Number(document.getElementById('edit-stock').value);
+      const newBody = document.getElementById('edit-body').value;
+
+      activeProduct.price = newPrice;
+      activeProduct.stock = newStock;
+      activeProduct.bodyHtml = newBody;
+
+      customOverrides[activeProduct.key] = {
+        price: newPrice,
+        stock: newStock,
+        bodyHtml: newBody
+      };
+
+      localStorage.setItem('moon_custom_overrides', JSON.stringify(customOverrides));
+
+      document.getElementById('detail-body').innerHTML = newBody;
+      document.getElementById('detail-stock-count').innerText = newStock;
+      updateDisplayedPrice();
+
+      tgAlert("✅ Изменения сохранены! Чтобы обновить их для всех покупателей — нажми «☁️ Сохранить для всех».");
+    }
+
+    function buildUpdatedFullHtml() {
+      const ghInput = document.getElementById('gh-token-input');
+      const tempToken = ghInput ? ghInput.value : '';
+      if (ghInput) ghInput.value = '';
+
+      switchTab('home');
+      document.getElementById('admin-badge')?.classList.add('hidden');
+      document.getElementById('cabinet-admin-btn')?.classList.add('hidden');
+      document.getElementById('admin-item-editor')?.classList.add('hidden');
+      document.getElementById('payment-modal')?.classList.add('hidden');
+
+      let currentHtml = document.documentElement.outerHTML;
+
+      if (ghInput) ghInput.value = tempToken;
+      updateAdminUI();
+      openAdminDashboard();
+
+      const overridesBlock = `/*__OVERRIDES_START__*/\n    const SAVED_OVERRIDES = ${JSON.stringify(customOverrides, null, 2)};\n    /*__OVERRIDES_END__*/`;
+      return "<!DOCTYPE html>\n" + currentHtml.replace(/\/\*__OVERRIDES_START__\*\/[\s\S]*?\/\*__OVERRIDES_END__\*\//, overridesBlock);
+    }
+
+    function copyUpdatedHtmlToClipboard() {
+      haptic('medium');
+      const fullHtml = buildUpdatedFullHtml();
+      navigator.clipboard.writeText(fullHtml).then(() => {
+        tgAlert("📋 Полный чистый код index.html скопирован в буфер обмена!");
+      }).catch(() => {
+        tgAlert("Не удалось скопировать автоматически. Используй публикацию через токен.");
+      });
+    }
+
+    async function publishOverridesToGitHub() {
+      const token = document.getElementById('gh-token-input').value.trim();
+      if (!token) {
+        tgAlert("Введи GitHub Personal Access Token или используй кнопку «📋 Скопировать готовый код index.html» выше.");
+        return;
+      }
+      localStorage.setItem('moon_gh_token', token);
+
+      try {
+        haptic('medium');
+        const apiUrl = `https://api.github.com/repos/${GITHUB_REPO}/contents/index.html`;
+        const getRes = await fetch(apiUrl, {
+          headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' }
+        });
+        if (!getRes.ok) throw new Error("Не удалось получить index.html с GitHub. Проверь права токена (галочка repo).");
+        const fileData = await getRes.json();
+
+        const updatedHtml = buildUpdatedFullHtml();
+        const base64Content = btoa(unescape(encodeURIComponent(updatedHtml)));
+
+        const putRes = await fetch(apiUrl, {
+          method: 'PUT',
+          headers: {
+            'Authorization': `token ${token}`,
+            'Accept': 'application/vnd.github.v3+json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            message: "Update store prices & descriptions via Admin Panel",
+            content: base64Content,
+            sha: fileData.sha
+          })
+        });
+
+        if (!putRes.ok) throw new Error("Ошибка при сохранении на GitHub.");
+        tgAlert("🚀 Опубликовано на GitHub! Через 30 секунд изменения вступят в силу для всех пользователей бота.");
+      } catch (err) {
+        tgAlert("Ошибка: " + err.message);
+      }
+    }
+
+    function resetAllOverrides() {
+      if (!confirm("Сбросить все локальные изменения цен и описаний?")) return;
+      customOverrides = {};
+      localStorage.removeItem('moon_custom_overrides');
+      tgAlert("Все локальные правки сброшены.");
+    }
+
+    function updateDisplayedPrice() {
+      if (!activeProduct) return;
+      const priceEl = document.getElementById('detail-price');
+      if (promoDiscount > 0) {
+        const discounted = (activeProduct.price * (1 - promoDiscount)).toFixed(1);
+        priceEl.innerHTML = `<span class="text-xs text-zinc-500 line-through mr-1.5">${activeProduct.price.toFixed(1)}$</span><span class="text-emerald-400">${discounted}$</span>`;
+      } else {
+        priceEl.innerText = `${activeProduct.price.toFixed(1)}$`;
+      }
+    }
+
+    function handleStepBack() {
+      haptic();
+      if (currentStep === 2) {
+        currentStep = 1;
+        openCategory(currentCategory);
+      } else {
+        resetCatalogToRoot();
+      }
+    }
+
+    function backFromProductDetail() {
+      haptic();
+      showCatalogView('view-step-list');
+    }
+
+    function activateMoonPromoBanner() {
+      haptic('medium');
+      promoDiscount = 0.10;
+      document.getElementById('promo-status-badge').innerText = "(активирован ✅ -10%)";
+      document.getElementById('promo-status-badge').className = "ml-1 text-[10px] text-emerald-400 font-bold";
+      document.getElementById('cabinet-discount').innerText = "10%";
+      tgAlert("💎 Промокод «moon» успешно применен! Скидка 10% активирована на все товары.");
+    }
+
+    function tgPromptPromo() {
+      haptic();
+      const code = prompt("💎 Введите промокод (например: moon):");
+      if (!code) return;
+      if (code.trim().toLowerCase() === 'moon') {
+        promoDiscount = 0.10;
+        document.getElementById('promo-status-badge').innerText = "(активирован ✅ -10%)";
+        document.getElementById('promo-status-badge').className = "ml-1 text-[10px] text-emerald-400 font-bold";
+        document.getElementById('cabinet-discount').innerText = "10%";
+        updateDisplayedPrice();
+        tgAlert("✅ Промокод «moon» активирован! Скидка 10% применена.");
+      } else {
+        tgAlert("❌ Промокод не найден или срок его действия истек.");
+      }
+    }
+
     switchTab('home');
+    updateAdminUI();
+    updateBalanceUI();
   </script>
 </body>
 </html>
