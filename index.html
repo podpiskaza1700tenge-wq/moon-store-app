@@ -106,6 +106,24 @@
       background: #15151A;
     }
 
+    .country-btn {
+      background: #101014;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 11px 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .country-btn:active {
+      transform: scale(0.985);
+      border-color: rgba(255, 255, 255, 0.25);
+      background: #16161C;
+    }
+
     .status-dot-green {
       width: 6px;
       height: 6px;
@@ -452,7 +470,7 @@
       <!-- 2. КАТАЛОГ -->
       <section id="tab-catalog" class="tab-content hidden space-y-3">
         
-        <!-- ЭКРАН 1: 4 Главные категории -->
+        <!-- Главные 4 категории -->
         <div id="view-categories" class="space-y-2.5">
           <div class="flex items-center justify-between px-1">
             <div class="text-[11px] font-bold text-zinc-400 uppercase tracking-widest">
@@ -501,7 +519,7 @@
                 </div>
                 <div>
                   <div class="text-sm font-bold text-white">Платёжки / Необанки</div>
-                  <div class="text-[11px] text-zinc-400">Wise, Revolut, Bunq, Stripe, Payoneer, N26...</div>
+                  <div class="text-[11px] text-zinc-400">Wise, Revolut, Bunq, Stripe, Payoneer...</div>
                 </div>
               </div>
               <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg>
@@ -516,7 +534,7 @@
                 </div>
                 <div>
                   <div class="text-sm font-bold text-white">Банк + Биржа</div>
-                  <div class="text-[11px] text-zinc-400">Privat, Tinkoff, Sber, Mono, Bakai, Kapital...</div>
+                  <div class="text-[11px] text-zinc-400">Privat, Tinkoff, Sber, Mono, Bakai...</div>
                 </div>
               </div>
               <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg>
@@ -524,7 +542,7 @@
           </div>
         </div>
 
-        <!-- ЭКРАН 2: Универсальный список шага -->
+        <!-- Список товаров шага -->
         <div id="view-step-list" class="hidden space-y-3">
           <div class="flex items-center justify-between pb-1">
             <button onclick="handleStepBack()" class="text-xs font-semibold text-white hover:text-zinc-300 flex items-center space-x-1.5 py-1">
@@ -537,7 +555,7 @@
           <div id="step-list-container" class="space-y-1.5"></div>
         </div>
 
-        <!-- ЭКРАН 3: Детальная карточка товара -->
+        <!-- Детальная карточка товара -->
         <div id="view-product-detail" class="hidden space-y-3">
           <div class="flex items-center justify-between pb-1">
             <button onclick="backFromProductDetail()" class="text-xs font-semibold text-white hover:text-zinc-300 flex items-center space-x-1.5 py-1">
@@ -547,7 +565,7 @@
             <span class="text-xs font-bold text-zinc-400 uppercase tracking-wider">Карточка товара</span>
           </div>
 
-          <!-- Админ-редактор лота -->
+          <!-- Админ-редактор -->
           <div id="admin-item-editor" class="hidden mono-card p-4 space-y-3 border border-rose-500/40 bg-rose-950/15">
             <div class="flex items-center justify-between border-b border-white/10 pb-2">
               <span class="text-xs font-black text-rose-400 uppercase tracking-wider">✏️ Админ-редактор лота</span>
@@ -566,18 +584,16 @@
             </div>
 
             <div>
-              <label class="text-[10px] text-zinc-400 font-bold uppercase block mb-1">Описание / Текст карточки</label>
+              <label class="text-[10px] text-zinc-400 font-bold uppercase block mb-1">Описание</label>
               <textarea id="edit-body" rows="4" class="admin-input font-mono text-[11px]"></textarea>
             </div>
 
-            <div class="flex gap-2">
-              <button onclick="saveCurrentProductEdits()" class="flex-1 py-2.5 bg-rose-500 hover:bg-rose-600 text-white font-bold text-xs rounded-xl transition">
-                💾 Сохранить изменения
-              </button>
-            </div>
+            <button onclick="saveCurrentProductEdits()" class="w-full py-2.5 bg-rose-500 hover:bg-rose-600 text-white font-bold text-xs rounded-xl transition">
+              💾 Сохранить изменения
+            </button>
           </div>
 
-          <!-- Сама карточка товара -->
+          <!-- Карточка -->
           <div class="mono-card p-4 space-y-3.5 border border-white/12">
             <div class="flex items-center justify-between border-b border-white/10 pb-3">
               <div class="flex items-center space-x-3">
@@ -607,7 +623,7 @@
             </div>
           </div>
 
-          <!-- Кнопки действия -->
+          <!-- Кнопка покупки -->
           <div class="space-y-2 pt-1">
             <button onclick="confirmPurchase()" class="w-full py-3.5 bg-[#22C55E] hover:bg-[#16A34A] active:scale-[0.98] text-black font-extrabold text-xs uppercase tracking-wider rounded-xl transition flex items-center justify-center space-x-2 shadow-[0_4px_20px_rgba(34,197,94,0.3)]">
               <span>💳 Купить товар</span>
@@ -644,7 +660,7 @@
           </div>
           <div class="text-base font-bold text-white mb-1">У вас пока нет покупок</div>
           <p class="text-xs text-zinc-400 max-w-xs mb-5 leading-relaxed">
-            Выберите любой товар в каталоге и оплатите персональный счёт через CryptoBot, xRocket или внутренний баланс.
+            Выберите любой товар в каталоге и оплатите персональный счёт через CryptoBot или xRocket.
           </p>
           <button onclick="switchTab('catalog')" class="px-6 py-2.5 rounded-xl bg-white text-black text-xs font-bold active:scale-95 transition">
             Перейти в каталог
@@ -696,7 +712,7 @@
                 </div>
                 <div>
                   <div class="text-xs font-semibold text-white">Мои заказы и SMS-сервис 24/7</div>
-                  <div class="text-[10px] text-zinc-400">Купленные лоты и история счетов</div>
+                  <div class="text-[10px] text-zinc-400">Купленные лоты и проверка оплаты</div>
                 </div>
               </div>
               <span id="cabinet-orders-count" class="text-xs text-zinc-400 font-mono">0 шт.</span>
@@ -713,18 +729,6 @@
               </div>
               <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg>
             </div>
-
-            <div onclick="tgAlert('Реферальная ссылка: https://t.me/moonstore_shop_bot?start=ref')" class="mono-row">
-              <div class="flex items-center space-x-3">
-                <div class="mono-icon-box">
-                  <svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                  </svg>
-                </div>
-                <span class="text-xs font-semibold text-white">Реферальная система</span>
-              </div>
-              <span class="text-[11px] font-bold text-white bg-white/10 px-2 py-0.5 rounded-md border border-white/20">5%</span>
-            </div>
           </div>
         </div>
       </section>
@@ -739,50 +743,24 @@
             <span>Комплектация и Duoplus</span>
           </div>
           <p class="text-xs text-zinc-300 leading-relaxed">
-            Все банковские аккаунты и необанки авторизованы в облачном антидетект-эмуляторе <b>Duoplus</b> (также можно войти со своего устройства). Виртуальный номер для приёма SMS работает 24/7 в разделе «Заказы» (срок 10 дней с возможностью продления или смены на свой).
+            Все банковские аккаунты и необанки авторизованы в облачном антидетект-эмуляторе <b>Duoplus</b>. Виртуальный номер для приёма SMS работает 24/7 в разделе «Заказы» (срок 10 дней с возможностью продления).
           </p>
-        </div>
-
-        <div class="mono-card p-4 space-y-2">
-          <div class="font-bold text-xs text-white">Физические карты и Документы</div>
-          <div class="text-xs text-zinc-400 space-y-1.5 leading-relaxed">
-            <p>• По всем банкам и платёжкам в комплекте идут фото документа, селфи дропа и селфи дропа с документом в руках.</p>
-            <p>• Выпущенные физические карты Visa / Mastercard отправляются в ваш город по запросу.</p>
-            <p>• В комплекте также идут родная почта, пароли, резервные коды 2FA и резидентские прокси.</p>
-          </div>
-        </div>
-
-        <div class="mono-card p-4 flex items-center justify-between">
-          <div>
-            <div class="text-xs font-bold text-white">Поддержка MOON STORE</div>
-            <div class="text-[10px] text-zinc-400">Помощь с входом и отправкой карт</div>
-          </div>
-          <a href="https://t.me/Moon_store_news" target="_blank" class="px-3.5 py-1.5 rounded-xl bg-white text-black text-xs font-bold transition active:scale-95 flex items-center gap-1.5 shadow-[0_2px_12px_rgba(255,255,255,0.15)]">
-            <span>Написать</span>
-          </a>
         </div>
       </section>
 
-      <!-- 6. ГЛОБАЛЬНАЯ АДМИН-ПАНЕЛЬ -->
+      <!-- 6. АДМИН-ПАНЕЛЬ -->
       <section id="tab-admin" class="tab-content hidden space-y-4">
         <div class="mono-card p-4 border border-rose-500/40 space-y-3">
-          <div class="flex items-center justify-between">
-            <div>
-              <div class="text-sm font-black text-rose-400 uppercase">⚙️ Админ-панель владельца</div>
-              <div class="text-[10px] text-zinc-400 font-mono">Admin ID: 8677883972</div>
-            </div>
-            <button onclick="switchTab('catalog')" class="px-2.5 py-1 rounded-lg bg-white/10 text-xs font-bold text-white">В каталог</button>
-          </div>
+          <div class="text-sm font-black text-rose-400 uppercase">⚙️ Админ-панель владельца</div>
           <p class="text-xs text-zinc-300 leading-relaxed">
-            1. Зайди в любой товар в <b>Каталоге</b> — прямо внутри его карточки открыт редактор цены, остатка и описания.<br>
-            2. Изменения сохраняются локально.
+            Зайдите в любой товар в каталоге — прямо в карточке открыт редактор цены и описания.
           </p>
         </div>
       </section>
 
     </main>
 
-    <!-- МОДАЛЬНОЕ ОКНО: ПОЛНЫЙ ЦИКЛ ПОКУПКИ (ШАГ 1: КОЛ-ВО -> ШАГ 2: ВЫБОР ОПЛАТЫ -> ШАГ 3-5: ПРОВЕРКА/БАЛАНС) -->
+    <!-- МОДАЛЬНОЕ ОКНО ОПЛАТЫ -->
     <div id="payment-modal" class="modal-backdrop hidden" onclick="if(event.target===this) closePaymentModal()">
       <div class="modal-sheet space-y-4">
         
@@ -794,10 +772,10 @@
           <button onclick="closePaymentModal()" class="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center text-zinc-400 hover:text-white text-xs">✕</button>
         </div>
 
-        <!-- ШАГ 1: ВЫБОР И ВАЛИДАЦИЯ КОЛИЧЕСТВА (STOCK И MIN_QTY) -->
+        <!-- Шаг 1: Количество -->
         <div id="product-qty-block" class="space-y-3">
           <div class="flex items-center justify-between text-xs">
-            <span class="text-zinc-400">В наличии на складе: <b id="modal-stock-count" class="text-white">0</b> шт.</span>
+            <span class="text-zinc-400">В наличии: <b id="modal-stock-count" class="text-white">0</b> шт.</span>
             <span class="text-zinc-400">Цена за шт: <b id="modal-unit-price" class="text-emerald-400 font-mono">0.00 $</b></span>
           </div>
 
@@ -813,7 +791,7 @@
           </button>
         </div>
 
-        <!-- БЛОК ВЫБОРА СУММЫ ПРИ ПОПОЛНЕНИИ БАЛАНСА -->
+        <!-- Пополнение баланса -->
         <div id="topup-amount-block" class="hidden space-y-2.5">
           <label class="text-[11px] font-bold text-zinc-400 uppercase block">Сумма пополнения (USDT / $):</label>
           <div class="grid grid-cols-4 gap-2">
@@ -825,7 +803,7 @@
           <input type="number" id="topup-custom-amount" value="50" min="1" step="1" oninput="updatePayModalSummary()" class="admin-input font-mono text-base font-bold text-center" placeholder="Введите сумму в $" />
         </div>
 
-        <!-- ШАГ 2: ИТОГОВАЯ СУММА (TOTAL) И ВЫБОР 3 СПОСОБОВ ОПЛАТЫ -->
+        <!-- Шаг 2: Выбор метода оплаты -->
         <div id="payment-methods-block" class="hidden space-y-3.5">
           <div class="p-3.5 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-between">
             <div>
@@ -835,35 +813,31 @@
             <div id="pay-modal-amount" class="text-xl font-black text-emerald-400 font-mono">0.00 $</div>
           </div>
 
-          <!-- Способ 1: Внутренний баланс (*_pbalance:) -->
           <button id="pay-with-balance-btn" onclick="payWithInternalBalance()" class="w-full py-3 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 text-white font-bold text-xs transition flex items-center justify-between px-4 active:scale-98">
             <span class="flex items-center gap-2">💰 Оплатить с баланса</span>
             <span id="pay-modal-user-bal" class="font-mono text-emerald-400">0.00 $</span>
           </button>
 
-          <!-- Способы 2 и 3: Внешние криптопроцессинги (CryptoBot и xRocket) -->
           <div id="payment-methods-buttons" class="space-y-2">
-            <div class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider px-1">Криптопроцессинг (USDT):</div>
+            <div class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider px-1">Криптопроцессинг (Точный счёт):</div>
 
-            <!-- Способ 2: CryptoBot -->
             <button onclick="createInvoiceUnified('cryptobot')" id="btn-pay-cryptobot" class="w-full p-3.5 rounded-2xl bg-[#161922] hover:bg-[#1E222E] active:scale-[0.98] border border-sky-500/30 flex items-center justify-between transition">
               <div class="flex items-center space-x-3">
                 <div class="w-9 h-9 rounded-xl bg-sky-500/20 border border-sky-500/40 flex items-center justify-center text-lg">💎</div>
                 <div class="text-left">
                   <div class="text-xs font-extrabold text-white">CryptoBot (@send)</div>
-                  <div class="text-[10px] text-sky-400 font-medium">Официальный API крипто-бота</div>
+                  <div class="text-[10px] text-sky-400 font-medium">Счёт на точную сумму</div>
                 </div>
               </div>
               <span id="label-btn-cryptobot" class="px-2.5 py-1 rounded-lg bg-sky-500 text-black font-extrabold text-[10px] uppercase">Счёт →</span>
             </button>
 
-            <!-- Способ 3: xRocket -->
             <button onclick="createInvoiceUnified('xrocket')" id="btn-pay-xrocket" class="w-full p-3.5 rounded-2xl bg-[#181520] hover:bg-[#211C2C] active:scale-[0.98] border border-purple-500/30 flex items-center justify-between transition">
               <div class="flex items-center space-x-3">
                 <div class="w-9 h-9 rounded-xl bg-purple-500/20 border border-purple-500/40 flex items-center justify-center text-lg">🚀</div>
                 <div class="text-left">
                   <div class="text-xs font-extrabold text-white">xRocket Pay (@xrocket)</div>
-                  <div class="text-[10px] text-purple-400 font-medium">Альтернативный криптопроцессинг</div>
+                  <div class="text-[10px] text-purple-400 font-medium">Счёт на точную сумму</div>
                 </div>
               </div>
               <span id="label-btn-xrocket" class="px-2.5 py-1 rounded-lg bg-purple-400 text-black font-extrabold text-[10px] uppercase">Счёт →</span>
@@ -871,7 +845,7 @@
           </div>
         </div>
 
-        <!-- ШАГИ 3 И 4: ЭКРАН ВЫСТАВЛЕННОГО СЧЁТА С PAY_URL И КНОПКОЙ «ПРОВЕРИТЬ ОПЛАТУ» -->
+        <!-- Экран выставленного счёта -->
         <div id="active-invoice-box" class="hidden p-4 rounded-2xl bg-emerald-950/20 border border-emerald-500/40 space-y-3">
           <div class="flex items-center justify-between">
             <span id="invoice-provider-badge" class="text-[10px] font-black uppercase px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300">Счёт создан</span>
@@ -879,7 +853,7 @@
           </div>
 
           <a id="invoice-pay-link" href="#" target="_blank" class="w-full py-3 bg-[#22C55E] hover:bg-[#16A34A] text-black font-extrabold text-xs uppercase rounded-xl flex items-center justify-center space-x-2 shadow-lg transition">
-            <span>🔗 Оплатить (pay_url)</span>
+            <span>🔗 Оплатить счёт в Telegram</span>
           </a>
 
           <button onclick="checkInvoiceUnified()" id="btn-check-invoice" class="w-full py-3 bg-white hover:bg-zinc-200 text-black font-extrabold text-xs uppercase rounded-xl transition shadow-md active:scale-98">
@@ -890,7 +864,7 @@
       </div>
     </div>
 
-    <!-- Нижняя панель навигации -->
+    <!-- Навигация -->
     <div class="tabbar-dock">
       <div class="tabbar">
         <div id="tab-slider" class="tab-slider"></div>
@@ -929,102 +903,18 @@
   </div>
 
   <script>
-    // =========================================================================
-    // НАСТРОЙКИ АДМИНА И ШЛЮЗА
-    // =========================================================================
     const ADMIN_TG_IDS = [8677883972];
     const ADMIN_PIN = "admin";
-
-    // ВАШ ОБНОВЛЕННЫЙ ШЛЮЗ GOOGLE APPS SCRIPT
     const GOOGLE_PAYMENT_GATEWAY_URL = "https://script.google.com/macros/s/AKfycbxIrWRcmdwqqD3_izi8LhJusRL6o3jJ5el8F6DzIkP_xWCDBP2UprBd8bgrhFyS0s4/exec";
     const TG_BOT_TOKEN_NOTIFY = "8977291915:AAHz7fRlCgq0C9v4rCzDJbmL5KxqJ7oafKk";
 
     let isAdmin = false;
-    let secretTapCount = 0;
-    let secretTapTimer = null;
-
     let userBalance = parseFloat(localStorage.getItem('moon_user_balance') || '0.00');
     let userOrders = JSON.parse(localStorage.getItem('moon_user_orders') || '[]');
     let currentPaymentContext = null;
     let activeInvoice = null;
 
-    /*__OVERRIDES_START__*/
-    const SAVED_OVERRIDES = {};
-    /*__OVERRIDES_END__*/
-
-    let customOverrides = Object.assign({}, SAVED_OVERRIDES, JSON.parse(localStorage.getItem('moon_custom_overrides') || '{}'));
-
-    // Анимация звездного фона
-    const canvas = document.getElementById('stars-canvas');
-    const ctx = canvas.getContext('2d');
-    let stars = [];
-    let shootingStar = null;
-
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      initStars();
-    }
-
-    function initStars() {
-      stars = [];
-      const count = Math.floor((canvas.width * canvas.height) / 3200);
-      for (let i = 0; i < count; i++) {
-        stars.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          radius: Math.random() * 1.2 + 0.3,
-          alpha: Math.random(),
-          speed: Math.random() * 0.02 + 0.005,
-          increasing: Math.random() > 0.5
-        });
-      }
-    }
-
-    function drawStars() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      for (let s of stars) {
-        if (s.increasing) {
-          s.alpha += s.speed;
-          if (s.alpha >= 0.95) s.increasing = false;
-        } else {
-          s.alpha -= s.speed;
-          if (s.alpha <= 0.15) s.increasing = true;
-        }
-        ctx.beginPath();
-        ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255, 255, 255, ${s.alpha})`;
-        ctx.fill();
-      }
-
-      if (!shootingStar && Math.random() < 0.008) {
-        shootingStar = {
-          x: Math.random() * canvas.width,
-          y: Math.random() * (canvas.height * 0.4),
-          length: Math.random() * 80 + 40,
-          speed: Math.random() * 10 + 12,
-          opacity: 1
-        };
-      }
-
-      if (shootingStar) {
-        ctx.beginPath();
-        ctx.moveTo(shootingStar.x, shootingStar.y);
-        ctx.lineTo(shootingStar.x - shootingStar.length, shootingStar.y + shootingStar.length * 0.6);
-        ctx.strokeStyle = `rgba(255, 255, 255, ${shootingStar.opacity})`;
-        ctx.lineWidth = 1.2;
-        ctx.stroke();
-        shootingStar.x += shootingStar.speed;
-        shootingStar.y += shootingStar.speed * 0.6;
-        shootingStar.opacity -= 0.025;
-        if (shootingStar.opacity <= 0) shootingStar = null;
-      }
-      requestAnimationFrame(drawStars);
-    }
-
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
-    drawStars();
+    let customOverrides = JSON.parse(localStorage.getItem('moon_custom_overrides') || '{}');
 
     const tg = window.Telegram?.WebApp;
     let tgUser = { id: 'guest', first_name: 'Moon Member', username: '' };
@@ -1038,18 +928,13 @@
         tgUser = tg.initDataUnsafe.user;
         document.getElementById('user-name').innerText = [tgUser.first_name, tgUser.last_name].filter(Boolean).join(' ') || tgUser.username || 'Пользователь';
         document.getElementById('user-tg-id').innerText = `ID: ${tgUser.id}`;
-        if (ADMIN_TG_IDS.includes(Number(tgUser.id))) {
-          isAdmin = true;
-        }
+        if (ADMIN_TG_IDS.includes(Number(tgUser.id))) isAdmin = true;
       }
     }
 
     function tgAlert(msg) {
-      if (tg && tg.showAlert) {
-        tg.showAlert(msg);
-      } else {
-        alert(msg);
-      }
+      if (tg && tg.showAlert) tg.showAlert(msg);
+      else alert(msg);
     }
 
     function updateBalanceUI() {
@@ -1092,39 +977,25 @@
       });
     }
 
-    // =========================================================================
-    // ШАГ 1: ВЫБОР ТОВАРА И ВАЛИДАЦИЯ КОЛИЧЕСТВА (STOCK И MIN_QTY)
-    // =========================================================================
     function confirmPurchase() {
       haptic('heavy');
       if (!activeProduct) return;
-
-      const stock = typeof activeProduct.stock === 'number' ? activeProduct.stock : 1;
-      const minQty = 1;
-
-      if (stock < minQty) {
-        tgAlert("❌ Данного товара нет в наличии на складе.");
-        return;
-      }
-
-      const unitPrice = promoDiscount > 0
-        ? parseFloat((activeProduct.price * (1 - promoDiscount)).toFixed(2))
-        : parseFloat(activeProduct.price.toFixed(2));
+      const stock = activeProduct.stock || 1;
+      const unitPrice = promoDiscount > 0 ? parseFloat((activeProduct.price * (1 - promoDiscount)).toFixed(2)) : parseFloat(activeProduct.price.toFixed(2));
 
       currentPaymentContext = {
         mode: 'product',
-        itemType: activeProduct.serviceType || 'buy_acc',
-        productId: activeProduct.id || activeProduct.name,
-        title: `${activeProduct.name} | ${activeProduct.country ? activeProduct.country.name : 'Global'}`,
+        itemType: 'buy_acc',
+        productId: activeProduct.name,
+        title: `${activeProduct.name} | ${activeProduct.country?.name || 'Global'}`,
         unitPrice: unitPrice,
         stock: stock,
-        minQty: minQty,
+        minQty: 1,
         qty: 1,
         total: unitPrice
       };
 
       activeInvoice = null;
-
       document.getElementById('active-invoice-box').classList.add('hidden');
       document.getElementById('topup-amount-block').classList.add('hidden');
       document.getElementById('payment-methods-block').classList.add('hidden');
@@ -1136,15 +1007,13 @@
       document.getElementById('modal-unit-price').innerText = `${unitPrice.toFixed(2)} $`;
       document.getElementById('purchase-qty-input').value = 1;
       document.getElementById('qty-error-msg').classList.add('hidden');
-
       document.getElementById('payment-modal').classList.remove('hidden');
     }
 
     function changeQty(delta) {
       haptic('light');
       const input = document.getElementById('purchase-qty-input');
-      let val = (parseInt(input.value) || 1) + delta;
-      input.value = val;
+      input.value = Math.max(1, (parseInt(input.value) || 1) + delta);
       handleQtyChange();
     }
 
@@ -1153,14 +1022,13 @@
       const errorEl = document.getElementById('qty-error-msg');
       let val = parseInt(input.value);
 
-      if (isNaN(val) || val < currentPaymentContext.minQty) {
-        errorEl.innerText = `Минимальный заказ: ${currentPaymentContext.minQty} шт.`;
+      if (isNaN(val) || val < 1) {
+        errorEl.innerText = `Минимальный заказ: 1 шт.`;
         errorEl.classList.remove('hidden');
         return false;
       }
-
       if (val > currentPaymentContext.stock) {
-        errorEl.innerText = `Превышен остаток! Доступно на складе: ${currentPaymentContext.stock} шт.`;
+        errorEl.innerText = `Превышен остаток! Доступно: ${currentPaymentContext.stock} шт.`;
         errorEl.classList.remove('hidden');
         return false;
       }
@@ -1171,14 +1039,8 @@
       return true;
     }
 
-    // =========================================================================
-    // ШАГ 2: РАСЧЕТ TOTAL И ПЕРЕХОД К ВЫБОРУ ОПЛАТЫ
-    // =========================================================================
     function proceedToPaymentMethods() {
-      if (!handleQtyChange()) {
-        haptic('error');
-        return;
-      }
+      if (!handleQtyChange()) return;
       haptic('medium');
 
       document.getElementById('product-qty-block').classList.add('hidden');
@@ -1186,12 +1048,8 @@
 
       document.getElementById('pay-modal-title').innerText = 'Метод оплаты';
       document.getElementById('pay-modal-subtitle').innerText = 'Шаг 2: Выберите способ оплаты';
-      
       document.getElementById('pay-modal-item-name').innerText = `${currentPaymentContext.title} (${currentPaymentContext.qty} шт.)`;
       document.getElementById('pay-modal-amount').innerText = `${currentPaymentContext.total.toFixed(2)} $`;
-
-      const balBtn = document.getElementById('pay-with-balance-btn');
-      balBtn.classList.remove('hidden');
       document.getElementById('pay-modal-user-bal').innerText = `Баланс: ${userBalance.toFixed(2)} $`;
     }
 
@@ -1211,7 +1069,7 @@
 
       document.getElementById('active-invoice-box').classList.add('hidden');
       document.getElementById('product-qty-block').classList.add('hidden');
-      document.getElementById('pay-with-balance-btn').classList.add('hidden');
+      document.getElementById('pay-with-balance-btn').classList.remove('hidden');
       document.getElementById('topup-amount-block').classList.remove('hidden');
       document.getElementById('payment-methods-block').classList.remove('hidden');
 
@@ -1219,7 +1077,6 @@
       document.getElementById('pay-modal-subtitle').innerText = 'Выберите сумму пополнения';
       document.getElementById('topup-custom-amount').value = 50;
       updatePayModalSummary();
-
       document.getElementById('payment-modal').classList.remove('hidden');
     }
 
@@ -1242,7 +1099,6 @@
       document.getElementById('payment-modal').classList.add('hidden');
     }
 
-    // Вызов шлюза Google Apps Script
     async function callGoogleGateway(payloadObj) {
       const response = await fetch(GOOGLE_PAYMENT_GATEWAY_URL, {
         method: 'POST',
@@ -1252,9 +1108,6 @@
       return await response.json();
     }
 
-    // =========================================================================
-    // ШАГ 3: СОЗДАНИЕ СЧЕТА (create_invoice_unified)
-    // =========================================================================
     async function createInvoiceUnified(provider) {
       if (!currentPaymentContext) return;
       haptic('medium');
@@ -1267,15 +1120,7 @@
       const oldLabel = labelEl.innerText;
 
       btnEl.style.pointerEvents = 'none';
-      labelEl.innerText = '⏳ Создание...';
-
-      const payloadObj = {
-        user_id: tgUser.id,
-        item_type: currentPaymentContext.itemType,
-        product_id: currentPaymentContext.productId || null,
-        qty: currentPaymentContext.qty,
-        amount: totalAmount
-      };
+      labelEl.innerText = '⏳ Счёт...';
 
       try {
         const data = await callGoogleGateway({
@@ -1283,7 +1128,6 @@
           provider: provider,
           amount: totalAmount,
           description: `${currentPaymentContext.title} | ${totalAmount}$ [${tgUser.id}]`,
-          payload: JSON.stringify(payloadObj),
           user_id: tgUser.id
         });
 
@@ -1299,12 +1143,9 @@
 
           document.getElementById('payment-methods-block').classList.add('hidden');
           document.getElementById('active-invoice-box').classList.remove('hidden');
-
           document.getElementById('invoice-provider-badge').innerText = `${provider.toUpperCase()} • Счёт #${inv.invoice_id}`;
           document.getElementById('invoice-status-text').innerText = '⏳ Ожидание оплаты...';
           document.getElementById('invoice-pay-link').href = inv.pay_url;
-
-          notifyAdminEvent(`🧾 <b>Выставлен счёт на оплату</b>\n\n📦 Товар: <b>${currentPaymentContext.title}</b>\n🔢 Кол-во: <b>${currentPaymentContext.qty} шт.</b>\n💵 Сумма: <b>${totalAmount.toFixed(2)} USDT</b>\n💳 Шлюз: <b>${provider.toUpperCase()} (#${inv.invoice_id})</b>\n👤 Клиент: ${tgUser.first_name || ''} (@${tgUser.username || 'без_юзернейма'}) [ID: <code>${tgUser.id}</code>]`);
 
           if (tg?.openTelegramLink && inv.pay_url.includes('t.me/')) {
             tg.openTelegramLink(inv.pay_url);
@@ -1313,28 +1154,20 @@
           }
           return;
         }
-
-        throw new Error(data?.error || 'Сервер не вернул ссылку на оплату');
+        throw new Error(data?.error || 'Не удалось создать счёт');
       } catch (err) {
-        tgAlert(`Ошибка при создании счёта: ${err.message}`);
+        tgAlert(`Ошибка: ${err.message}`);
       } finally {
         btnEl.style.pointerEvents = 'auto';
         labelEl.innerText = oldLabel;
       }
     }
 
-    // =========================================================================
-    // ШАГ 4: ПРОВЕРКА ОПЛАТЫ (Callback chkinv:)
-    // =========================================================================
     async function checkInvoiceUnified() {
       if (!activeInvoice) return;
       haptic('medium');
-
       const statusEl = document.getElementById('invoice-status-text');
-      const checkBtn = document.getElementById('btn-check-invoice');
-
-      statusEl.innerText = '🔄 Проверяем статус по API...';
-      checkBtn.style.pointerEvents = 'none';
+      statusEl.innerText = '🔄 Проверяем оплату...';
 
       try {
         const res = await callGoogleGateway({
@@ -1354,660 +1187,63 @@
             updateBalanceUI();
             tgAlert(`✅ Баланс пополнен на ${activeInvoice.amount.toFixed(2)} $!`);
           } else {
-            // Уменьшаем складской остаток (stock)
-            if (activeProduct && activeProduct.stock !== undefined) {
+            if (activeProduct && activeProduct.stock) {
               activeProduct.stock = Math.max(0, activeProduct.stock - activeInvoice.context.qty);
               document.getElementById('detail-stock-count').innerText = activeProduct.stock;
             }
-
-            registerCompletedOrder(
-              activeInvoice.context.title,
-              activeInvoice.amount,
-              `${activeInvoice.provider.toUpperCase()} #${activeInvoice.id}`,
-              activeInvoice.context.qty
-            );
-
-            tgAlert(`✅ Оплата успешно получена! Заказ на ${activeInvoice.context.qty} шт. подтверждён.`);
+            registerCompletedOrder(activeInvoice.context.title, activeInvoice.amount, `${activeInvoice.provider.toUpperCase()} #${activeInvoice.id}`, activeInvoice.context.qty);
+            tgAlert(`✅ Оплата получена! Заказ подтверждён.`);
             switchTab('cart');
           }
-
           closePaymentModal();
           activeInvoice = null;
         } else {
           statusEl.innerText = '⏳ Оплата еще не поступила';
-          tgAlert('Счёт ещё не оплачен. Завершите перевод по кнопке «Оплатить» и нажмите проверку снова.');
+          tgAlert('Счёт ещё не оплачен. Завершите перевод и проверьте снова.');
         }
       } catch (err) {
-        statusEl.innerText = '❌ Ошибка проверки';
-        tgAlert('Ошибка соединения со шлюзом: ' + err.message);
-      } finally {
-        checkBtn.style.pointerEvents = 'auto';
+        tgAlert('Ошибка проверки: ' + err.message);
       }
     }
 
-    // =========================================================================
-    // ШАГ 5: ОПЛАТА С ВНУТРЕННЕГО БАЛАНСА (*_pbalance:)
-    // =========================================================================
     async function payWithInternalBalance() {
       if (!currentPaymentContext) return;
       haptic('heavy');
-
       const total = currentPaymentContext.total;
 
-      // Проверка баланса
       if (userBalance < total) {
         tgAlert(`Недостаточно средств на балансе! Требуется: ${total.toFixed(2)}$, доступно: ${userBalance.toFixed(2)}$.`);
         return;
       }
 
-      // Списание с баланса
       userBalance -= total;
       localStorage.setItem('moon_user_balance', userBalance.toFixed(2));
       updateBalanceUI();
 
-      // Уменьшение остатка на складе (stock)
-      if (activeProduct && activeProduct.stock !== undefined) {
+      if (activeProduct && activeProduct.stock) {
         activeProduct.stock = Math.max(0, activeProduct.stock - currentPaymentContext.qty);
         document.getElementById('detail-stock-count').innerText = activeProduct.stock;
       }
 
-      // Фиксация в истории
-      registerCompletedOrder(
-        currentPaymentContext.title,
-        total,
-        'С баланса',
-        currentPaymentContext.qty
-      );
-
-      // Синхронизация с сервером
-      callGoogleGateway({
-        action: 'pay_internal_balance',
-        user_id: tgUser.id,
-        amount: total,
-        item_title: currentPaymentContext.title,
-        qty: currentPaymentContext.qty
-      }).catch(() => {});
-
+      registerCompletedOrder(currentPaymentContext.title, total, 'С баланса', currentPaymentContext.qty);
       closePaymentModal();
-      tgAlert(`✅ Заказ «${currentPaymentContext.title}» (${currentPaymentContext.qty} шт.) успешно оплачен с баланса!`);
+      tgAlert(`✅ Заказ успешно оплачен с баланса!`);
       switchTab('cart');
     }
 
     function registerCompletedOrder(title, amount, provider, qty = 1) {
       const orderId = Math.floor(100000 + Math.random() * 900000);
-      const newOrd = {
-        id: orderId,
-        title: title,
-        amount: Number(amount).toFixed(2),
-        qty: qty,
-        provider: provider,
-        date: new Date().toLocaleDateString('ru-RU')
-      };
-      userOrders.push(newOrd);
+      userOrders.push({ id: orderId, title, amount: Number(amount).toFixed(2), qty, provider, date: new Date().toLocaleDateString('ru-RU') });
       localStorage.setItem('moon_user_orders', JSON.stringify(userOrders));
       updateBalanceUI();
-
-      notifyAdminEvent(`🔥 <b>ОПЛАЧЕН НОВЫЙ ЗАКАЗ #${orderId}!</b>\n\n📦 Товар: <b>${title}</b>\n🔢 Количество: <b>${qty} шт.</b>\n💵 Сумма: <b>${newOrd.amount} $</b>\n💳 Способ: <b>${provider}</b>\n👤 Клиент: ${tgUser.first_name || ''} (@${tgUser.username || 'без_юзернейма'}) [ID: <code>${tgUser.id}</code>]`);
-    }
-
-    function notifyAdminEvent(htmlText) {
-      fetch(`https://api.telegram.org/bot${TG_BOT_TOKEN_NOTIFY}/sendMessage`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          chat_id: ADMIN_TG_IDS[0],
-          text: htmlText,
-          parse_mode: 'HTML'
-        })
-      }).catch(() => {});
-    }
-
-    // =========================================================================
-    // АДМИНКА, ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК И КАТАЛОГ ТОВАРОВ
-    // =========================================================================
-    function updateAdminUI() {
-      const badge = document.getElementById('admin-badge');
-      const cabBtn = document.getElementById('cabinet-admin-btn');
-      const editor = document.getElementById('admin-item-editor');
-      if (isAdmin) {
-        if (badge) badge.classList.remove('hidden');
-        if (cabBtn) cabBtn.classList.remove('hidden');
-        if (editor && activeProduct) editor.classList.remove('hidden');
-      } else {
-        if (badge) badge.classList.add('hidden');
-        if (cabBtn) cabBtn.classList.add('hidden');
-        if (editor) editor.classList.add('hidden');
-      }
-    }
-
-    function handleSecretAdminTap() {
-      secretTapCount++;
-      clearTimeout(secretTapTimer);
-      secretTapTimer = setTimeout(() => { secretTapCount = 0; }, 1800);
-
-      if (secretTapCount >= 5) {
-        secretTapCount = 0;
-        haptic('heavy');
-        if (isAdmin) {
-          openAdminDashboard();
-          return;
-        }
-        const pin = prompt("🔐 Вход в Админ-панель MOON STORE.\nВведите пароль:");
-        if (pin === ADMIN_PIN) {
-          isAdmin = true;
-          updateAdminUI();
-          tgAlert("✅ Режим Администратора активирован!");
-        } else if (pin !== null) {
-          tgAlert("❌ Неверный пароль.");
-        }
-      }
-    }
-
-    function openAdminDashboard() {
-      if (!isAdmin) return;
-      haptic();
-      ['home', 'catalog', 'cart', 'cabinet', 'info', 'admin'].forEach(t => {
-        const el = document.getElementById('tab-' + t);
-        if (el) el.classList.add('hidden');
-      });
-      document.getElementById('tab-admin').classList.remove('hidden');
-      window.scrollTo({ top: 0, behavior: 'instant' });
     }
 
     function haptic(style = 'light') {
       if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred(style);
     }
 
-    function getOfficialPngUrl(domain) {
-      return `https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://${domain}&size=128`;
-    }
-
-    function renderBrandLogo(domain, name, domain2 = null) {
-      const firstLetter = (name || '?').charAt(0).toUpperCase();
-      if (domain2) {
-        return `
-          <div class="flex items-center -space-x-2 flex-shrink-0">
-            <div class="brand-logo-box w-8 h-8 rounded-lg z-10 shadow-md">
-              <img src="${getOfficialPngUrl(domain)}" alt="${name}" class="brand-logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-              <span class="hidden w-full h-full items-center justify-center text-[10px] font-bold text-white">${firstLetter}</span>
-            </div>
-            <div class="brand-logo-box w-8 h-8 rounded-lg z-0 opacity-95">
-              <img src="${getOfficialPngUrl(domain2)}" alt="${name}" class="brand-logo-img" onerror="this.style.display='none';">
-            </div>
-          </div>
-        `;
-      }
-      return `
-        <div class="brand-logo-box">
-          <img src="${getOfficialPngUrl(domain)}" alt="${name}" class="brand-logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-          <span class="hidden w-full h-full items-center justify-center text-xs font-bold text-white">${firstLetter}</span>
-        </div>
-      `;
-    }
-
-    const COUNTRIES = {
-      ua: { code: "ua", name: "Ukraine" },
-      kz: { code: "kz", name: "Kazakhstan" },
-      by: { code: "by", name: "Belarus" },
-      md: { code: "md", name: "Moldova" },
-      az: { code: "az", name: "Azerbaijan" },
-      kg: { code: "kg", name: "Kyrgyzstan" },
-      uz: { code: "uz", name: "Uzbekistan" },
-      ge: { code: "ge", name: "Georgia" },
-      pl: { code: "pl", name: "Poland" },
-      de: { code: "de", name: "Germany" },
-      es: { code: "es", name: "Spain" },
-      ee: { code: "ee", name: "Estonia" },
-      lv: { code: "lv", name: "Latvia" },
-      lt: { code: "lt", name: "Lithuania" },
-      it: { code: "it", name: "Italy" },
-      tr: { code: "tr", name: "Turkey" },
-      id: { code: "id", name: "Indonesia" },
-      ke: { code: "ke", name: "Kenya" },
-      ng: { code: "ng", name: "Nigeria" },
-      us: { code: "us", name: "USA" },
-      ru: { code: "ru", name: "Russia" },
-      cr: { code: "cr", name: "Costa-Rica" },
-      ug: { code: "ug", name: "Uganda" },
-      ye: { code: "ye", name: "Yemen" },
-      dm: { code: "dm", name: "Dominica" },
-      fr: { code: "fr", name: "France" },
-      gb: { code: "gb", name: "United Kingdom" },
-      ca: { code: "ca", name: "Canada" },
-      no: { code: "no", name: "Norway" },
-      au: { code: "au", name: "Australia" },
-      fi: { code: "fi", name: "Finland" },
-      at: { code: "at", name: "Austria" },
-      be: { code: "be", name: "Belgium" },
-      bg: { code: "bg", name: "Bulgaria" },
-      cy: { code: "cy", name: "Cyprus" },
-      nl: { code: "nl", name: "Netherlands" },
-      tj: { code: "tj", name: "Tajikistan" },
-      am: { code: "am", name: "Armenia" },
-      cz: { code: "cz", name: "Czech Republic" }
-    };
-
-    function flagImg(code) {
-      return `<img src="https://flagcdn.com/w40/${code}.png" srcset="https://flagcdn.com/w80/${code}.png 2x" width="22" height="15" class="rounded-sm object-cover shadow-sm flex-shrink-0" alt="${code}">`;
-    }
-
-    const cryptoExchanges = [
-      {
-        id: "binance", name: "Binance", domain: "binance.com",
-        countries: ["ua","kz","by","md","az","kg","uz","ge","pl","de","es","ee","lv","lt","it","tr","id","ke","ng","us"],
-        desc: "Binance - криптобиржа для торговли, инвестиций и управления цифровыми активами.",
-        features: ["Торговля криптовалютами – тысячи пар (BTC, ETH, USDT)", "Фьючерсы и маржа – плечо до 125x", "Earn и стейкинг – пассивный доход", "P2P – сделки напрямую между пользователями"],
-        limits: ["Пополнение – без ограничений", "Вывод – до 100 BTC в сутки", "Торговля – без лимитов"],
-        commissions: ["Торговля – от 0,1%", "P2P – 0%"]
-      },
-      {
-        id: "bybit", name: "Bybit", domain: "bybit.com",
-        countries: ["ua","kz","by","md","az","kg","ge","pl","de","es","ee","lv","lt","it","tr","id","ke","ng","ru"],
-        desc: "Bybit – популярная криптовалютная биржа для спотовой и деривативной торговли, P2P и стейкинга.",
-        features: ["Торговля криптовалютой (BTC, ETH, USDT)", "Фьючерсы с плечом до 100x", "Стейкинг и Earn-продукты", "P2P-платформа"],
-        limits: ["Пополнение: Безлимитное", "Вывод: До 2 BTC в день"],
-        commissions: ["Торговля: от 0,1%", "P2P: 0%"]
-      },
-      {
-        id: "mexc", name: "MEXC", domain: "mexc.com",
-        countries: ["ua","kz","by","md","az","kg","ge","pl","de","es","ee","lv","lt","it","tr","id","ke","ng","ru"],
-        desc: "MEXC – глобальная криптобиржа с самым широким выбором альткоинов и фьючерсных пар.",
-        features: ["Спотовая и фьючерсная торговля до 200x", "Тысячи новых листингов", "P2P-торговля"],
-        limits: ["Пополнение – без ограничений", "Вывод – до 80 BTC в сутки"],
-        commissions: ["Спот – от 0%", "Фьючерсы – от 0,01%"]
-      },
-      {
-        id: "okx", name: "OKX", domain: "okx.com",
-        countries: ["ua","kz","by","md","az","kg","ge","pl","de","es","ee","lv","lt","it","tr","id","ke","ng","ru"],
-        desc: "OKX – ведущая криптовалютная биржа и Web3-экосистема для профессиональной торговли и P2P.",
-        features: ["Спотовая, маржинальная и фьючерсная торговля", "Ликвидный P2P-рынок", "Web3-кошелек"],
-        limits: ["Пополнение – без ограничений", "Вывод – до 10 000 000 USD в сутки"],
-        commissions: ["Торговля – от 0,08%"]
-      },
-      {
-        id: "bitget", name: "Bitget", domain: "bitget.com",
-        countries: ["ua","kz","by","md","az","kg","ge","pl","de","es","ee","lv","lt","it","tr","id","ke","ng","ru"],
-        desc: "Bitget – крупная криптобиржа, лидер в сфере копи-трейдинга и деривативов.",
-        features: ["Фьючерсная и спотовая торговля", "Флагманский копи-трейдинг", "P2P-рынок"],
-        limits: ["Пополнение – без ограничений", "Вывод – до 3 000 000 USDT"],
-        commissions: ["Торговля – от 0,1%"]
-      },
-      {
-        id: "kucoin", name: "KuCoin", domain: "kucoin.com",
-        countries: ["ua","kz","by","md","az","kg","ge","pl","de","es","ee","lv","lt","it","tr","id","ke","ng","ru"],
-        desc: "KuCoin – международная биржа для торговли криптовалютами и альткоинами.",
-        features: ["Торговля сотнями криптопар", "Фьючерсы и торговые боты", "P2P-маркет"],
-        limits: ["Пополнение – без ограничений", "Вывод – до 100 BTC в сутки"],
-        commissions: ["Торговля – от 0,1%"]
-      }
-    ];
-
-    const paymentServices = [
-      { id: "wise_p", name: "Wise (Personal)", domain: "wise.com", price: 50, stock: 4, countries: ["de","fr","it","pl","es","gb","ca","us"], cardInfo: "Выпущено 3 виртуальных и 1 физическая карта." },
-      { id: "wise_b", name: "Wise (Business)", domain: "wise.com", price: 120, stock: 3, countries: ["de","fr","it","pl","es","gb","ca","us"], cardInfo: "Корпоративный счет + бизнес-карты Visa/Mastercard." },
-      { id: "revolut_p", name: "Revolut (Personal)", domain: "revolut.com", price: 90, stock: 3, countries: ["fr","it","pl","es","de","no"], cardInfo: "Виртуальные карты + физическая карта." },
-      { id: "revolut_b", name: "Revolut (Business)", domain: "revolut.com", price: 220, stock: 2, countries: ["fr","it","pl","es","de","no"], cardInfo: "Мультивалютный бизнес-счет + карты." },
-      { id: "bunq_p", name: "Bunq (Personal)", domain: "bunq.com", price: 85, stock: 3, countries: ["fr","it","pl","es","gb","de","no"], cardInfo: "Европейские IBAN (NL/DE/ES/FR) и виртуальные карты." },
-      { id: "stripe", name: "Stripe Business", domain: "stripe.com", price: 150, stock: 2, countries: ["fi","es","it","pl","gb","us"], cardInfo: "Верифицированный мерчант-аккаунт для приёма платежей." }
-    ];
-
-    const bundleServices = [
-      { id: "privat_bin", name: "Privat Bank + Binance", domain: "privatbank.ua", domain2: "binance.com", country: "ua", price: 85, stock: 3 },
-      { id: "tinkoff_byb", name: "Tinkoff Bank + Bybit", domain: "tbank.ru", domain2: "bybit.com", country: "ru", price: 90, stock: 3 },
-      { id: "sber_bybm", name: "Sber Bank + Bybit(maker)", domain: "sberbank.ru", domain2: "bybit.com", country: "ru", price: 165, stock: 2 },
-      { id: "mono_bin", name: "Mono Bank + Binance", domain: "monobank.ua", domain2: "binance.com", country: "ua", price: 85, stock: 4 }
-    ];
-
-    const banksCatalog = {
-      ua: [
-        { name: "Mono bank", domain: "monobank.ua", price: 65, stock: 5, desc: "Монобанк — украинский мобильный банк без отделений." },
-        { name: "Privat bank", domain: "privatbank.ua", price: 65, stock: 2, desc: "ПриватБанк — крупнейший банк Украины." },
-        { name: "A-bank", domain: "a-bank.com.ua", price: 65, stock: 2, desc: "А-Банк — современный украинский банк с мгновенными переводами." }
-      ],
-      ru: [
-        { name: "Tinkoff bank", domain: "tbank.ru", price: 70, stock: 3, desc: "T-Bank (Тинькофф) — популярный мобильный банк РФ." },
-        { name: "Sberbank", domain: "sberbank.ru", price: 70, stock: 2, desc: "СберБанк — крупнейший банк РФ." },
-        { name: "OZON bank", domain: "ozon.ru", price: 70, stock: 4, desc: "Ozon Банк — удобный финтех-банк с расширенными лимитами." }
-      ],
-      kz: [
-        { name: "Kaspi bank", domain: "kaspi.kz", price: 65, stock: 4, desc: "Kaspi.kz — ведущий супер-апп и банк Казахстана." },
-        { name: "Halyk Bank", domain: "halykbank.kz", price: 65, stock: 3, desc: "Halyk Bank — крупнейший универсальный банк Казахстана." }
-      ]
-    };
-
-    let currentCategory = "";
-    let currentStep = 1;
-    let selectedService = null;
-    let activeProduct = null;
-    let promoDiscount = 0;
-
-    const tabIndices = { 'home': 0, 'catalog': 1, 'cart': 2, 'cabinet': 3, 'info': 0, 'admin': 1 };
-
-    function switchTab(tabId) {
-      haptic('light');
-      ['home', 'catalog', 'cart', 'cabinet', 'info', 'admin'].forEach(t => {
-        const el = document.getElementById('tab-' + t);
-        if (el) el.classList.add('hidden');
-      });
-
-      const target = document.getElementById('tab-' + tabId);
-      if (target) target.classList.remove('hidden');
-
-      ['home', 'catalog', 'cart', 'cabinet'].forEach(t => {
-        const btn = document.getElementById('nav-' + t);
-        if (btn) btn.classList.remove('active');
-      });
-
-      const activeNav = document.getElementById('nav-' + tabId);
-      if (activeNav) activeNav.classList.add('active');
-
-      const slider = document.getElementById('tab-slider');
-      if (slider && tabIndices[tabId] !== undefined) {
-        slider.style.transform = `translateX(${tabIndices[tabId] * 100}%)`;
-      }
-
-      if (tabId === 'catalog') {
-        resetCatalogViews();
-      }
-      window.scrollTo({ top: 0, behavior: 'instant' });
-    }
-
-    function resetCatalogViews() {
-      document.getElementById('view-categories').classList.remove('hidden');
-      document.getElementById('view-step-list').classList.add('hidden');
-      document.getElementById('view-product-detail').classList.add('hidden');
-      currentStep = 1;
-      selectedService = null;
-      activeProduct = null;
-    }
-
-    function openCategory(cat) {
-      haptic('medium');
-      currentCategory = cat;
-      document.getElementById('view-categories').classList.add('hidden');
-      document.getElementById('view-step-list').classList.remove('hidden');
-
-      if (cat === 'crypto') {
-        currentStep = 1;
-        renderCryptoList();
-      } else if (cat === 'banks') {
-        currentStep = 1;
-        renderBanksCountries();
-      } else if (cat === 'payment') {
-        currentStep = 1;
-        renderPaymentList();
-      } else if (cat === 'bundle') {
-        currentStep = 1;
-        renderBundleList();
-      }
-    }
-
-    function handleStepBack() {
-      haptic('light');
-      if (currentStep === 2) {
-        currentStep = 1;
-        if (currentCategory === 'crypto') renderCryptoList();
-        if (currentCategory === 'banks') renderBanksCountries();
-        if (currentCategory === 'payment') renderPaymentList();
-      } else {
-        resetCatalogViews();
-      }
-    }
-
-    function backFromProductDetail() {
-      haptic('light');
-      document.getElementById('view-product-detail').classList.add('hidden');
-      document.getElementById('view-step-list').classList.remove('hidden');
-    }
-
-    function renderCryptoList() {
-      document.getElementById('step-title').innerText = "Крипто-биржи";
-      const container = document.getElementById('step-list-container');
-      container.innerHTML = "";
-
-      cryptoExchanges.forEach(ex => {
-        const row = document.createElement('div');
-        row.className = "mono-card mono-card-interactive p-3.5 flex items-center justify-between cursor-pointer";
-        row.onclick = () => openCryptoCountries(ex);
-        row.innerHTML = `
-          <div class="flex items-center space-x-3">
-            ${renderBrandLogo(ex.domain, ex.name)}
-            <div>
-              <div class="text-xs font-bold text-white">${ex.name}</div>
-              <div class="text-[10px] text-zinc-400">Доступно: ${ex.countries.length} стран</div>
-            </div>
-          </div>
-          <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-        `;
-        container.appendChild(row);
-      });
-    }
-
-    function openCryptoCountries(ex) {
-      haptic('medium');
-      selectedService = ex;
-      currentStep = 2;
-      document.getElementById('step-title').innerText = `${ex.name} • Страны`;
-      const container = document.getElementById('step-list-container');
-      container.innerHTML = "";
-
-      ex.countries.forEach(cCode => {
-        const c = COUNTRIES[cCode] || { name: cCode.toUpperCase(), code: cCode };
-        const price = 45;
-        const row = document.createElement('div');
-        row.className = "mono-card mono-card-interactive p-3.5 flex items-center justify-between cursor-pointer";
-        row.onclick = () => showProductDetail({
-          name: ex.name,
-          domain: ex.domain,
-          country: c,
-          price: price,
-          stock: 4,
-          desc: ex.desc,
-          features: ex.features
-        });
-        row.innerHTML = `
-          <div class="flex items-center space-x-3">
-            ${flagImg(c.code)}
-            <span class="text-xs font-semibold text-white">${c.name}</span>
-          </div>
-          <div class="flex items-center space-x-2">
-            <span class="text-xs font-mono font-bold text-white">${price} $</span>
-            <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-          </div>
-        `;
-        container.appendChild(row);
-      });
-    }
-
-    function renderBanksCountries() {
-      document.getElementById('step-title').innerText = "ЛК Банков • Страны";
-      const container = document.getElementById('step-list-container');
-      container.innerHTML = "";
-
-      Object.keys(banksCatalog).forEach(cCode => {
-        const c = COUNTRIES[cCode];
-        const count = banksCatalog[cCode].length;
-        const row = document.createElement('div');
-        row.className = "mono-card mono-card-interactive p-3.5 flex items-center justify-between cursor-pointer";
-        row.onclick = () => openBanksInCountry(cCode);
-        row.innerHTML = `
-          <div class="flex items-center space-x-3">
-            ${flagImg(c.code)}
-            <div>
-              <div class="text-xs font-bold text-white">${c.name}</div>
-              <div class="text-[10px] text-zinc-400">Банков: ${count}</div>
-            </div>
-          </div>
-          <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-        `;
-        container.appendChild(row);
-      });
-    }
-
-    function openBanksInCountry(cCode) {
-      haptic('medium');
-      currentStep = 2;
-      const c = COUNTRIES[cCode];
-      document.getElementById('step-title').innerText = `${c.name} • Банки`;
-      const container = document.getElementById('step-list-container');
-      container.innerHTML = "";
-
-      banksCatalog[cCode].forEach(b => {
-        const row = document.createElement('div');
-        row.className = "mono-card mono-card-interactive p-3.5 flex items-center justify-between cursor-pointer";
-        row.onclick = () => showProductDetail({
-          name: b.name,
-          domain: b.domain,
-          country: c,
-          price: b.price,
-          stock: b.stock,
-          desc: b.desc
-        });
-        row.innerHTML = `
-          <div class="flex items-center space-x-3">
-            ${renderBrandLogo(b.domain, b.name)}
-            <span class="text-xs font-semibold text-white">${b.name}</span>
-          </div>
-          <div class="flex items-center space-x-2">
-            <span class="text-xs font-mono font-bold text-white">${b.price} $</span>
-            <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-          </div>
-        `;
-        container.appendChild(row);
-      });
-    }
-
-    function renderPaymentList() {
-      document.getElementById('step-title').innerText = "Платёжки и Необанки";
-      const container = document.getElementById('step-list-container');
-      container.innerHTML = "";
-
-      paymentServices.forEach(p => {
-        const row = document.createElement('div');
-        row.className = "mono-card mono-card-interactive p-3.5 flex items-center justify-between cursor-pointer";
-        row.onclick = () => showProductDetail({
-          name: p.name,
-          domain: p.domain,
-          country: { name: "Европа / США", code: "eu" },
-          price: p.price,
-          stock: p.stock,
-          desc: p.cardInfo
-        });
-        row.innerHTML = `
-          <div class="flex items-center space-x-3">
-            ${renderBrandLogo(p.domain, p.name)}
-            <div>
-              <div class="text-xs font-bold text-white">${p.name}</div>
-              <div class="text-[10px] text-zinc-400">В наличии: ${p.stock} шт.</div>
-            </div>
-          </div>
-          <div class="flex items-center space-x-2">
-            <span class="text-xs font-mono font-bold text-white">${p.price} $</span>
-            <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-          </div>
-        `;
-        container.appendChild(row);
-      });
-    }
-
-    function renderBundleList() {
-      document.getElementById('step-title').innerText = "Банк + Биржа (Связки)";
-      const container = document.getElementById('step-list-container');
-      container.innerHTML = "";
-
-      bundleServices.forEach(b => {
-        const c = COUNTRIES[b.country];
-        const row = document.createElement('div');
-        row.className = "mono-card mono-card-interactive p-3.5 flex items-center justify-between cursor-pointer";
-        row.onclick = () => showProductDetail({
-          name: b.name,
-          domain: b.domain,
-          domain2: b.domain2,
-          country: c,
-          price: b.price,
-          stock: b.stock,
-          desc: "Готовая связка банковского приложения и биржи с прогревом и гарантией."
-        });
-        row.innerHTML = `
-          <div class="flex items-center space-x-3">
-            ${renderBrandLogo(b.domain, b.name, b.domain2)}
-            <span class="text-xs font-bold text-white">${b.name}</span>
-          </div>
-          <div class="flex items-center space-x-2">
-            <span class="text-xs font-mono font-bold text-white">${b.price} $</span>
-            <svg class="w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-          </div>
-        `;
-        container.appendChild(row);
-      });
-    }
-
-    function showProductDetail(prod) {
-      haptic('medium');
-      activeProduct = prod;
-
-      document.getElementById('view-step-list').classList.add('hidden');
-      document.getElementById('view-product-detail').classList.remove('hidden');
-
-      document.getElementById('detail-icon-box').innerHTML = prod.domain2 
-        ? renderBrandLogo(prod.domain, prod.name, prod.domain2) 
-        : renderBrandLogo(prod.domain, prod.name);
-
-      document.getElementById('detail-title').innerHTML = `
-        <span>${prod.name}</span>
-        ${prod.country?.code ? `<span class="ml-1 inline-flex items-center gap-1 text-[10px] text-zinc-400 bg-white/10 px-2 py-0.5 rounded">${flagImg(prod.country.code)}${prod.country.name}</span>` : ''}
-      `;
-
-      let descHtml = `<p>${prod.desc || ''}</p>`;
-      if (prod.features && prod.features.length) {
-        descHtml += `<ul class="list-disc list-inside space-y-1 text-zinc-400 mt-2">` + prod.features.map(f => `<li>${f}</li>`).join('') + `</ul>`;
-      }
-      document.getElementById('detail-body').innerHTML = descHtml;
-
-      document.getElementById('detail-stock-count').innerText = prod.stock || 1;
-      document.getElementById('detail-price').innerText = `${prod.price} $`;
-
-      updateAdminUI();
-      if (isAdmin) {
-        document.getElementById('edit-price').value = prod.price;
-        document.getElementById('edit-stock').value = prod.stock || 1;
-        document.getElementById('edit-body').value = prod.desc || '';
-      }
-    }
-
-    function saveCurrentProductEdits() {
-      if (!activeProduct) return;
-      haptic('medium');
-      activeProduct.price = parseFloat(document.getElementById('edit-price').value) || activeProduct.price;
-      activeProduct.stock = parseInt(document.getElementById('edit-stock').value) || activeProduct.stock;
-      activeProduct.desc = document.getElementById('edit-body').value;
-
-      document.getElementById('detail-price').innerText = `${activeProduct.price} $`;
-      document.getElementById('detail-stock-count').innerText = activeProduct.stock;
-      document.getElementById('detail-body').innerHTML = `<p>${activeProduct.desc}</p>`;
-
-      tgAlert("✅ Товар обновлен!");
-    }
-
-    function activateMoonPromoBanner() {
-      haptic('medium');
-      promoDiscount = 0.10;
-      document.getElementById('promo-status-badge').innerText = "(активирован: -10%)";
-      document.getElementById('promo-status-badge').className = "ml-1 text-[10px] text-emerald-400 font-bold";
-      document.getElementById('cabinet-discount').innerText = "10%";
-      tgAlert("💎 Промокод 'moon' на 10% успешно применен!");
-    }
-
-    function tgPromptPromo() {
-      const code = prompt("Введите промокод на скидку:");
-      if (code && code.trim().toLowerCase() === "moon") {
-        activateMoonPromoBanner();
-      } else if (code) {
-        tgAlert("❌ Недействительный промокод.");
-      }
-    }
-
     updateBalanceUI();
+    switchTab('home');
   </script>
 </body>
 </html>
