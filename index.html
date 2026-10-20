@@ -1,4 +1,4 @@
-GOOGLE_PAYMENT_GATEWAY_URL<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
@@ -352,7 +352,7 @@ GOOGLE_PAYMENT_GATEWAY_URL<!DOCTYPE html>
     <!-- Верхний хедер -->
     <header class="sticky top-0 z-40 px-4 py-3 bg-[#050507]/85 backdrop-blur-md border-b border-white/10 flex items-center justify-between">
       <div class="flex items-center space-x-2.5">
-        <div class="w-8 h-8 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white shadow-[0_0_12px_rgba(255,255,255,0.12)]">
+        <div onclick="handleSecretAdminTap()" class="cursor-pointer w-8 h-8 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white shadow-[0_0_12px_rgba(255,255,255,0.12)] active:scale-90 transition">
           <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
             <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
           </svg>
@@ -565,7 +565,7 @@ GOOGLE_PAYMENT_GATEWAY_URL<!DOCTYPE html>
             <span class="text-xs font-bold text-zinc-400 uppercase tracking-wider">Карточка товара</span>
           </div>
 
-          <!-- БЛОК РЕДАКТИРОВАНИЯ ТОВАРА (Только для ID 8677883972) -->
+          <!-- БЛОК РЕДАКТИРОВАНИЯ ТОВАРА (Только для ID 8677883972 или после ввода PIN) -->
           <div id="admin-item-editor" class="hidden mono-card p-4 space-y-3 border border-rose-500/40 bg-rose-950/15">
             <div class="flex items-center justify-between border-b border-white/10 pb-2">
               <span class="text-xs font-black text-rose-400 uppercase tracking-wider">✏️ Админ-редактор лота</span>
@@ -969,16 +969,19 @@ GOOGLE_PAYMENT_GATEWAY_URL<!DOCTYPE html>
 
   <script>
     // =========================================================================
-    // НАСТРОЙКИ АДМИНА (ТОЛЬКО ПО TELEGRAM ID) И ШЛЮЗА
+    // НАСТРОЙКИ АДМИНА И ШЛЮЗА
     // =========================================================================
     const ADMIN_TG_IDS = [8677883972];
+    const ADMIN_PIN = "admin";
     const GITHUB_REPO = "podpiskaza1700tenge-wq/moon-store-app";
 
     // ВАШ РАБОЧИЙ ШЛЮЗ GOOGLE APPS SCRIPT
-    const GOOGLE_PAYMENT_GATEWAY_URL = "https://script.google.com/macros/s/AKfycbwNMJXu2qIwk7mimGQZa6TsH1oTaCr7pmgA1tOVqO01iT8rVCc3Yi49q38tGmnHKKPc/exec";
+    const GOOGLE_PAYMENT_GATEWAY_URL = "https://script.google.com/macros/s/AKfycbxIrWRcmdwqqD3_izi8LhJusRL6o3jJ5el8F6DzIkP_xWCDBP2UprBd8bgrhFyS0s4/exec";
     const TG_BOT_TOKEN_NOTIFY = "8977291915:AAHz7fRlCgq0C9v4rCzDJbmL5KxqJ7oafKk";
 
     let isAdmin = false;
+    let secretTapCount = 0;
+    let secretTapTimer = null;
 
     let userBalance = parseFloat(localStorage.getItem('moon_user_balance') || '0.00');
     let userOrders = JSON.parse(localStorage.getItem('moon_user_orders') || '[]');
@@ -1517,6 +1520,29 @@ GOOGLE_PAYMENT_GATEWAY_URL<!DOCTYPE html>
       const savedToken = localStorage.getItem('moon_gh_token');
       if (savedToken && document.getElementById('gh-token-input')) {
         document.getElementById('gh-token-input').value = savedToken;
+      }
+    }
+
+    function handleSecretAdminTap() {
+      secretTapCount++;
+      clearTimeout(secretTapTimer);
+      secretTapTimer = setTimeout(() => { secretTapCount = 0; }, 1800);
+
+      if (secretTapCount >= 5) {
+        secretTapCount = 0;
+        haptic('heavy');
+        if (isAdmin) {
+          openAdminDashboard();
+          return;
+        }
+        const pin = prompt("🔐 Вход в Админ-панель MOON STORE.\nВведите секретный пароль:");
+        if (pin === ADMIN_PIN) {
+          isAdmin = true;
+          updateAdminUI();
+          tgAlert("✅ Режим Администратора активирован!");
+        } else if (pin !== null) {
+          tgAlert("❌ Неверный пароль.");
+        }
       }
     }
 
